@@ -177,6 +177,7 @@ return null
 
       return;
     },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     [chessboard] // Array of dependencies
   );
 
