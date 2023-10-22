@@ -395,6 +395,7 @@ return null
           ) {
             return (
               <div
+              key={index }
                 style={{
                   height: "100%",
                   width: "100%",
