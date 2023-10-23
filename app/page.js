@@ -9,19 +9,11 @@ import { findcorrectpiece } from "./(utlilites)/findcorrectpiece";
 import { movesforrking } from "./(utlilites)/movesforking";
 import Dropdown from "./(utlilites)/Dropdown";
 export default function Home() {
+  const [gameover, setgameover] = React.useState(false);
   function castle(index) {
     const colorofenemy = colortomove === "white" ? "black" : "white";
 
     if (colortomove === "black") {
-
-
-
-
-
-
-
-
-      
       if (index === 6) {
         setchessboard((prev) => {
           let [...table] = prev;
@@ -62,7 +54,6 @@ export default function Home() {
       setblackkingplace(index);
     }
 
-
     if (colortomove === "white") {
       if (index === 62) {
         setchessboard((prev) => {
@@ -101,23 +92,8 @@ export default function Home() {
           return table;
         });
 
-     setwhitekingplace(index);
+      setwhitekingplace(index);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     setfieldswhereplayercanmove([]);
     setpiecethatismoving(null);
@@ -283,9 +259,7 @@ export default function Home() {
           /// If king doessnt have any moves we check his protections///
 
           if (protections === false) {
-            const winin = colortomove === "white" ? "black" : "white";
-            return toast(`Game over ${winin} Won`);
-            //// No protections === game over////
+            setgameover(true);
           }
         }
       }
@@ -640,13 +614,7 @@ export default function Home() {
             );
         })}
         {check && <div>{`${check} is in check`}</div>}
-        {castling.map((each) => {
-          return (
-            <>
-              <div>{each}</div>
-            </>
-          );
-        })}
+        {gameover && <div>{"Koniec gry"}</div>}
       </div>
     </>
   );
