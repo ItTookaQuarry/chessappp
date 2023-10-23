@@ -9,24 +9,139 @@ import { findcorrectpiece } from "./(utlilites)/findcorrectpiece";
 import { movesforrking } from "./(utlilites)/movesforking";
 import Dropdown from "./(utlilites)/Dropdown";
 export default function Home() {
+  function castle(index) {
+    const colorofenemy = colortomove === "white" ? "black" : "white";
+
+    if (colortomove === "black") {
+
+
+
+
+
+
+
+
+      
+      if (index === 6) {
+        setchessboard((prev) => {
+          let [...table] = prev;
+
+          table[6] = {
+            ...table[6],
+            takenby: ["black", "King"],
+            move: table[4].move,
+          };
+          table[5] = {
+            ...table[5],
+            takenby: table[7].takenby,
+            move: table[7].move,
+          };
+          table[7] = { ...table[7], takenby: false };
+          table[4] = { ...table[4], takenby: false };
+          return table;
+        });
+      } else
+        setchessboard((prev) => {
+          let [...table] = prev;
+
+          table[2] = {
+            ...table[2],
+            takenby: ["black", "King"],
+            move: table[4].move,
+          };
+          table[3] = {
+            ...table[3],
+            takenby: table[0].takenby,
+            move: table[0].move,
+          };
+          table[0] = { ...table[0], takenby: false };
+          table[4] = { ...table[4], takenby: false };
+          return table;
+        });
+
+      setblackkingplace(index);
+    }
+
+
+    if (colortomove === "white") {
+      if (index === 62) {
+        setchessboard((prev) => {
+          let [...table] = prev;
+
+          table[62] = {
+            ...table[62],
+            takenby: ["white", "King"],
+            move: table[60].move,
+          };
+          table[61] = {
+            ...table[61],
+            takenby: table[63].takenby,
+            move: table[63].move,
+          };
+          table[63] = { ...table[63], takenby: false };
+          table[60] = { ...table[60], takenby: false };
+          return table;
+        });
+      } else
+        setchessboard((prev) => {
+          let [...table] = prev;
+
+          table[58] = {
+            ...table[58],
+            takenby: ["white", "King"],
+            move: table[60].move,
+          };
+          table[59] = {
+            ...table[59],
+            takenby: table[56].takenby,
+            move: table[56].move,
+          };
+          table[56] = { ...table[56], takenby: false };
+          table[60] = { ...table[60], takenby: false };
+          return table;
+        });
+
+     setwhitekingplace(index);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    setfieldswhereplayercanmove([]);
+    setpiecethatismoving(null);
+    setcolortomove(colorofenemy);
+    setcastling([false]);
+  }
 
   function changingtoanotherpiece(piece) {
     // setchanging({bull:false})
-  
 
-let newboard = [...changing.board]
-newboard[changing.to]={...newboard[changing.to],takenby:[colortomove,piece]}
-setchessboard(
-((prev)=>{
-  return newboard
-})
-)
-setcolortomove((prev) => {
-  const toreturn = prev === "white" ? "black" : "white";
-  return toreturn;
-});
-setchanging({bull:false})
-return null
+    let newboard = [...changing.board];
+    newboard[changing.to] = {
+      ...newboard[changing.to],
+      takenby: [colortomove, piece],
+    };
+    setchessboard((prev) => {
+      return newboard;
+    });
+    setcolortomove((prev) => {
+      const toreturn = prev === "white" ? "black" : "white";
+      return toreturn;
+    });
+    setchanging({ bull: false });
+    return null;
   }
 
   const A = 1;
@@ -37,7 +152,7 @@ return null
   const F = 6;
   const G = 7;
   const H = 8;
-
+  const [check, setcheck] = React.useState(false);
   const [changing, setchanging] = React.useState(false);
   const [Playercanmovethere, setfieldswhereplayercanmove] = React.useState([]);
   const [piecethatismoving, setpiecethatismoving] = React.useState();
@@ -54,26 +169,26 @@ return null
 
   ///This is State of chessbord on the begining of the game It will be changing with players actions ///
   // const [chessboard, setchessboard] = React.useState([
+  const [castling, setcastling] = React.useState([false]);
 
-  const [chessboard, setchessboard] = React.useState(
-    [
-  { name: [A, 8], takenby: ["black", "Rook"] },
+  const [chessboard, setchessboard] = React.useState([
+    { name: [A, 8], takenby: ["black", "Rook"], move: 0 },
     { name: [B, 8], takenby: ["black", "Knight"] },
     { name: [C, 8], takenby: ["black", "Bishop"] },
     { name: [D, 8], takenby: ["black", "Queen"] },
-    { name: [E, 8], takenby: ["black", "King"] },
+    { name: [E, 8], takenby: ["black", "King"], move: 0 },
     { name: [F, 8], takenby: ["black", "Bishop"] },
     { name: [G, 8], takenby: ["black", "Knight"] },
-    { name: [H, 8], takenby: ["black", "Rook"],move:0 },
-    { name: [A, 7], takenby: ["black", "Pawn"],move:0 },
-    { name: [B, 7], takenby: ["black", "Pawn"],move:0 },
-    { name: [C, 7], takenby: ["black", "Pawn"],move:0 },
-    { name: [D, 7], takenby: ["black", "Pawn"],move:0 },
-    { name: [E, 7], takenby: ["black", "Pawn"],move:0 },
-    { name: [F, 7], takenby: ["black", "Pawn"],move:0 },
-    { name: [G, 7], takenby: ["black", "Pawn"],move:0 },
-    { name: [H, 7], takenby: ["black", "Pawn"],move:0 },
-    { name: [A, 6], takenby: false},
+    { name: [H, 8], takenby: ["black", "Rook"], move: 0 },
+    { name: [A, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [B, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [C, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [D, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [E, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [F, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [G, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [H, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [A, 6], takenby: false },
     { name: [B, 6], takenby: false },
     { name: [C, 6], takenby: false },
     { name: [D, 6], takenby: false },
@@ -105,27 +220,23 @@ return null
     { name: [F, 3], takenby: false },
     { name: [G, 3], takenby: false },
     { name: [H, 3], takenby: false },
-    { name: [A, 2], takenby: ["white", "Pawn"],move:0 },
-    { name: [B, 2], takenby: ["white", "Pawn"],move:0 },
-    { name: [C, 2], takenby: ["white", "Pawn"],move:0 },
-    { name: [D, 2], takenby: ["white", "Pawn"],move:0 },
-    { name: [E, 2], takenby: ["white", "Pawn"],move:0 },
-    { name: [F, 2], takenby: ["white", "Pawn"],move:0},
-    { name: [G, 2], takenby: ["white", "Pawn"],move:0 },
-    { name: [H, 2], takenby: ["white", "Pawn"],move:0 },
-    { name: [A, 1], takenby: ["white", "Rook"],move:0 },
+    { name: [A, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [B, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [C, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [D, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [E, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [F, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [G, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [H, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [A, 1], takenby: ["white", "Rook"], move: 0 },
     { name: [B, 1], takenby: ["white", "Knight"] },
     { name: [C, 1], takenby: ["white", "Bishop"] },
     { name: [D, 1], takenby: ["white", "Queen"] },
-    { name: [E, 1], takenby: ["white", "King"] },
+    { name: [E, 1], takenby: ["white", "King"], move: 0 },
     { name: [F, 1], takenby: ["white", "Bishop"] },
     { name: [G, 1], takenby: ["white", "Knight"] },
-    { name: [H, 1], takenby: ["white", "Rook"] },
-  ]
-  );
-
-
-
+    { name: [H, 1], takenby: ["white", "Rook"], move: 0 },
+  ]);
 
   React.useEffect(
     () => {
@@ -158,6 +269,10 @@ return null
           passingbeating
         );
 
+        if (movesforking.table.length !== 0) {
+          setcheck(colortomove);
+        }
+
         if (movesforking.table.length === 0) {
           const protections = findprotection(
             checkifkingisincheck.movestoprotect,
@@ -177,7 +292,7 @@ return null
 
       return;
     },
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [chessboard] // Array of dependencies
   );
 
@@ -200,6 +315,60 @@ return null
       passingbeating
     );
 
+    if (
+      chessboard[obj.index].takenby[1] === "King" &&
+      chessboard[obj.index].move === 0 &&
+      !check
+    ) {
+      let cast = [];
+
+      if (
+        chessboard[obj.index - 1]?.takenby === false &&
+        chessboard[obj.index - 2]?.takenby === false &&
+        chessboard[obj.index - 3]?.takenby === false &&
+        chessboard[obj.index - 4]?.move === 0 &&
+        chessboard[obj.index - 4]?.takenby[1] === "Rook" &&
+        checkifkingischecked(
+          colortomove,
+          chessboard[obj.index - 1].name[0],
+          chessboard[obj.index - 1].name[1],
+          chessboard
+        ).ischecked.length === 0 &&
+        checkifkingischecked(
+          colortomove,
+          chessboard[obj.index - 2].name[0],
+          chessboard[obj.index - 2].name[1],
+          chessboard
+        ).ischecked.length === 0
+      ) {
+        cast.push(obj.index - 2);
+      }
+
+      if (
+        chessboard[obj.index + 1]?.takenby === false &&
+        chessboard[obj.index + 2]?.takenby === false &&
+        chessboard[obj.index + 3]?.move === 0 &&
+        chessboard[obj.index + 3]?.takenby[1] === "Rook" &&
+        checkifkingischecked(
+          colortomove,
+          chessboard[obj.index + 1].name[0],
+          chessboard[obj.index + 1].name[1],
+          chessboard
+        ).ischecked.length === 0 &&
+        checkifkingischecked(
+          colortomove,
+          chessboard[obj.index + 2].name[0],
+          chessboard[obj.index + 2].name[1],
+          chessboard
+        ).ischecked.length === 0
+      ) {
+        cast.push(obj.index + 2);
+      }
+      if (cast.length > 0) {
+        setcastling(cast);
+      }
+    } else setcastling([false]);
+
     setfieldswhereplayercanmove(obj.table);
     ///Setting state of possible moves for player with moves returned from function
 
@@ -212,10 +381,14 @@ return null
   function movepiece(indexwhereismoving) {
     if (indexwhereismoving === piecethatismoving) {
       ///Player can chose another piece after clicking on the moving piece again.
-
+      setcastling([false]);
       setfieldswhereplayercanmove([]);
       setpiecethatismoving(null);
       return;
+    }
+
+    if (castling.includes(indexwhereismoving)) {
+      castle(indexwhereismoving);
     }
 
     setfieldswhereplayercanmove("");
@@ -235,8 +408,8 @@ return null
         colortomove === "white" &&
         table[indexwhereismoving].takenby === false &&
         table[indexwhereismoving + 8]?.takenby[1] === "Pawn" &&
-        table[indexwhereismoving + 8]?.takenby[0] !== colortomove&&
-        table[piecethatismoving]?.takenby[1]==="Pawn"
+        table[indexwhereismoving + 8]?.takenby[0] !== colortomove &&
+        table[piecethatismoving]?.takenby[1] === "Pawn"
       ) {
         table[indexwhereismoving + 8].takenby = {
           ...table[indexwhereismoving + 8],
@@ -250,18 +423,19 @@ return null
         colortomove === "black" &&
         table[indexwhereismoving].takenby === false &&
         table[indexwhereismoving - 8]?.takenby[1] === "Pawn" &&
-        table[indexwhereismoving - 8]?.takenby[0] !== colortomove&&
-        table[piecethatismoving]?.takenby[1]==="Pawn"
+        table[indexwhereismoving - 8]?.takenby[0] !== colortomove &&
+        table[piecethatismoving]?.takenby[1] === "Pawn"
       ) {
         table[indexwhereismoving - 8].takenby = {
           ...table[indexwhereismoving + 8],
           takenby: false,
         };
-        console.log(table[indexwhereismoving + 8].takenby[1]);
       }
 
       table[indexwhereismoving] =
-        table[piecethatismoving].takenby[1] === "Pawn"
+        table[piecethatismoving].takenby[1] === "Pawn" ||
+        table[piecethatismoving].takenby[1] === "Rook" ||
+        table[piecethatismoving].takenby[1] === "King"
           ? { ...temp2, takenby: temp.takenby, move: temp.move + 1 }
           : { ...temp2, takenby: temp.takenby };
 
@@ -322,8 +496,11 @@ return null
         }
       }
 
+      setcastling([false]);
       let beatinginpassing = false;
-
+      if (check !== false) {
+        setcheck(false);
+      }
       if (
         (table[indexwhereismoving].move === 1) &
           (table[indexwhereismoving]?.takenby[1] === "Pawn") &&
@@ -389,19 +566,29 @@ return null
           if (Playercanmovethere?.includes(index)) {
             color = "red";
           }
+
+          if (castling.includes(index)) {
+            color = "red";
+          }
           if (
             !Playercanmovethere?.includes(index) &&
             index !== piecethatismoving
           ) {
             return (
               <div
-              key={index }
+                key={index}
                 style={{
                   height: "100%",
                   width: "100%",
                   backgroundColor: color,
                   display: "grid",
                   border: "0.5px solid black",
+                }}
+                onClick={() => {
+                  if (castling.includes(index)) {
+                    castle(index);
+                  }
+                  return null;
                 }}
               >
                 {Icon && (
@@ -451,6 +638,14 @@ return null
                 )}
               </div>
             );
+        })}
+        {check && <div>{`${check} is in check`}</div>}
+        {castling.map((each) => {
+          return (
+            <>
+              <div>{each}</div>
+            </>
+          );
         })}
       </div>
     </>
