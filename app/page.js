@@ -682,16 +682,16 @@ setchessboardbefore([...chessboard])
         <br></br>
 <div  className="flex  ">{deadblackpieces.map((each)=>{
   const Deadblackicon= findcorrecticon("black",each,"verysmall")
-  return (<div className="h-[50px]  border-solid border-2 border-indigo-600 grid">
-   <div className="h-[40px] m-auto rounded"> {Deadblackicon} </div>
+  return (<div className="h-[60px]  border-solid border-2 border-indigo-600 grid">
+   <div className="h-[40px] w-[40px] m-auto rounded"> {Deadblackicon} </div>
     </div>)
 })}</div>
 
 <div className="flex">
 {deadwhitepieces.map((each)=>{ 
   const Deadwhiteicon= findcorrecticon("white",each,"verysmall")
-  return (<div className="h-[50px]  border-solid border-2 border-indigo-600 grid">
-  <div className="h-[40px] m-auto rounded"> {Deadwhiteicon} </div>
+  return (<div className="h-[60px]  border-solid border-2 border-indigo-600 grid">
+  <div className="h-[40px] w-[40px] m-auto rounded"> {Deadwhiteicon} </div>
    </div>)
 })}
 
