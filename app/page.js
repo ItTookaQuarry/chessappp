@@ -216,8 +216,8 @@ export default function Home() {
   );
 
   const [chessboardbefore,setchessboardbefore]= React.useState([...chessboard])
-  const [deadwhitepieces,setdeadwhitepieces]= React.useState([1,2,3])
-  const [deadblackpieces,setdeadblackpieces]= React.useState([1,2,3])
+  const [deadwhitepieces,setdeadwhitepieces]= React.useState([])
+  const [deadblackpieces,setdeadblackpieces]= React.useState([])
   React.useEffect(
     () => {
       if (moveshistory.length === 0) {
@@ -232,12 +232,48 @@ export default function Home() {
 
       const field1 = chessboard[indexofkingtocheck].name[1];
 
+
+
+///Function to display all dead pieces
+      chessboard.map((each,index)=>{
+
+if(colortomove==="black"&&
+chessboard[index]?.takenby[0]==="white"&&
+chessboardbefore[index]?.takenby[0]==="black"){
+  setdeadblackpieces((prev)=>{
+    return [...prev,chessboardbefore[index].takenby[1]]
+  })
+}
+if(colortomove==="white"&&
+chessboard[index]?.takenby[0]==="black"&&
+chessboardbefore[index]?.takenby[0]==="white"){
+  setdeadwhitepieces((prev)=>{
+    return [...prev,chessboardbefore[index].takenby[1]]
+  })
+}
+
+      
+      
+      
+      
+      })
+
+
+setchessboardbefore([...chessboard])
+
+
+
+
+
       const checkifkingisincheck = checkifkingischecked(
         colortomove,
         field0,
         field1,
         chessboard
       );
+
+
+
 
 
 
@@ -255,13 +291,6 @@ export default function Home() {
           chessboard,
           passingbeating
         );
-
-console.log(findprotection(
-  checkifkingisincheck.movestoprotect,
-  colortomove,
-  chessboard,
-  indexofkingtocheck
-))
 
 
       
@@ -372,6 +401,10 @@ console.log(findprotection(
 
     return;
   }
+
+
+
+
 
   function movepiece(indexwhereismoving) {
     if (indexwhereismoving === piecethatismoving) {
@@ -536,7 +569,7 @@ console.log(findprotection(
   return (
     <>
 <div className="grid grid-cols-4 ">
-      <div class="grid  w-auto h-auto lg:h-[600px] lg:w-[600px]  lg:col-start-1 lg:col-span-2   grid-cols-8 grid-rows-8 md:col-start-1 md:col-span-2 auto-rows-fr col-span-full m-auto">
+      <div class="grid border-solid border-2 border-indigo-600 w-auto h-auto lg:h-[600px] lg:w-[600px]  lg:col-start-1 lg:col-span-2   grid-cols-8 grid-rows-8 md:col-start-1 md:col-span-2 auto-rows-fr col-span-full m-auto">
         {chessboard.map((each, index) => {
           let i = index + 1;
 
@@ -645,20 +678,23 @@ console.log(findprotection(
       
 
 
-
-      {/* <div className="grid-cols-4 ">
-<div className="grid col-span-full" >{deadblackpieces.map((each)=>{
-  return (<><div>{each}</div> <br></br></>)
+      <div className="grid gap-10 m-auto col-span-full lg:col-span-2 ">
+        <br></br>
+<div  className="flex  ">{deadblackpieces.map((each)=>{
+  const Deadblackicon= findcorrecticon("black",each,"verysmall")
+  return (<div className="h-[80px]  border-solid border-2 border-indigo-600">{Deadblackicon} </div>)
 })}</div>
-<div>
-{deadwhitepieces.map((each)=>{
-  return (<><div>{each}</div> <br></br></>)
+
+<div className="flex">
+{deadwhitepieces.map((each)=>{ 
+  const Deadwhiteicon= findcorrecticon("white",each,"verysmall")
+  return (<div className="h-[80px]  border-solid border-2 border-indigo-600">{Deadwhiteicon} </div>)
 })}
 
 
 
 </div>
-</div> */}
+</div>
       </div>
 
 

@@ -13,11 +13,11 @@ export function findcorrecticon(color, piece, bull) {
 
 
   const style = { margin: "auto" };
-  const size = "3em";
+  const size = bull!=="verysmall" ?  "3em": "50%" ;
 
   let iconcolor = color !== "black" ? "orange" : "brown";
 
-  if (bull) {
+  if (bull&&bull!=="verysmall") {
     iconcolor = "red";
   }
 
