@@ -50,6 +50,22 @@ export function findifcanprotect(field0, field1, color, chessboard, kingfield) {
     return true;
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   for (let i = 1; i < 9; i++) {
     let moves = [
       {

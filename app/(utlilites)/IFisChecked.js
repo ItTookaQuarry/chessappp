@@ -42,7 +42,7 @@ if(color==="black"&&chessboard[staticchessboard.indexOf(tab[field0]+ (field1-1))
 
       tabofmovesbetweentoreturn.push([staticchessboard.indexOf(tab[field0]+ (field1-1))])
   
-      tabtoreturn.push(staticchessboard.indexOf(tab[field0]+ (field1+1)))
+      tabtoreturn.push(chessboard[staticchessboard.indexOf(tab[field0]+ (field1+1))])
     }
   }
   if(color==="white"&&chessboard[staticchessboard.indexOf(tab[field0-1-1]+ (field1+1))]?.takenby!==false){
@@ -52,7 +52,7 @@ if(color==="black"&&chessboard[staticchessboard.indexOf(tab[field0]+ (field1-1))
 
       tabofmovesbetweentoreturn.push([staticchessboard.indexOf(tab[field0-1-1]+ (field1-1))])
   
-      tabtoreturn.push(staticchessboard.indexOf(tab[field0]+ (field1+1)))
+      tabtoreturn.push(staticchessboard.indexOf(tab[field0-1-1] + (field1+1)))
     }
   }
 
