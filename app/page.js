@@ -102,7 +102,7 @@ export default function Home() {
   }
 
   function changingtoanotherpiece(piece) {
-    // setchanging({bull:false})
+  
 
     let newboard = [...changing.board];
     newboard[changing.to] = {
@@ -239,7 +239,14 @@ export default function Home() {
         chessboard
       );
 
+
+
+
+
+
+
       if (checkifkingisincheck.ischecked.length >= 1) {
+        setcheck(colortomove);
         ///Function that finds out if king is in  / check at the begining of your move///
         const movesforking = movesforrking(
           colortomove,
@@ -257,9 +264,7 @@ console.log(findprotection(
 ))
 
 
-        if (movesforking.table.length === 0) {
-          setcheck(colortomove);
-        }
+      
 
 
 
@@ -530,8 +535,8 @@ console.log(findprotection(
 
   return (
     <>
-    <div className="grid w-[300px] lg:h-screen lg:w-screen md:h-screen md:w-screen grid-cols-8 grid-rows-8">
-      <div class="grid col-start-1 col-span-4  grid-cols-8 grid-rows-8 auto-rows-fr">
+<div className="grid grid-cols-4 ">
+      <div class="grid  w-auto h-auto lg:h-[600px] lg:w-[600px]  lg:col-start-1 lg:col-span-2   grid-cols-8 grid-rows-8 md:col-start-1 md:col-span-2 auto-rows-fr col-span-full m-auto">
         {chessboard.map((each, index) => {
           let i = index + 1;
 
@@ -638,11 +643,6 @@ console.log(findprotection(
 
       </div>
       
-      </div>
-
-
-
-
 
 
 
@@ -659,6 +659,11 @@ console.log(findprotection(
 
 </div>
 </div> */}
+      </div>
+
+
+
+  
 
 
 
