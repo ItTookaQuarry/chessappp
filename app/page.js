@@ -664,8 +664,10 @@ setchessboardbefore([...chessboard])
                   <Dropdown
                     color={colortomove}
                     onklikfunct={changingtoanotherpiece}
-                  />
-                )}
+                  /> 
+               
+               
+               )} 
               </div>
             );
         })}
