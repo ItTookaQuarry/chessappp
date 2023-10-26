@@ -680,17 +680,24 @@ setchessboardbefore([...chessboard])
 
       <div className="grid gap-10 m-auto col-span-full lg:col-span-2 ">
         <br></br>
-<div  className="flex  ">{deadblackpieces.map((each)=>{
+<div  className="flex  ">{deadblackpieces.map((each,index)=>{
   const Deadblackicon= findcorrecticon("black",each,"verysmall")
-  return (<div className="h-[60px]  border-solid border-2 border-indigo-600 grid">
+  return (<div
+    key={index
+    }
+  
+  className="h-[60px]  border-solid border-2 border-indigo-600 grid">
    <div className="h-[40px] w-[40px] m-auto rounded"> {Deadblackicon} </div>
     </div>)
 })}</div>
 
 <div className="flex">
-{deadwhitepieces.map((each)=>{ 
+{deadwhitepieces.map((each,index)=>{ 
   const Deadwhiteicon= findcorrecticon("white",each,"verysmall")
-  return (<div className="h-[60px]  border-solid border-2 border-indigo-600 grid">
+  return (<div 
+  key={index
+  }
+  className="h-[60px]  border-solid border-2 border-indigo-600 grid">
   <div className="h-[40px] w-[40px] m-auto rounded"> {Deadwhiteicon} </div>
    </div>)
 })}
