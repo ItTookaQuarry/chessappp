@@ -215,8 +215,9 @@ export default function Home() {
     ]
   );
 
-  // const [chessboardbefore,setchessboardbefore]= React.useState([...chessboard])
-  // const 
+  const [chessboardbefore,setchessboardbefore]= React.useState([...chessboard])
+  const [deadwhitepieces,setdeadwhitepieces]= React.useState([1,2,3])
+  const [deadblackpieces,setdeadblackpieces]= React.useState([1,2,3])
   React.useEffect(
     () => {
       if (moveshistory.length === 0) {
@@ -256,7 +257,7 @@ console.log(findprotection(
 ))
 
 
-        if (movesforking.table.length !== 0) {
+        if (movesforking.table.length === 0) {
           setcheck(colortomove);
         }
 
@@ -529,7 +530,8 @@ console.log(findprotection(
 
   return (
     <>
-      <div class="grid h-[500px] w-[450px] lg:h-[600px] lg:w-[600px] grid-cols-8 grid-rows-8 auto-rows-fr">
+    <div className="grid w-[300px] lg:h-screen lg:w-screen md:h-screen md:w-screen grid-cols-8 grid-rows-8">
+      <div class="grid col-start-1 col-span-4  grid-cols-8 grid-rows-8 auto-rows-fr">
         {chessboard.map((each, index) => {
           let i = index + 1;
 
@@ -605,6 +607,7 @@ console.log(findprotection(
           } else
             return (
               <div
+              key={index}
                 onClick={() => {
                   if (changing?.bull !== true) {
                     movepiece(index);
@@ -628,9 +631,43 @@ console.log(findprotection(
               </div>
             );
         })}
-        {check && <div>{`${check} is in check`}</div>}
-        {gameover && <div>{"Koniec gry"}</div>}
+
+
+
+
+
       </div>
+      
+      </div>
+
+
+
+
+
+
+
+      {/* <div className="grid-cols-4 ">
+<div className="grid col-span-full" >{deadblackpieces.map((each)=>{
+  return (<><div>{each}</div> <br></br></>)
+})}</div>
+<div>
+{deadwhitepieces.map((each)=>{
+  return (<><div>{each}</div> <br></br></>)
+})}
+
+
+
+</div>
+</div> */}
+
+
+
+
+
+
+
+{check && <div>{`${check} is in check`}</div>}
+        {gameover && <div>{"Koniec gry"}</div>}
     </>
   );
 }

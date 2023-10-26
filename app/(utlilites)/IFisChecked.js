@@ -202,11 +202,13 @@ if(color==="black"&&chessboard[staticchessboard.indexOf(tab[field0]+ (field1-1))
     }
   }
 
+
+
   return {ischecked:tabtoreturn,movestoprotect: tabofmovesbetweentoreturn.map((each)=>{
     return each.map((el)=>{
 
  const toreturn = el.field=== undefined ?  chessboard[el] : chessboard[el.field]
-
+console.log(toreturn)
 
  
       return toreturn
