@@ -102,8 +102,6 @@ export default function Home() {
   }
 
   function changingtoanotherpiece(piece) {
-  
-
     let newboard = [...changing.board];
     newboard[changing.to] = {
       ...newboard[changing.to],
@@ -148,76 +146,77 @@ export default function Home() {
   const [castling, setcastling] = React.useState([false]);
 
   const [chessboard, setchessboard] = React.useState([
-    { name: [A, 8], takenby: ["black", "Rook"],move:0 },
-      { name: [B, 8], takenby: ["black", "Knight"] },
-      { name: [C, 8], takenby: ["black", "Bishop"] },
-      { name: [D, 8], takenby: ["black", "Queen"] },
-      { name: [E, 8], takenby: ["black", "King"],move:0 },
-      { name: [F, 8], takenby: ["black", "Bishop"] },
-      { name: [G, 8], takenby: ["black", "Knight"] },
-      { name: [H, 8], takenby: ["black", "Rook"],move:0 },
-      { name: [A, 7], takenby: ["black", "Pawn"],move:0 },
-      { name: [B, 7], takenby: ["black", "Pawn"],move:0 },
-      { name: [C, 7], takenby: ["black", "Pawn"],move:0 },
-      { name: [D, 7], takenby: ["black", "Pawn"],move:0 },
-      { name: [E, 7], takenby: ["black", "Pawn"],move:0 },
-      { name: [F, 7], takenby: ["black", "Pawn"],move:0 },
-      { name: [G, 7], takenby: ["black", "Pawn"],move:0 },
-      { name: [H, 7], takenby: ["black", "Pawn"],move:0 },
-      { name: [A, 6], takenby: false},
-      { name: [B, 6], takenby: false },
-      { name: [C, 6], takenby: false },
-      { name: [D, 6], takenby: false },
-      { name: [E, 6], takenby: false },
-      { name: [F, 6], takenby: false },
-      { name: [G, 6], takenby: false },
-      { name: [H, 6], takenby: false },
-      { name: [A, 5], takenby: false },
-      { name: [B, 5], takenby: false },
-      { name: [C, 5], takenby: false },
-      { name: [D, 5], takenby: false },
-      { name: [E, 5], takenby: false },
-      { name: [F, 5], takenby: false },
-      { name: [G, 5], takenby: false },
-      { name: [H, 5], takenby: false },
-      { name: [A, 4], takenby: false },
-      { name: [B, 4], takenby: false },
-      { name: [C, 4], takenby: false },
-      { name: [D, 4], takenby: false },
-      { name: [E, 4], takenby: false },
-      { name: [F, 4], takenby: false },
-      { name: [G, 4], takenby: false },
-      { name: [H, 4], takenby: false },
-      { name: [A, 3], takenby: false },
-      { name: [B, 3], takenby: false },
-      { name: [C, 3], takenby: false },
-      { name: [D, 3], takenby: false },
-      { name: [E, 3], takenby: false },
-      { name: [F, 3], takenby: false },
-      { name: [G, 3], takenby: false },
-      { name: [H, 3], takenby: false },
-      { name: [A, 2], takenby: ["white", "Pawn"],move:0 },
-      { name: [B, 2], takenby: ["white", "Pawn"],move:0 },
-      { name: [C, 2], takenby: ["white", "Pawn"],move:0 },
-      { name: [D, 2], takenby: ["white", "Pawn"],move:0 },
-      { name: [E, 2], takenby: ["white", "Pawn"],move:0 },
-      { name: [F, 2], takenby: ["white", "Pawn"],move:0},
-      { name: [G, 2], takenby: ["white", "Pawn"],move:0 },
-      { name: [H, 2], takenby: ["white", "Pawn"],move:0 },
-      { name: [A, 1], takenby: ["white", "Rook"],move:0 },
-      { name: [B, 1], takenby: ["white", "Knight"] },
-      { name: [C, 1], takenby: ["white", "Bishop"] },
-      { name: [D, 1], takenby: ["white", "Queen"] },
-      { name: [E, 1], takenby: ["white", "King"],move:0 },
-      { name: [F, 1], takenby: ["white", "Bishop"] },
-      { name: [G, 1], takenby: ["white", "Knight"] },
-      { name: [H, 1], takenby: ["white", "Rook"],move:0 },
-    ]
-  );
+    { name: [A, 8], takenby: ["black", "Rook"], move: 0 },
+    { name: [B, 8], takenby: ["black", "Knight"] },
+    { name: [C, 8], takenby: ["black", "Bishop"] },
+    { name: [D, 8], takenby: ["black", "Queen"] },
+    { name: [E, 8], takenby: ["black", "King"], move: 0 },
+    { name: [F, 8], takenby: ["black", "Bishop"] },
+    { name: [G, 8], takenby: ["black", "Knight"] },
+    { name: [H, 8], takenby: ["black", "Rook"], move: 0 },
+    { name: [A, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [B, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [C, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [D, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [E, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [F, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [G, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [H, 7], takenby: ["black", "Pawn"], move: 0 },
+    { name: [A, 6], takenby: false },
+    { name: [B, 6], takenby: false },
+    { name: [C, 6], takenby: false },
+    { name: [D, 6], takenby: false },
+    { name: [E, 6], takenby: false },
+    { name: [F, 6], takenby: false },
+    { name: [G, 6], takenby: false },
+    { name: [H, 6], takenby: false },
+    { name: [A, 5], takenby: false },
+    { name: [B, 5], takenby: false },
+    { name: [C, 5], takenby: false },
+    { name: [D, 5], takenby: false },
+    { name: [E, 5], takenby: false },
+    { name: [F, 5], takenby: false },
+    { name: [G, 5], takenby: false },
+    { name: [H, 5], takenby: false },
+    { name: [A, 4], takenby: false },
+    { name: [B, 4], takenby: false },
+    { name: [C, 4], takenby: false },
+    { name: [D, 4], takenby: false },
+    { name: [E, 4], takenby: false },
+    { name: [F, 4], takenby: false },
+    { name: [G, 4], takenby: false },
+    { name: [H, 4], takenby: false },
+    { name: [A, 3], takenby: false },
+    { name: [B, 3], takenby: false },
+    { name: [C, 3], takenby: false },
+    { name: [D, 3], takenby: false },
+    { name: [E, 3], takenby: false },
+    { name: [F, 3], takenby: false },
+    { name: [G, 3], takenby: false },
+    { name: [H, 3], takenby: false },
+    { name: [A, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [B, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [C, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [D, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [E, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [F, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [G, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [H, 2], takenby: ["white", "Pawn"], move: 0 },
+    { name: [A, 1], takenby: ["white", "Rook"], move: 0 },
+    { name: [B, 1], takenby: ["white", "Knight"] },
+    { name: [C, 1], takenby: ["white", "Bishop"] },
+    { name: [D, 1], takenby: ["white", "Queen"] },
+    { name: [E, 1], takenby: ["white", "King"], move: 0 },
+    { name: [F, 1], takenby: ["white", "Bishop"] },
+    { name: [G, 1], takenby: ["white", "Knight"] },
+    { name: [H, 1], takenby: ["white", "Rook"], move: 0 },
+  ]);
 
-  const [chessboardbefore,setchessboardbefore]= React.useState([...chessboard])
-  const [deadwhitepieces,setdeadwhitepieces]= React.useState([])
-  const [deadblackpieces,setdeadblackpieces]= React.useState([])
+  const [chessboardbefore, setchessboardbefore] = React.useState([
+    ...chessboard,
+  ]);
+  const [deadwhitepieces, setdeadwhitepieces] = React.useState([]);
+  const [deadblackpieces, setdeadblackpieces] = React.useState([]);
   React.useEffect(
     () => {
       if (moveshistory.length === 0) {
@@ -232,38 +231,29 @@ export default function Home() {
 
       const field1 = chessboard[indexofkingtocheck].name[1];
 
+      ///Function to display all dead pieces
+      chessboard.map((each, index) => {
+        if (
+          colortomove === "black" &&
+          chessboard[index]?.takenby[0] === "white" &&
+          chessboardbefore[index]?.takenby[0] === "black"
+        ) {
+          setdeadblackpieces((prev) => {
+            return [...prev, chessboardbefore[index].takenby[1]];
+          });
+        }
+        if (
+          colortomove === "white" &&
+          chessboard[index]?.takenby[0] === "black" &&
+          chessboardbefore[index]?.takenby[0] === "white"
+        ) {
+          setdeadwhitepieces((prev) => {
+            return [...prev, chessboardbefore[index].takenby[1]];
+          });
+        }
+      });
 
-
-///Function to display all dead pieces
-      chessboard.map((each,index)=>{
-
-if(colortomove==="black"&&
-chessboard[index]?.takenby[0]==="white"&&
-chessboardbefore[index]?.takenby[0]==="black"){
-  setdeadblackpieces((prev)=>{
-    return [...prev,chessboardbefore[index].takenby[1]]
-  })
-}
-if(colortomove==="white"&&
-chessboard[index]?.takenby[0]==="black"&&
-chessboardbefore[index]?.takenby[0]==="white"){
-  setdeadwhitepieces((prev)=>{
-    return [...prev,chessboardbefore[index].takenby[1]]
-  })
-}
-
-      
-      
-      
-      
-      })
-
-
-setchessboardbefore([...chessboard])
-
-
-
-
+      setchessboardbefore([...chessboard]);
 
       const checkifkingisincheck = checkifkingischecked(
         colortomove,
@@ -271,15 +261,6 @@ setchessboardbefore([...chessboard])
         field1,
         chessboard
       );
-
-
-
-
-
-
-
-
-
 
       if (checkifkingisincheck.ischecked.length >= 1) {
         setcheck(colortomove);
@@ -291,13 +272,6 @@ setchessboardbefore([...chessboard])
           chessboard,
           passingbeating
         );
-
-
-      
-
-
-
-
 
         if (movesforking.table.length === 0) {
           const protections = findprotection(
@@ -401,10 +375,6 @@ setchessboardbefore([...chessboard])
 
     return;
   }
-
-
-
-
 
   function movepiece(indexwhereismoving) {
     if (indexwhereismoving === piecethatismoving) {
@@ -565,164 +535,153 @@ setchessboardbefore([...chessboard])
 
   let fromwhitetoblack = true;
   let color;
-
+const classnamechessboard= colortomove === "black" ? "grid grid-cols-4 rotate-180" : "grid grid-cols-4 " 
   return (
     <>
-<div className="grid grid-cols-4 ">
-      <div class="grid border-solid border-2 border-indigo-600 w-auto h-auto lg:h-[600px] lg:w-[600px] rounded lg:col-start-1 lg:col-span-2   grid-cols-8 grid-rows-8 md:col-start-1 md:col-span-2 auto-rows-fr col-span-full m-auto">
-        {chessboard.map((each, index) => {
-          let i = index + 1;
+      <div className={classnamechessboard}>
+        <div class="grid border-solid border-2 border-indigo-600 w-auto h-auto lg:h-[600px] lg:w-[600px] rounded lg:col-start-1 lg:col-span-2   grid-cols-8 grid-rows-8 md:col-start-1 md:col-span-2 auto-rows-fr col-span-full m-auto">
+          {chessboard.map((each, index) => {
+            let i = index + 1;
 
-          if (fromwhitetoblack) {
-            color = i % 2 == 0 ? "black" : "#f3e5ab";
-          }
+            if (fromwhitetoblack) {
+              color = i % 2 == 0 ? "black" : "#f3e5ab";
+            }
 
-          if (!fromwhitetoblack) {
-            color = i % 2 == 0 ? "#f3e5ab" : "black ";
-          }
+            if (!fromwhitetoblack) {
+              color = i % 2 == 0 ? "#f3e5ab" : "black ";
+            }
 
-          if (i % 8 == 0) {
-            fromwhitetoblack = !fromwhitetoblack;
-          }
-          const Icon = each.takenby
-            ? findcorrecticon(
-                each.takenby[0],
-                each.takenby[1],
-                index === piecethatismoving
-              )
-            : false;
+            if (i % 8 == 0) {
+              fromwhitetoblack = !fromwhitetoblack;
+            }
+            const Icon = each.takenby
+              ? findcorrecticon(
+                  each.takenby[0],
+                  each.takenby[1],
+                  index === piecethatismoving,
+                  colortomove
+                )
+              : false;
 
-          if (Playercanmovethere?.includes(index)) {
-            color = "red";
-          }
+            if (Playercanmovethere?.includes(index)) {
+              color = "red";
+            }
 
-          if (castling.includes(index)) {
-            color = "red";
-          }
-          if (
-            !Playercanmovethere?.includes(index) &&
-            index !== piecethatismoving
-          ) {
-            return (
-              <div
-                key={index}
-                style={{
-                  height: "100%",
-                  width: "100%",
-                  backgroundColor: color,
-                  display: "grid",
-                  border: "0.5px solid black",
-                }}
-                onClick={() => {
-                  if (castling.includes(index)) {
-                    castle(index);
-                  }
-                  return null;
-                }}
-              >
-                {Icon && (
-                  <div
-                    onClick={() => {
-                      if (changing?.bull !== true) {
-                        findmoves(
-                          each.takenby[0],
-                          each.takenby[1],
-                          each.name[0],
-                          each.name[1],
-                          chessboard,
-                          index
-                        );
-                      }
-                    }}
-                    style={{ margin: "auto" }}
-                  >
+            if (castling.includes(index)) {
+              color = "red";
+            }
+            if (
+              !Playercanmovethere?.includes(index) &&
+              index !== piecethatismoving
+            ) {
+              return (
+                <div
+                  key={index}
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                    backgroundColor: color,
+                    display: "grid",
+                    border: "0.5px solid black",
+                  }}
+                  onClick={() => {
+                    if (castling.includes(index)) {
+                      castle(index);
+                    }
+                    return null;
+                  }}
+                >
+                  {Icon && (
+                    <div
+                      onClick={() => {
+                        if (changing?.bull !== true) {
+                          findmoves(
+                            each.takenby[0],
+                            each.takenby[1],
+                            each.name[0],
+                            each.name[1],
+                            chessboard,
+                            index
+                          );
+                        }
+                      }}
+                      style={{ margin: "auto" }}
+                    >
+                      {" "}
+                      {Icon}{" "}
+                    </div>
+                  )}
+                </div>
+              );
+            } else
+              return (
+                <div
+                  key={index}
+                  onClick={() => {
+                    if (changing?.bull !== true) {
+                      movepiece(index);
+                    }
+                  }}
+                  style={{
+                    border: "0.5px solid black",
+                    height: "100%",
+                    width: "100%",
+                    backgroundColor: color,
+                    display: "grid",
+                  }}
+                >
+                  {Icon && <div style={{ margin: "auto" }}> {Icon} </div>}
+                  {changing.bull && (
+                    <Dropdown
+                      color={colortomove}
+                      onklikfunct={changingtoanotherpiece}
+                    />
+                  )}
+                </div>
+              );
+          })}
+        </div>
+
+        <div className="grid gap-10 m-auto col-span-full lg:col-span-2 ">
+          <br></br>
+          <div className="flex  ">
+            {deadblackpieces.map((each, index) => {
+              const Deadblackicon = findcorrecticon("black", each, "verysmall");
+              return (
+                <div
+                  key={index}
+                  className="h-[60px]  border-solid border-2 border-indigo-600 grid"
+                >
+                  <div className="h-[40px] w-[40px] m-auto rounded">
                     {" "}
-                    {Icon}{" "}
+                    {Deadblackicon}{" "}
                   </div>
-                )}
-              </div>
-            );
-          } else
-            return (
-              <div
-              key={index}
-                onClick={() => {
-                  if (changing?.bull !== true) {
-                    movepiece(index);
-                  }
-                }}
-                style={{
-                  border: "0.5px solid black",
-                  height: "100%",
-                  width: "100%",
-                  backgroundColor: color,
-                  display: "grid",
-                }}
-              >
-                {Icon && <div style={{ margin: "auto" }}> {Icon} </div>}
-                {changing.bull && (
-                  <Dropdown
-                    color={colortomove}
-                    onklikfunct={changingtoanotherpiece}
-                  /> 
-               
-               
-               )} 
-              </div>
-            );
-        })}
+                </div>
+              );
+            })}
+          </div>
 
-
-
-
-
-      </div>
-      
-
-
-      <div className="grid gap-10 m-auto col-span-full lg:col-span-2 ">
-        <br></br>
-<div  className="flex  ">{deadblackpieces.map((each,index)=>{
-  const Deadblackicon= findcorrecticon("black",each,"verysmall")
-  return (<div
-    key={index
-    }
-  
-  className="h-[60px]  border-solid border-2 border-indigo-600 grid">
-   <div className="h-[40px] w-[40px] m-auto rounded"> {Deadblackicon} </div>
-    </div>)
-})}</div>
-
-<div className="flex">
-{deadwhitepieces.map((each,index)=>{ 
-  const Deadwhiteicon= findcorrecticon("white",each,"verysmall")
-  return (<div 
-  key={index
-  }
-  className="h-[60px]  border-solid border-2 border-indigo-600 grid">
-  <div className="h-[40px] w-[40px] m-auto rounded"> {Deadwhiteicon} </div>
-   </div>)
-})}
-
-
-
-</div>
-</div>
+          <div className="flex">
+            {deadwhitepieces.map((each, index) => {
+              const Deadwhiteicon = findcorrecticon("white", each, "verysmall");
+              return (
+                <div
+                  key={index}
+                  className="h-[60px]  border-solid border-2 border-indigo-600 grid"
+                >
+                  <div className="h-[40px] w-[40px] m-auto rounded">
+                    {" "}
+                    {Deadwhiteicon}{" "}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
-
-
-  
-
-
-
-
-
-
-
-{check && <div>{`${check} is in check`}</div>}
-        {gameover && <div>{"Koniec gry"}</div>}
+      {check && <div>{`${check} is in check`}</div>}
+      {gameover && <div>{"Koniec gry"}</div>}
     </>
   );
 }
-

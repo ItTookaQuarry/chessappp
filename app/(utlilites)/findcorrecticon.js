@@ -7,7 +7,7 @@ import {
   FaChessRook,
 } from "react-icons/fa";
 
-export function findcorrecticon(color, piece, bull) {
+export function findcorrecticon(color, piece, bull,colortomove) {
 //// Function to find correct icon of piece located on the field///
 
 
@@ -21,9 +21,11 @@ export function findcorrecticon(color, piece, bull) {
     iconcolor = "red";
   }
 
+  const classname= colortomove==="black" ? "rotate-180 hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer" : "hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer"
+
   if (piece === "Pawn") {
     const icontoreturn = (
-      <FaChessPawn color={iconcolor} size={size} style={style}  className="hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer"/>
+      <FaChessPawn color={iconcolor} size={size} style={style}  className={classname}/>
     );
 
     return icontoreturn;
@@ -31,27 +33,27 @@ export function findcorrecticon(color, piece, bull) {
 
   if (piece === "Rook") {
     const icontoreturn = (
-      <FaChessRook color={iconcolor} size={size} style={style} className="hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer"/>
+      <FaChessRook color={iconcolor} size={size} style={style} className={classname}/>
     );
 
     return icontoreturn;
   }
   if (piece === "Bishop") {
     const icontoreturn = ( 
-      <FaChessBishop color={iconcolor} size={size} style={style}  className="hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer" />
+      <FaChessBishop color={iconcolor} size={size} style={style}  className={classname} />
     );
 
     return icontoreturn;
   }
   if (piece === "Knight") {
     const icontoreturn = (
-      <FaChessKnight color={iconcolor} size={size} style={style}   className="hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer" />
+      <FaChessKnight color={iconcolor} size={size} style={style}   className={classname} />
     );
     return icontoreturn;
   }
   if (piece === "Queen") {
     const icontoreturn = (
-      <FaChessQueen color={iconcolor} size={size} style={style}  className="hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer" />
+      <FaChessQueen color={iconcolor} size={size} style={style}  className={classname} />
     );
 
     return icontoreturn;
@@ -59,7 +61,7 @@ export function findcorrecticon(color, piece, bull) {
 
   if (piece === "King") {
     const icontoreturn = (
-      <FaChessKing color={iconcolor} size={size} style={style}  className="hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer" />
+      <FaChessKing color={iconcolor} size={size} style={style}  className={classname} />
     );
 
     return icontoreturn;
