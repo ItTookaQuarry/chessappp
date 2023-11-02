@@ -8,7 +8,7 @@ import {  onSnapshot } from "firebase/firestore";
 
 import Image from 'next/image'
 import chessjpg from "/public/chess.jpg"
-export default function page() {
+export default function Page() {
   const [data, setdata] = React.useState([]);
   const [fetch, setfetch] = React.useState(false);
 
