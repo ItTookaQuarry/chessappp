@@ -14,8 +14,10 @@ import Stoperwhite from "../(components)/Stoperwhite";
 import StoperBlack from "../(components)/Stoperblack";
 import { onSnapshot, updateDoc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
-
+import { useRouter } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 export default function Home() {
+
   const [isRunning, setIsRunning] = React.useState("white");
   const [update, setupdate] = React.useState(0);
 
@@ -24,12 +26,34 @@ export default function Home() {
   let pathname = usePathname();
   pathname = pathname.replace("/", "");
 
+const searchParams= useSearchParams()
+const router=useRouter()
+
+
+window.addEventListener('unload',  function () {
+  const docRef = doc(db, "rooms", `${pathname}`);
+  if (searchParams.get("color")==="white") {
+     updateDoc(docRef, {
+      white: false,
+    });
+
+  }
+
+  if (searchParams.get("color")==="black") {
+    updateDoc(docRef, {
+      black: false,
+    });
+  }
+});
+
+
   React.useEffect(() => {
     if (moveshistory.length === 0) {
       return;
     }
 
     const docRef = doc(db, "rooms", `${pathname}`);
+
     const docSnap = updateDoc(docRef, {
       chessboard: chessboard,
       colortomove: colortomove,
@@ -60,17 +84,21 @@ export default function Home() {
     const docRef = doc(db, "rooms", `${pathname}`);
     const docSnap = await getDoc(docRef);
 
+
+    if (!docSnap.exists()) {
+      router.push("/")}
+   else{
     const data = docSnap.data();
-    let alreadyaswhite = false;
-    if (!data.white && !data.black) {
+
+    if (searchParams.get("color")==="white") {
       setYourside("white");
       await updateDoc(docRef, {
         white: true,
       });
-      alreadyaswhite = true;
+ 
     }
 
-    if (Yourside !== "white" && data.white) {
+    if (searchParams.get("color")==="black") {
       setYourside("black");
       await updateDoc(docRef, {
         black: true,
@@ -87,11 +115,10 @@ export default function Home() {
       setdeadwhitepieces(data.deadwhitepieces);
       setpassinginbeating(data.beatinginpassing);
       setpassinginbeating(data.beatinginpassing);
-    }
+    }}
   };
 
-  const [timewhite, settimewhite] = React.useState(600);
-  const [time, blacksetimeblack] = React.useState(600);
+
 
   const [gameover, setgameover] = React.useState(false);
   function castle(index) {

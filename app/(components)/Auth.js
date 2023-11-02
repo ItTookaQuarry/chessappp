@@ -16,11 +16,18 @@ export default function Auth() {
     const signIn = async () => {
     
         try {
-          const result = await signInWithPopup(auth, provider);
-          cookies.set("auth-token", result.user.refreshToken);
           
-          router.push("?logged=true")
+          const result = await signInWithPopup(auth, provider);
+          const user = result.user
+          cookies.set("auth-token", result.user.refreshToken);
+          cookies.set("src",user.photoURL);
+          cookies.set("email",user.email)
+          cookies.set("displayname",user.displayName)
 
+          router.refresh()
+
+ 
+        
         } catch (err) {
           console.log(`There was an error - ${err}`);
           

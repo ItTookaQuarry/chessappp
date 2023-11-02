@@ -10,7 +10,8 @@ import Mainpage from './(components)/Mainpage'
 import Image from 'next/image'
 import chessjpg from "/public/chess.jpg"
 export default  async function() {
-  const user =  auth?.currentUser;
+  
+
   const cookieStore = cookies()
   const authe = cookieStore.get('auth-token')
 

@@ -22,11 +22,14 @@ const signout= signOut(auth).then(() => {
 
 signout
 
+cookies.remove("auth-token");
+cookies.remove("src");
+cookies.remove("email")
+cookies.remove("displayname")
 
 
 
-        cookies.remove("auth-token")
-        router.push("/?logged=false")
+router.refresh()
         };
    
   return (
