@@ -1,8 +1,39 @@
 "use client"
 import React from 'react'
-
+import {v4 as uuidv4} from 'uuid';
 import Link from 'next/link';
-export default function Mainpage() {
+
+import Cookies, { Cookie } from "universal-cookie";
+
+export default function Mainpage(props) {
+
+
+
+  const cookies = new Cookies();
+
+
+  const cookie= cookies.get("temporaryvalue")
+
+React.useEffect(()=>{
+
+
+
+
+  if(!cookie){
+    cookies.set("temporaryvalue",uuidv4())
+  }
+
+
+
+}
+
+
+
+,[])
+
+
+
+
   return (
     <>
   <div className='relative col-span-full lg:p-40 grid backdrop-brightness-50'>
@@ -14,6 +45,7 @@ Graj
     <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
   </svg>
+
 </Link>
 </div>
 </>

@@ -1,10 +1,28 @@
 import React, { useState, useEffect } from 'react';
-
+import Cookies, { Cookie } from "universal-cookie";
+import { Spinner } from "@nextui-org/react";
 function StoperBlack(props) {
+  const cookies = new Cookies();
+  const funct= ()=>{
+cookies.set("blacktime",elapsedTime)
+cookies.set("blackpausedattime", new Date().getTime())
+  }
+  window.onbeforeunload = function() {
+    funct()
+}
 
 
-  const [elapsedTime, setElapsedTime] = React.useState(600);
+const time2= Math.round((new Date().getTime()-cookies.get("blackpausedattime"))/1000)
 
+
+
+const time = cookies.get("blacktime") ? cookies.get("blacktime")-time2  : 600 
+
+
+
+
+
+  const [elapsedTime, setElapsedTime] = React.useState(time);
 const showzero= elapsedTime%60<10 ? "0" : ""
 
   useEffect(() => {
@@ -38,6 +56,7 @@ const showzero= elapsedTime%60<10 ? "0" : ""
   <div className='flex col-span-full m-auto'>
   <div>{(elapsedTime-elapsedTime%60)/60} : </div> 
   <div>{showzero}{elapsedTime%60}</div> </div>
+
     </div>
   );
 }

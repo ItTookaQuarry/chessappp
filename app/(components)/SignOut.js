@@ -4,6 +4,7 @@ import Cookies, { Cookie } from "universal-cookie";
 import { useRouter } from 'next/navigation'
 import { signOut } from "firebase/auth";
 import { auth } from '../(firebase)/firebase';
+import {v4 as uuidv4} from 'uuid';
 const cookies = new Cookies();
 
 
@@ -12,6 +13,7 @@ const cookies = new Cookies();
 
 
 export default function SignOut() {
+  
     const router= useRouter()
     const Signout = async () => {
 const signout= signOut(auth).then(() => {
@@ -26,9 +28,6 @@ cookies.remove("auth-token");
 cookies.remove("src");
 cookies.remove("email")
 cookies.remove("displayname")
-
-
-
 router.refresh()
         };
    

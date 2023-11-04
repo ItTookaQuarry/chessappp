@@ -15,6 +15,7 @@ export default  async function() {
   const cookieStore = cookies()
   const authe = cookieStore.get('auth-token')
 
+
   return (
   <>
 
@@ -22,7 +23,7 @@ export default  async function() {
   {!authe&&<Nawnotlogged /> }
   {authe&&<NawLoggedIn />}
 
-  <Mainpage/>
+  <Mainpage />
   
 
  </>

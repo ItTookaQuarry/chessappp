@@ -6,63 +6,75 @@ import {
   FaChessBishop,
   FaChessRook,
 } from "react-icons/fa";
-
+import {
+  FaRegChessQueen,
+  FaRegChessKnight,
+  FaRegChessKing,
+  FaRegChessPawn,
+  FaRegChessBishop,
+  FaRegChessRook,} from "react-icons/fa6"
 export function findcorrecticon(color, piece, bull,colortomove) {
 //// Function to find correct icon of piece located on the field///
 
 
 
   const style = { margin: "auto" };
-  const size = bull!=="verysmall" ?  "3em": "100%" ;
+ 
 
-  let iconcolor = color !== "black" ? "orange" : "brown";
+  let iconcolor = "black"
 
   if (bull&&bull!=="verysmall") {
     iconcolor = "red";
   }
 
-  const classname= colortomove==="black" ? "rotate-180 hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer" : "hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer"
+  const classname= colortomove==="black" ? "rotate-180 hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer md:text-[45px] lg:text-[50px] text-[35px]" : "hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer text-[45px] lg:text-[50px]"
 
   if (piece === "Pawn") {
-    const icontoreturn = (
-      <FaChessPawn color={iconcolor} size={size} style={style}  className={classname}/>
-    );
+let  icontoreturn = color==="black" ? (
+      <FaChessPawn color={iconcolor}  style={style}  className={classname} />
+    ) : (<FaRegChessPawn   style={style} color={iconcolor}  className={`${classname} `} />) ; 
+
+
+
 
     return icontoreturn;
   }
 
   if (piece === "Rook") {
-    const icontoreturn = (
-      <FaChessRook color={iconcolor} size={size} style={style} className={classname}/>
-    );
+    let  icontoreturn = color==="black" ? (
+      <FaChessRook color={iconcolor}  style={style}  className={classname} />
+    ) : (<FaRegChessRook style={style}  color={iconcolor} className={`${classname}  `} />) ; 
 
     return icontoreturn;
   }
   if (piece === "Bishop") {
-    const icontoreturn = ( 
-      <FaChessBishop color={iconcolor} size={size} style={style}  className={classname} />
-    );
+    let  icontoreturn = color==="black" ? (
+      <FaChessBishop color={iconcolor}  style={style}  className={classname} />
+    ) : (<FaRegChessBishop  style={style}  color={iconcolor}  className={`${classname}  `} />) ; 
+
 
     return icontoreturn;
   }
   if (piece === "Knight") {
-    const icontoreturn = (
-      <FaChessKnight color={iconcolor} size={size} style={style}   className={classname} />
-    );
+    let  icontoreturn = color==="black" ? (
+      <FaChessKnight color={iconcolor} style={style}  className={classname} />
+    ) : (<FaRegChessKnight  style={style} color={iconcolor}  className={`${classname}  `} />) ; 
+
     return icontoreturn;
   }
   if (piece === "Queen") {
-    const icontoreturn = (
-      <FaChessQueen color={iconcolor} size={size} style={style}  className={classname} />
-    );
+    let  icontoreturn = color==="black" ? (
+      <FaChessQueen color={iconcolor}  style={style}  className={classname} />
+    ) : (<FaRegChessQueen  style={style}  color={iconcolor} className={`${classname}  `} />) ; 
+
 
     return icontoreturn;
   }
 
   if (piece === "King") {
-    const icontoreturn = (
-      <FaChessKing color={iconcolor} size={size} style={style}  className={classname} />
-    );
+    let  icontoreturn = color==="black" ? (
+      <FaChessKing color={iconcolor} style={style}  className={classname} />
+    ) : (<FaRegChessKing  style={style}  color={iconcolor}  className={`${classname}  text-black`} />) ; 
 
     return icontoreturn;
   }
