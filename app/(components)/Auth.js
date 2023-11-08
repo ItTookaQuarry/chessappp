@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { auth, provider } from "../(firebase)/firebase";
+import { auth, provider  } from "../(firebase)/firebase";
 import { signInWithPopup } from "firebase/auth";
 import Cookies, { Cookie } from "universal-cookie";
 import { useRouter } from 'next/navigation'
