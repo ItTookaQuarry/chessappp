@@ -55,7 +55,7 @@ const showzero= elapsedTime%60<10 ? "0" : ""
     return () => {
       clearInterval(interval);
     };
-  }, [props.isRunning]);
+  }, [props]);
 
  
   return (

@@ -104,12 +104,14 @@ window.addEventListener("onuload", function(e){
 
   React.useEffect(() => {
     onSnapshot(collection(db, "rooms"), (snapshot) => {
+   // eslint-disable-next-line react-hooks/exhaustive-deps
       setfetch(snapshot);
     });
   }, []);
 
   React.useEffect(() => {
     Datafetching();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetch]);
 
   const [Yourside, setYourside] = React.useState(null);
@@ -213,6 +215,7 @@ window.addEventListener("onuload", function(e){
         gameover: gameover,
       });
     }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameover]);
 
   function castle(index) {
@@ -354,8 +357,10 @@ window.addEventListener("onuload", function(e){
 
   React.useEffect(() => {
     if (gamestarted) {
+
       setIsRunning(colortomove);
     }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [colortomove, gamestarted]);
 
   const [chessboard, setchessboard] = React.useState([
