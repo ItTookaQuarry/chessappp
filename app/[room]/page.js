@@ -18,18 +18,32 @@ import { useSearchParams } from "next/navigation";
 import Cookies, { Cookie } from "universal-cookie";
 import { Spinner } from "@nextui-org/react";
 import Smallicon from "../(components)/Smallicon";
-import { ToastContainer, toast } from "react-toastify";
 import { Button } from "@nextui-org/react";
 import "react-toastify/dist/ReactToastify.css";
-import Link from "next/link";
 import Gameover from "../(components)/Gameover";
-
+import { usePageLeave } from "@reactuses/core";
 export default function Home() {
 
 
 
+ 
+  const isLeft = usePageLeave();
+
+React.useEffect(()=>{
+
+  if(gamestarted&&isLeft){
+    updateDoc(docRef,{
+       left:Yourside
+    })
+  }
+  if(gamestarted&&!isLeft){
+    updateDoc(docRef,{
+       left:false
+    })
+  }
 
 
+},[isLeft])
 
 
 
@@ -983,7 +997,7 @@ window.onpopstate = function () {
         )}
       {  gameover && <Gameover msg={Ifgameisoveer} />}
       </div>
-
+<div>{`${isLeft}`}</div>
     </>
   );
 }
