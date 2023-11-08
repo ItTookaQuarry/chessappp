@@ -45,7 +45,7 @@ export function NavigationEvents() {
     if (ingame && ingame !== url) {
 
         router.push(ingame)
-    }
+    }// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, searchParams]);
 
   return null;

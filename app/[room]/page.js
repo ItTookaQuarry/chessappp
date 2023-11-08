@@ -100,6 +100,7 @@ window.addEventListener("onuload", function(e){
       deadblackpieces: deadblackpieces,
       beatinginpassing: passingbeating,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [update]);
 
   React.useEffect(() => {
@@ -947,7 +948,7 @@ window.addEventListener("onuload", function(e){
             <div className="flex  gap-1">
               {deadblackpieces.map((each, index) => {
                 return (
-                  <div className="bg-white rounded">
+                  <div className="bg-white rounded" key={index}>
                     {" "}
                     <Smallicon piece={each.piece} color={"black"} />{" "}
                   </div>
@@ -958,7 +959,7 @@ window.addEventListener("onuload", function(e){
             <div className="flex">
               {deadwhitepieces.map((each, index) => {
                 return (
-                  <div className="bg-white rounded">
+                  <div className="bg-white rounded" key={index}>
                     {" "}
                     <Smallicon piece={each.piece} color={"white"} />{" "}
                   </div>

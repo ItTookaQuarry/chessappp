@@ -26,7 +26,8 @@ export default function Naw() {
 
   React.useEffect(() => {
     setsrc(cookies.get("src"));
-  }, [cookies]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Navbar>
