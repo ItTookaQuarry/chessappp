@@ -25,6 +25,15 @@ import Link from "next/link";
 import Gameover from "../(components)/Gameover";
 
 export default function Home() {
+
+
+
+
+
+
+
+
+
   const cookies = new Cookies();
 
   const cookie = cookies.get("temporaryvalue");
@@ -47,7 +56,7 @@ export default function Home() {
 
 
 window.addEventListener("beforeunload", function(e){
-  if(!gamestarted){
+  if(gamestarted){
     updateDoc(docRef,{
       gameover:Yourside
     })
@@ -57,23 +66,27 @@ window.addEventListener("beforeunload", function(e){
     navigateback();
   }
 });
-window.addEventListener("onuload", function(e){
-  if(!gamestarted){
-    updateDoc(docRef,{
-      gameover:Yourside
-    })
-  }
+
+
+window.onpopstate = function () {
+  
   if (!gamestarted) {
     navigateback();
   }
-});
+};
+
+
+
+
+
+
 
   function navigateback() {
     if (searchParams.get("color") === "white" && Yourside === "white") {
       updateDoc(docRef, {
         white: false,
-      });
-    }
+      })
+    };
 
     if (searchParams.get("color") === "black" && Yourside === "black") {
       updateDoc(docRef, {

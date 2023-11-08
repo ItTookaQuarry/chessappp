@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import {getAuth,GoogleAuthProvider } from 'firebase/auth'
 import {getFirestore} from "firebase/firestore"
-import { getDatabase } from "firebase/database";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -14,7 +14,6 @@ const firebaseConfig = {
   storageBucket: "szachy-d6a51.appspot.com",
   messagingSenderId: "1062376784445",
   appId: "1:1062376784445:web:56e1dd176252eeae392054",
-  databaseURL: "https://europe-west1.firebasedatabase.app.firebaseio.com",
 };
 
 // Initialize Firebase
@@ -23,4 +22,3 @@ export const auth = getAuth(app)
 export const provider = new GoogleAuthProvider()
 
 export const db= getFirestore(app)
-export const database = getDatabase(app);
