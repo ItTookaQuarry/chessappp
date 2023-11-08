@@ -60,7 +60,7 @@ function Stoperwhite(props) {
     return () => {
       clearInterval(interval);
     };
-  }, [props.isRunning]);
+  }, [props]);
 
   return (
     <div

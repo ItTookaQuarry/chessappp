@@ -963,7 +963,6 @@ window.addEventListener("onuload", function(e){
           </div>
         )}
       {  gameover && <Gameover msg={Ifgameisoveer} />}
-      <div>{`${gamestarted}`}</div>
       </div>
 
     </>

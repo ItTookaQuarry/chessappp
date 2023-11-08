@@ -26,7 +26,7 @@ export default function Naw() {
 
   React.useEffect(() => {
     setsrc(cookies.get("src"));
-  }, []);
+  }, [cookies]);
 
   return (
     <Navbar>
