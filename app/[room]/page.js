@@ -22,12 +22,32 @@ import { Button } from "@nextui-org/react";
 import "react-toastify/dist/ReactToastify.css";
 import Gameover from "../(components)/Gameover";
 import { usePageLeave } from "@reactuses/core";
+import { usePageVisibility } from 'react-page-visibility';
 export default function Home() {
 
 
 
  
-  const isLeft = usePageLeave();
+  const isLeft = usePageLeave(); 
+  const isVisible = usePageVisibility()
+
+  React.useEffect(()=>{
+
+    if(gamestarted&&!isVisible){
+      updateDoc(docRef,{
+         left:Yourside
+      })
+    }
+    if(gamestarted&&isVisible){
+      updateDoc(docRef,{
+         left:false
+      })
+    }
+  
+  
+  },[isVisible])
+
+
 
 React.useEffect(()=>{
 
