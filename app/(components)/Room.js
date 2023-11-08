@@ -21,9 +21,6 @@ if(!data.white&&data.black){
   msg="Graj jako białe"
 }
 
-if(data.white&&data.black){
-  msg="Pełny"
-}
 
 
 

@@ -1,41 +1,22 @@
 "use client"
 import React from 'react'
-import {v4 as uuidv4} from 'uuid';
+
 import Link from 'next/link';
 
-import Cookies, { Cookie } from "universal-cookie";
+
 
 export default function Mainpage(props) {
 
 
 
-  const cookies = new Cookies();
 
-
-  const cookie= cookies.get("temporaryvalue")
-
-React.useEffect(()=>{
-
-
-
-
-  if(!cookie){
-    cookies.set("temporaryvalue",uuidv4())
-  }
-
-
-
-}
-
-
-
-,[])
 
 
 
 
   return (
     <>
+   
   <div className='relative col-span-full lg:p-40 grid backdrop-brightness-50'>
   <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Aplikacja do grania w szachy</h1>
 <strong>

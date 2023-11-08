@@ -19,7 +19,7 @@ export default  async function() {
   return (
   <>
 
-  <Image  src={chessjpg} className='absolute '/>
+  <Image  src={chessjpg} className='h-screen w-screen absolute object-cover'/>
   {!authe&&<Nawnotlogged /> }
   {authe&&<NawLoggedIn />}
 

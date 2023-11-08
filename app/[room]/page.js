@@ -8,7 +8,7 @@ import { movesforrking } from "../(utlilites)/movesforking";
 import Dropdown from "../(utlilites)/Dropdown";
 import { usePathname } from "next/navigation";
 import { db } from "../(firebase)/firebase";
-import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import Stoperwhite from "../(components)/Stoperwhite";
 import StoperBlack from "../(components)/Stoperblack";
 import { onSnapshot, updateDoc } from "firebase/firestore";
@@ -17,10 +17,12 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Cookies, { Cookie } from "universal-cookie";
 import { Spinner } from "@nextui-org/react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Smallicon from "../(components)/Smallicon";
+import { ToastContainer, toast } from "react-toastify";
+import { Button } from "@nextui-org/react";
+import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-
+import Gameover from "../(components)/Gameover";
 
 export default function Home() {
   const cookies = new Cookies();
@@ -31,35 +33,42 @@ export default function Home() {
   const [update, setupdate] = React.useState(0);
   const [gamestarted, setgamestarted] = React.useState(false);
   const [fetch, setfetch] = React.useState(null);
-
+  const ingame = cookies.get("ingame");
   let pathname = usePathname();
   pathname = pathname.replace("/", "");
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const url = `${pathname}?${searchParams}`;
-
-  window.onpopstate = function () {
-    if(!gamestarted){
-      
-    navigateback();}
-else 
-toast.warn("Nie możesz wyjść z pokoju jeśli gra się zaczęła. Musisz się poddać")
-router.replace(url)
-  };
-
-      window.onbeforeunload = function() {
-        if(!gamestarted){
-      navigateback()}
-    }
-    
-    
+  const docRef = doc(db, "rooms", `${pathname}`);
 
 
 
+
+
+window.addEventListener("beforeunload", function(e){
+  if(!gamestarted){
+    updateDoc(docRef,{
+      gameover:Yourside
+    })
+  }
+  if (!gamestarted) {
+  
+    navigateback();
+  }
+});
+window.addEventListener("onuload", function(e){
+  if(!gamestarted){
+    updateDoc(docRef,{
+      gameover:Yourside
+    })
+  }
+  if (!gamestarted) {
+    navigateback();
+  }
+});
 
   function navigateback() {
-    const docRef = doc(db, "rooms", `${pathname}`);
     if (searchParams.get("color") === "white" && Yourside === "white") {
       updateDoc(docRef, {
         white: false,
@@ -93,12 +102,6 @@ router.replace(url)
     });
   }, [update]);
 
-
-
-
-
-
-
   React.useEffect(() => {
     onSnapshot(collection(db, "rooms"), (snapshot) => {
       setfetch(snapshot);
@@ -116,13 +119,47 @@ router.replace(url)
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      router.push("/");
+      if (ingame === url) {
+        cookies.remove("ingame");
+      }
+
+      router.push("rooms");
     } else {
       const data = docSnap.data();
 
+      if (data.gameover||data.gameover===null) {
+
+    
+
+        setgameover(data.gameover);
+        setgamestarted(false);
+        setcolortomove(false);
+        setTimeout(() => {
+          deleteDoc(docRef);
+        }, 2000);
+        cookies.remove("ingame");
+        return;
+      }
+
+      if (
+        searchParams.get("color") === "white" &&
+        data.white &&
+        data.white !== cookie
+      ) {
+        router.push("rooms");
+      }
+
+      if (
+        searchParams.get("color") === "black" &&
+        data.black &&
+        data.black!== cookie
+      ) {
+        router.push("rooms");
+      }
+
       if (
         (searchParams.get("color") === "white" && !data.white) ||
-        data.white === cookie && searchParams.get("color") === "white"
+        (data.white === cookie && searchParams.get("color") === "white")
       ) {
         setYourside("white");
         await updateDoc(docRef, {
@@ -132,7 +169,7 @@ router.replace(url)
 
       if (
         (searchParams.get("color") === "black" && !data.black) ||
-        data.black === cookie && searchParams.get("color") === "black"
+        (data.black === cookie && searchParams.get("color") === "black")
       ) {
         setYourside("black");
         await updateDoc(docRef, {
@@ -140,15 +177,13 @@ router.replace(url)
         });
       }
 
-if(data.black&&data.white){
-  
-  setgamestarted(true)
-}
-
-
-
-
-
+      if (data.black && data.white && !gameover) {
+        cookies.set("ingame", url);
+        updateDoc(docRef,{
+          gamestarted:true
+        })
+        setgamestarted(true);
+      }
 
       if (Array.isArray(data.chessboard)) {
         setchessboard(data.chessboard);
@@ -156,8 +191,13 @@ if(data.black&&data.white){
         setblackkingplace(data.blackkingplaceonchessboard);
         setwhitekingplace(data.whitekingplaceonchessboard);
         setgameover(data.gameover);
-        setdeadblackpieces(data.deadblackpieces);
-        setdeadwhitepieces(data.deadwhitepieces);
+        if (data.deadblackpieces.length > deadblackpieces) {
+          setdeadblackpieces(data.deadblackpieces);
+        }
+
+        if (data.deadwhitepieces > deadwhitepieces) {
+          setdeadwhitepieces(data.deadwhitepieces);
+        }
         setpassinginbeating(data.beatinginpassing);
         setpassinginbeating(data.beatinginpassing);
       }
@@ -165,6 +205,16 @@ if(data.black&&data.white){
   };
 
   const [gameover, setgameover] = React.useState(false);
+
+
+  React.useEffect(() => {
+    if (gameover!==false) {
+      updateDoc(docRef, {
+        gameover: gameover,
+      });
+    }
+  }, [gameover]);
+
   function castle(index) {
     const colorofenemy = colortomove === "white" ? "black" : "white";
 
@@ -302,16 +352,11 @@ if(data.black&&data.white){
   // const [chessboard, setchessboard] = React.useState([
   const [castling, setcastling] = React.useState([false]);
 
-
   React.useEffect(() => {
-    if(gamestarted){
-    setIsRunning(colortomove)}
-    }, [colortomove,gamestarted]);
-  
-
-
-
-
+    if (gamestarted) {
+      setIsRunning(colortomove);
+    }
+  }, [colortomove, gamestarted]);
 
   const [chessboard, setchessboard] = React.useState([
     { name: [A, 8], takenby: ["black", "Rook"], move: 0 },
@@ -451,7 +496,7 @@ if(data.black&&data.white){
           /// If king doessnt have any moves we check his protections///
 
           if (protections === false) {
-            setgameover(true);
+            setgameover(Yourside);
           }
         }
       }
@@ -465,7 +510,12 @@ if(data.black&&data.white){
   function findmoves(color, piece, fieldname0, fieldname1, chessboard, index) {
     //This function is finding moves for piece that is chosen by player//
 
-    if (color !== colortomove || colortomove !== Yourside || !gamestarted) {
+    if (
+      color !== colortomove ||
+      colortomove !== Yourside ||
+      !gamestarted ||
+      gameover
+    ) {
       return;
 
       ///You cannot move if it is not your turn//
@@ -581,7 +631,18 @@ if(data.black&&data.white){
           ...table[indexwhereismoving + 8],
           takenby: false,
         };
-        console.log(table[indexwhereismoving + 8].takenby[1]);
+
+        if (colortomove === "white") {
+          setdeadblackpieces((prev) => {
+            return [...prev, { piece: "Pawn" }];
+          });
+        }
+
+        if (colortomove === "black") {
+          setdeadwhitepieces((prev) => {
+            return [...prev, { piece: "Pawn" }];
+          });
+        }
       }
       ////Beating in passing logic///
 
@@ -608,7 +669,7 @@ if(data.black&&data.white){
       table[piecethatismoving] = { ...temp, takenby: false };
       //// Field from where piece is going and where is going switch places.
       /// but takenby propery in field from where piece is going will always be
-      // false and takenby propery in new field of moving piece will always be that piece.
+      // false and takenby property in new field of moving piece will always be that piece.
 
       let kingtomove =
         colortomove === "white"
@@ -708,13 +769,15 @@ if(data.black&&data.white){
 
   let fromwhitetoblack = true;
   let color;
+  let Ifgameisoveer =
+    gameover === "white"
+      ? "Koniec gry wygrały Czarne"
+      : "Koniec gry wygrały Białe";
   const classnamechessboard =
     Yourside === "black"
-      ? "grid border-solid border-2 border-indigo-600 w-auto h-auto lg:h-[600px] lg:w-[600px] h-[450px] w-5/6 md:h-[600px] md:w-[600px] rounded lg:col-start-1 lg:col-span-2   grid-cols-8 grid-rows-8 md:col-start-1 md:col-span-2 auto-rows-fr col-span-full m-auto rotate-180"
-      : "grid border-solid border-2 border-indigo-600 w-auto h-auto lg:h-[600px] lg:w-[600px] h-[450px]w-5/6 md:h-[600px] md:w-[600px] rounded lg:col-start-1 lg:col-span-2   grid-cols-8 grid-rows-8 md:col-start-1 md:col-span-2 auto-rows-fr col-span-full m-auto  ";
-  const secondgridclassname =
-
-       "grid gap-10 m-auto col-span-full lg:col-span-2";
+      ? "grid border-solid border-2 border-indigo-600 w-auto h-auto lg:h-[600px] lg:w-[600px] h-[450px] w-5/6 md:h-[450px] md:w-full rounded lg:col-start-1 lg:col-span-2   grid-cols-8 grid-rows-8 md:col-start-1 md:col-span-2 auto-rows-fr col-span-full m-auto rotate-180"
+      : "grid border-solid border-2 border-indigo-600 w-auto h-auto lg:h-[600px] lg:w-[600px] h-[450px] w-5/6 md:h-[450px] md:w-full rounded lg:col-start-1 lg:col-span-2   grid-cols-8 grid-rows-8 md:col-start-1 md:col-span-2 auto-rows-fr col-span-full m-auto  ";
+  const secondgridclassname = "grid gap-10 m-auto col-span-full lg:col-span-2";
   return (
     <>
       <div className="grid grid-cols-4">
@@ -820,76 +883,87 @@ if(data.black&&data.white){
               );
           })}
         </div>
-
-        <div className={secondgridclassname}>
-          {!gamestarted && (
-            <div className="grid">
-              <h1>Oczekiwanie na drugiego gracza</h1> <Spinner />
-            </div>
-            
-          )}
-
-{ gamestarted&& colortomove!==Yourside&&
-            <div className="grid">
-              <h1>Oczekiwanie na Ruch drugiego gracza</h1> <Spinner />
-            </div>
-            
-          }
-          
-{ gamestarted&& colortomove==Yourside&&
-            <div className="grid">
-              <h1>Twój Ruch</h1> 
-            </div>
-            
-          }
+        <div className="lg:hidden md:hidden block">
           <br></br>
-          <div className="flex  ">
-            {deadblackpieces.map((each, index) => {
-              const Deadblackicon = findcorrecticon(
-                "black",
-                each.piece,
-                "verysmall"
-              );
-              return (
-                <div
-                  key={index}
-                  className="h-[60px]  border-solid border-2 border-indigo-600 grid"
-                >
-                  <div className="h-[40px] w-[40px] m-auto rounded">
-                    {" "}
-                    {Deadblackicon}{" "}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div></div>
-          <Stoperwhite setIsRunning={setIsRunning} isRunning={isRunning} gamestarted={moveshistory.length}/>
-          <StoperBlack setIsRunning={setIsRunning} isRunning={isRunning} />
-          <div>{Yourside}</div>
-          <div className="flex">
-            {deadwhitepieces.map((each, index) => {
-              const Deadwhiteicon = findcorrecticon(
-                "white",
-                each.piece,
-                "verysmall"
-              );
-              return (
-                <div
-                  key={index}
-                  className="h-[60px]  border-solid border-2 border-indigo-600 grid"
-                >
-                  <div className="h-[40px] w-[40px] m-auto rounded">
-                    {" "}
-                    {Deadwhiteicon}{" "}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
-        <div className="rotate-180">{cookie}</div>
-<div>{`${gamestarted}`}</div>
+
+        {!gameover && (
+          <div className="grid lg:col-start-3 md:col-start-3 col-span-full lg:row-span-full  m-auto">
+            {!gamestarted && (
+              <div className="grid col-span-full m-auto text-center">
+                <h1>Oczekiwanie na drugiego gracza</h1> <Spinner />
+              </div>
+            )}
+
+            {gamestarted && colortomove !== Yourside && (
+              <div className="grid">
+                Oczekiwanie na ruch przeciwnika
+                <Spinner />
+              </div>
+            )}
+
+            {gamestarted && colortomove == Yourside && (
+              <h1 className="col-span-full m-auto text-center">Twój Ruch</h1>
+            )}
+            <div className="flex gap-10  lg:row-span-full  m-auto   ">
+              <Stoperwhite
+                setIsRunning={setIsRunning}
+                isRunning={isRunning}
+                gamestarted={moveshistory.length}
+                setgameover={setgameover}
+              />
+
+              <StoperBlack
+                setIsRunning={setIsRunning}
+                isRunning={isRunning}
+                setgameover={setgameover}
+              />
+            </div>
+            <br></br>
+
+            {gamestarted && (
+              <Button
+                color="danger"
+                variant="bordered"
+                onClick={() => {
+                  setupdate((prev) => {
+                    return prev + 1;
+                  });
+                  setgameover((prev) => {
+                    return Yourside;
+                  });
+                }}
+              >
+                Poddaj się
+              </Button>
+            )}
+
+            <br></br>
+            <div className="flex  gap-1">
+              {deadblackpieces.map((each, index) => {
+                return (
+                  <div className="bg-white rounded">
+                    {" "}
+                    <Smallicon piece={each.piece} color={"black"} />{" "}
+                  </div>
+                );
+              })}
+            </div>
+            <br></br>
+            <div className="flex">
+              {deadwhitepieces.map((each, index) => {
+                return (
+                  <div className="bg-white rounded">
+                    {" "}
+                    <Smallicon piece={each.piece} color={"white"} />{" "}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      {  gameover && <Gameover msg={Ifgameisoveer} />}
+      <div>{`${gamestarted}`}</div>
       </div>
 
     </>

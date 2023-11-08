@@ -8,15 +8,16 @@ import {  onSnapshot } from "firebase/firestore";
 import Cookies, { Cookie } from "universal-cookie";
 import Image from 'next/image'
 import chessjpg from "/public/chess.jpg"
-
+import { Suspense } from "react";
+import Nawnotlogged from '../(components)/Nawnotlogged'
+import NawLoggedIn from '../(components)/NawLoggedIn'
  export default function Page() {
 
 
   const cookies = new Cookies();
 
+  const authe = cookies.get('auth-token')
 
-  const cookie= cookies.get("temporary")
-  const auth= cookies.get("auth-token")
 
   const [data, setdata] = React.useState([]);
   const [fetch, setfetch] = React.useState(false);
@@ -52,12 +53,19 @@ import chessjpg from "/public/chess.jpg"
 
 
   return (
-
+    <div>
+    {!authe&&<Nawnotlogged /> }
+  {authe&&<NawLoggedIn />}
     <div className="grid h-screen w-screen overflow-x-scroll">
-    <Image src={chessjpg} fill/>
+    
+
+
+    <Image src={chessjpg} className="h-screen w-screen absolute object-cover"/>
   
 
+
+
       <Roomsclient data={data} />
-    </div>
+    </div></div>
   );
 }

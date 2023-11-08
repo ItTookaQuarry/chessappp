@@ -27,7 +27,7 @@ export function findcorrecticon(color, piece, bull,colortomove) {
     iconcolor = "red";
   }
 
-  const classname= colortomove==="black" ? "rotate-180 hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer md:text-[45px] lg:text-[50px] text-[35px]" : "hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer text-[45px] lg:text-[50px]"
+  const classname= colortomove==="black" ? "rotate-180 hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer text-[45px] lg:text-[50px]" : "hover:-translate-y-1 hover:scale-110 duration-300 hover:cursor-pointer text-[45px] lg:text-[50px]"
 
   if (piece === "Pawn") {
 let  icontoreturn = color==="black" ? (

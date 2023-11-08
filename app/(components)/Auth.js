@@ -23,7 +23,6 @@ export default function Auth() {
           cookies.set("src",user.photoURL);
           cookies.set("email",user.email)
           cookies.set("displayname",user.displayName)
-          cookies.remove("temporaryvalue")
           router.refresh()
 
  

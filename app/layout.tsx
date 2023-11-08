@@ -4,12 +4,12 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Providers } from "./providers";
 import { ToastContainer, toast } from "react-toastify";
-import { Link } from "@nextui-org/link";
-import  SignOut  from './(components)/SignOut'
+import { NavigationEvents } from './(components)/navigation-events'
+import { Suspense } from "react";
+
 import { cookies } from 'next/headers'
 import clsx from "clsx";
-import Naw from "./(components)/NawLoggedIn";
-import Nawnotlogged from "./(components)/Nawnotlogged";
+
 export const metadata: Metadata = {
 	title: {
 		default: siteConfig.name,
@@ -28,6 +28,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+	
 	children,
 }: {
 	children: React.ReactNode;
@@ -44,6 +45,9 @@ export default function RootLayout({
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
 				
 							{children}
+							<Suspense fallback={null}>
+          <NavigationEvents />
+        </Suspense>
 					<ToastContainer/>
 				
 						
