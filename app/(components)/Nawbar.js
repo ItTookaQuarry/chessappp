@@ -1,7 +1,7 @@
 
 import React from 'react'
-import NawLoggedIn from './NawLoggedIn.js'
-import Nawnotlogged from './NawNotLogged.js'
+import NawLogged from './NawLoggedIn.js'
+import Nawnotlogged from './Nawnotlogged.js'
 import { cookies } from 'next/headers'
 export default function Nawbar() {
 
@@ -12,6 +12,6 @@ export default function Nawbar() {
 
   return (
     <div >{!authe&&<Nawnotlogged /> }
-  {authe&&<NawLoggedIn />}</div>
+  {authe&&<NawLogged/>}</div>
   )
 }

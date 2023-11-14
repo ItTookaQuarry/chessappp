@@ -26,27 +26,28 @@ export default function User(props) {
       placeholder=""
       className="max-w-xs"
     /> */}
- <Card className="max-w-[600px]">
+ <Card className="lg:max-w-[600px] max-w-[400px]">
       <CardHeader className="flex gap-3">
         <Image
           alt="nextui logo"
-          height={40}
+          height={60}
           radius="sm"
           src={props.data.photoURL}
-          width={40}
+          width={200}
         />
         <div className="flex flex-col">
-          <p className="text-md">{props.data.displayName}</p>
-          <p className="text-small text-default-500">{props.data.user}</p>
+          <h1 className="text-lg">{props.data.displayName}</h1>
+          <p className="text-md text-default-500">{props.data.user}</p>
         </div>
       </CardHeader>
       <Divider/>
       <CardBody>
-      <Textarea
+      {/* <Textarea
       label="Description"
       placeholder="Enter your description"
       className="max-w-xs"
-    />
+    /> */}
+    <p>{props.data.discription}</p>
       </CardBody>
       <Divider/>
       <CardFooter>
