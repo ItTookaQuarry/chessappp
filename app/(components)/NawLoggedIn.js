@@ -16,7 +16,7 @@ import SignOut from "./SignOut";
 import { auth } from "../(firebase)/firebase";
 import Cookies, { Cookie } from "universal-cookie";
 import {Spinner} from "@nextui-org/react";
-export default function Naw() {
+export default function Nawlogged() {
   const user = auth.currentUser;
   const cookies = new Cookies();
 
@@ -33,6 +33,9 @@ export default function Naw() {
     <Navbar>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <SignOut />
+      </NavbarContent>
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+    <div>  <Link href="account">Your Account</Link></div> 
       </NavbarContent>
 
       <NavbarContent as="div" justify="end">

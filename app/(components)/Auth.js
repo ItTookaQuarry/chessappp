@@ -5,30 +5,49 @@ import { signInWithPopup } from "firebase/auth";
 import Cookies, { Cookie } from "universal-cookie";
 import { useRouter } from 'next/navigation'
 
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../(firebase)/firebase";
 const cookies = new Cookies();
 
 
 
 
 export default function Auth() {
+
+
+
+
     const router= useRouter()
     
     const signIn = async () => {
     
         try {
-          
+ 
           const result = await signInWithPopup(auth, provider);
           const user = result.user
+
+          const docRef = doc(db, "users",user.refreshToken);
+          const docSnap = await getDoc(docRef);
+      console.log(docSnap.exists())
+            if(!docSnap.exists()){
+
+              await setDoc(docRef,{
+                user:user.email,
+                photoURL:user.photoURL,
+                displayName:user.displayName,
+                Description:" ",
+              })
+
+            }
+  
           cookies.set("auth-token", result.user.refreshToken);
           cookies.set("src",user.photoURL);
           cookies.set("email",user.email)
           cookies.set("displayname",user.displayName)
           router.refresh()
-
- 
         
         } catch (err) {
-          console.log(`There was an error - ${err}`);
+          
           
         }
       };

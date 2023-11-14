@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { NavigationEvents } from './(components)/navigation-events'
 import { Suspense } from "react";
 
-import { cookies } from 'next/headers'
+import { headers } from 'next/headers';
 import clsx from "clsx";
 
 export const metadata: Metadata = {
@@ -33,6 +33,14 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
+
+	const headersList = headers();
+
+	 const header_url = headersList
+
+	console.log(header_url)
+
+
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head />
@@ -43,7 +51,7 @@ export default function RootLayout({
 				)}
 			>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-				
+			
 							{children}
 							<Suspense fallback={null}>
           <NavigationEvents />

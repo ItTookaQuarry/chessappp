@@ -20,57 +20,87 @@ import { Spinner } from "@nextui-org/react";
 import Smallicon from "../(components)/Smallicon";
 import { Button } from "@nextui-org/react";
 import "react-toastify/dist/ReactToastify.css";
-import Gameover from "../(components)/Gameover";
 import { usePageLeave } from "@reactuses/core";
-import { usePageVisibility } from 'react-page-visibility';
+import Gameover from "../(components)/Gameover";
+import { usePageVisibility } from "react-page-visibility";
 export default function Home() {
+  const [srcandnamewhite, setsrcandnamewhite] = React.useState({
+    name: "Gość",
+    src: "https://icon-library.com/images/user-image-icon/user-image-icon-9.jpg",
+  });
+  const [srcandnameblack, setsrcandnameblack] = React.useState({
+    name: "Gość",
+    src: "https://icon-library.com/images/user-image-icon/user-image-icon-9.jpg",
+  });
+  const [whiteleft, setwhiteleft] = React.useState(null);
+  const [blackleft, setblackleft] = React.useState(null);
 
+  const isLeft = usePageLeave();
+  const isVisible = usePageVisibility();
 
-
- 
-  const isLeft = usePageLeave(); 
-  const isVisible = usePageVisibility()
-
-  React.useEffect(()=>{
-
-    if(gamestarted&&!isVisible){
-      updateDoc(docRef,{
-         left:Yourside
-      })
+  React.useEffect(() => {
+    if (gamestarted && isLeft && Yourside === "black") {
+      updateDoc(docRef, {
+        blackleft: true,
+      });
     }
-    if(gamestarted&&isVisible){
-      updateDoc(docRef,{
-         left:false
-      })
+
+    if (gamestarted && isLeft && Yourside === "white") {
+      updateDoc(docRef, {
+        whiteleft: true,
+      });
     }
-  
-  
-  },[isVisible])
 
+    if (gamestarted && !isLeft && Yourside === "black") {
+      updateDoc(docRef, {
+        blackleft: false,
+      });
+    }
 
+    if (gamestarted && !isLeft && Yourside === "white") {
+      updateDoc(docRef, {
+        whiteleft: false,
+      });
+    }
+  }, [isLeft]);
 
-React.useEffect(()=>{
+  React.useEffect(() => {
+    if (gamestarted && !isVisible && Yourside === "black") {
+      updateDoc(docRef, {
+        blackleft: true,
+      });
+    }
 
-  if(gamestarted&&isLeft){
-    updateDoc(docRef,{
-       left:Yourside
-    })
-  }
-  if(gamestarted&&!isLeft){
-    updateDoc(docRef,{
-       left:false
-    })
-  }
+    if (gamestarted && !isVisible && Yourside === "white") {
+      updateDoc(docRef, {
+        whiteleft: true,
+      });
+    }
 
+    if (gamestarted && isVisible && Yourside === "black") {
+      updateDoc(docRef, {
+        blackleft: false,
+      });
+    }
 
-},[isLeft])
-
-
-
+    if (gamestarted && isVisible && Yourside === "white") {
+      updateDoc(docRef, {
+        whiteleft: false,
+      });
+    }
+  }, [isVisible]);
 
   const cookies = new Cookies();
 
   const cookie = cookies.get("temporaryvalue");
+  const src =
+    cookies.get("src") === undefined
+      ? "https://icon-library.com/images/user-image-icon/user-image-icon-9.jpg"
+      : cookies.get("src");
+  const name =
+    cookies.get("displayname") === undefined
+      ? "Gość"
+      : cookies.get("displayname");
 
   const [isRunning, setIsRunning] = React.useState(null);
   const [update, setupdate] = React.useState(0);
@@ -85,46 +115,30 @@ React.useEffect(()=>{
   const url = `${pathname}?${searchParams}`;
   const docRef = doc(db, "rooms", `${pathname}`);
 
+  window.addEventListener("beforeunload", function (e) {
+    if (!gamestarted) {
+      navigateback();
+    }
+  });
 
-
-
-
-window.addEventListener("beforeunload", function(e){
-  if(gamestarted){
-    updateDoc(docRef,{
-      gameover:Yourside
-    })
-  }
-  if (!gamestarted) {
-  
-    navigateback();
-  }
-});
-
-
-window.onpopstate = function () {
-  
-  if (!gamestarted) {
-    navigateback();
-  }
-};
-
-
-
-
-
-
+  window.onpopstate = function () {
+    if (!gamestarted) {
+      navigateback();
+    }
+  };
 
   function navigateback() {
     if (searchParams.get("color") === "white" && Yourside === "white") {
       updateDoc(docRef, {
         white: false,
-      })
-    };
+        whitesrcandname: { src: "https://icon-library.com/images/user-image-icon/user-image-icon-9.jpg", name: "Gość" },
+      });
+    }
 
     if (searchParams.get("color") === "black" && Yourside === "black") {
       updateDoc(docRef, {
         black: false,
+       blacksrcandname:{src: "https://icon-library.com/images/user-image-icon/user-image-icon-9.jpg", name: "Gość" }
       });
     }
   }
@@ -152,14 +166,15 @@ window.onpopstate = function () {
 
   React.useEffect(() => {
     onSnapshot(collection(db, "rooms"), (snapshot) => {
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+
       setfetch(snapshot);
     });
   }, []);
 
   React.useEffect(() => {
     Datafetching();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetch]);
 
   const [Yourside, setYourside] = React.useState(null);
@@ -177,10 +192,22 @@ window.onpopstate = function () {
     } else {
       const data = docSnap.data();
 
-      if (data.gameover||data.gameover===null) {
+      if (data.blackleft) {
+        setblackleft(true);
+      }
 
-    
+      if (data.whiteleft) {
+        setwhiteleft(true);
+      }
 
+      if (data.blackleft === false) {
+        setblackleft(false);
+      }
+      if (data.whiteleft === false) {
+        setwhiteleft(false);
+      }
+
+      if (data.gameover || data.gameover === null) {
         setgameover(data.gameover);
         setgamestarted(false);
         setcolortomove(false);
@@ -202,7 +229,7 @@ window.onpopstate = function () {
       if (
         searchParams.get("color") === "black" &&
         data.black &&
-        data.black!== cookie
+        data.black !== cookie
       ) {
         router.push("rooms");
       }
@@ -214,6 +241,7 @@ window.onpopstate = function () {
         setYourside("white");
         await updateDoc(docRef, {
           white: cookie,
+          whitesrcandname: { src: src, name: name },
         });
       }
 
@@ -224,18 +252,27 @@ window.onpopstate = function () {
         setYourside("black");
         await updateDoc(docRef, {
           black: cookie,
+          blacksrcandname: { src: src, name: name },
         });
       }
 
       if (data.black && data.white && !gameover) {
         cookies.set("ingame", url);
-        updateDoc(docRef,{
-          gamestarted:true
-        })
+        updateDoc(docRef, {
+          gamestarted: true,
+        });
         setgamestarted(true);
       }
 
-      if (Array.isArray(data.chessboard)) {
+      if (data.blacksrcandname) {
+        setsrcandnameblack(data.blacksrcandname);
+      }
+
+      if (data.whitesrcandname) {
+        setsrcandnamewhite(data.whitesrcandname);
+      }
+
+      if (Array.isArray(data.chessboard) && data.colortomove !== colortomove) {
         setchessboard(data.chessboard);
         setcolortomove(data.colortomove);
         setblackkingplace(data.blackkingplaceonchessboard);
@@ -256,14 +293,13 @@ window.onpopstate = function () {
 
   const [gameover, setgameover] = React.useState(false);
 
-
   React.useEffect(() => {
-    if (gameover!==false) {
+    if (gameover !== false) {
       updateDoc(docRef, {
         gameover: gameover,
       });
     }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameover]);
 
   function castle(index) {
@@ -405,10 +441,9 @@ window.onpopstate = function () {
 
   React.useEffect(() => {
     if (gamestarted) {
-
       setIsRunning(colortomove);
     }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [colortomove, gamestarted]);
 
   const [chessboard, setchessboard] = React.useState([
@@ -477,10 +512,40 @@ window.onpopstate = function () {
     { name: [G, 1], takenby: ["white", "Knight"] },
     { name: [H, 1], takenby: ["white", "Rook"], move: 0 },
   ]);
+  const [historydb, sethistorydb] = React.useState([chessboard]);
+  const [twolastmoves, settwolastmoves] = React.useState();
+  React.useEffect(() => {
+    if (gamestarted) {
+      sethistorydb((prev) => {
+        let table = [];
+
+        for (let i = 0; i < chessboard.length; i++) {
+          if (
+            prev[prev.length - 1][i].takenby === false &&
+            chessboard[i].takenby.length == 2
+          ) {
+            table.push(i);
+          }
+
+          if (
+            prev[prev.length - 1][i].takenby.length == 2 &&
+            chessboard[i].takenby === false
+          ) {
+            table.push(i);
+          }
+        }
+
+        settwolastmoves(table);
+
+        return [...prev, chessboard];
+      });
+    }
+  }, [chessboard]);
 
   const [chessboardbefore, setchessboardbefore] = React.useState([
     ...chessboard,
   ]);
+
   const [deadwhitepieces, setdeadwhitepieces] = React.useState([]);
   const [deadblackpieces, setdeadblackpieces] = React.useState([]);
   React.useEffect(
@@ -819,7 +884,6 @@ window.onpopstate = function () {
 
     return;
   }
-
   let fromwhitetoblack = true;
   let color;
   let Ifgameisoveer =
@@ -833,9 +897,15 @@ window.onpopstate = function () {
   const secondgridclassname = "grid gap-10 m-auto col-span-full lg:col-span-2";
   return (
     <>
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-4 ">
         <div class={classnamechessboard}>
           {chessboard.map((each, index) => {
+
+let border = "1px solid black"
+if(twolastmoves?.length>=2){  border =  twolastmoves.includes(index) ? "3px solid black" :"1px solid black"}
+
+
+
             let i = index + 1;
 
             if (fromwhitetoblack) {
@@ -877,7 +947,7 @@ window.onpopstate = function () {
                     width: "100%",
                     backgroundColor: color,
                     display: "grid",
-                    border: "0.5px solid black",
+                    border: `${border}`,
                   }}
                   onClick={() => {
                     if (castling.includes(index)) {
@@ -918,7 +988,7 @@ window.onpopstate = function () {
                     }
                   }}
                   style={{
-                    border: "0.5px solid black",
+                    border: `${border}`,
                     height: "100%",
                     width: "100%",
                     backgroundColor: color,
@@ -944,7 +1014,11 @@ window.onpopstate = function () {
           <div className="grid lg:col-start-3 md:col-start-3 col-span-full lg:row-span-full  m-auto">
             {!gamestarted && (
               <div className="grid col-span-full m-auto text-center">
-                <h1>Oczekiwanie na drugiego gracza</h1> <Spinner />
+                <h1>Oczekiwanie na drugiego gracza</h1>
+                <div className="flex m-auto gap-10">
+                  <Spinner />
+                </div>
+                <br></br>
               </div>
             )}
 
@@ -964,12 +1038,16 @@ window.onpopstate = function () {
                 isRunning={isRunning}
                 gamestarted={moveshistory.length}
                 setgameover={setgameover}
+                srcandname={srcandnamewhite}
+                whiteleft={whiteleft}
               />
 
               <StoperBlack
                 setIsRunning={setIsRunning}
                 isRunning={isRunning}
                 setgameover={setgameover}
+                srcandname={srcandnameblack}
+                blackleft={blackleft}
               />
             </div>
             <br></br>
@@ -1015,9 +1093,8 @@ window.onpopstate = function () {
             </div>
           </div>
         )}
-      {  gameover && <Gameover msg={Ifgameisoveer} />}
+  {gameover&&<Gameover msg={Ifgameisoveer}/>}
       </div>
-<div>{`${isLeft}`}</div>
     </>
   );
 }

@@ -4,7 +4,7 @@ import Cookies, { Cookie } from "universal-cookie";
 import { useRouter } from 'next/navigation'
 import { signOut } from "firebase/auth";
 import { auth } from '../(firebase)/firebase';
-import {v4 as uuidv4} from 'uuid';
+
 const cookies = new Cookies();
 
 

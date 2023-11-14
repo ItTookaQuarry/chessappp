@@ -2,26 +2,21 @@
 
 import React from 'react'
 
-import { cookies } from 'next/headers'
-import Nawnotlogged from './(components)/Nawnotlogged'
-import NawLoggedIn from './(components)/NawLoggedIn'
-import { auth } from './(firebase)/firebase'
+import Nawbar from "./(components)/Nawbar";
 import Mainpage from './(components)/Mainpage'
 import Image from 'next/image'
 import chessjpg from "/public/chess.jpg"
 export default   function Page() {
   
 
-  const cookieStore = cookies()
-  const authe = cookieStore.get('auth-token')
+
 
 
   return (
   <>
-
+<Nawbar/>
   <Image  src={chessjpg} className='h-screen w-screen absolute object-cover' alt='chess'/>
-  {!authe&&<Nawnotlogged /> }
-  {authe&&<NawLoggedIn />}
+
 
   <Mainpage />
   
