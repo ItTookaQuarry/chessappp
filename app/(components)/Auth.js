@@ -26,12 +26,19 @@ export default function Auth() {
           const result = await signInWithPopup(auth, provider);
           const user = result.user
 
-          const docRef = doc(db, "users",user.refreshToken);
+          const docRef = doc(db, "users",user.email);
           const docSnap = await getDoc(docRef);
-      console.log(docSnap.exists())
+
+
+          cookies.set("auth-token", result.user.refreshToken);
+          cookies.set("src",user.photoURL);
+          cookies.set("email",user.email)
+          cookies.set("displayname",user.displayName)
+          router.refresh()
             if(!docSnap.exists()){
 
               await setDoc(docRef,{
+                history:[],
                 user:user.email,
                 photoURL:user.photoURL,
                 displayName:user.displayName,
@@ -40,11 +47,7 @@ export default function Auth() {
 
             }
   
-          cookies.set("auth-token", result.user.refreshToken);
-          cookies.set("src",user.photoURL);
-          cookies.set("email",user.email)
-          cookies.set("displayname",user.displayName)
-          router.refresh()
+  
         
         } catch (err) {
           

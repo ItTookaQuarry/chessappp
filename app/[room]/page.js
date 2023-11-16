@@ -23,6 +23,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { usePageLeave } from "@reactuses/core";
 import Gameover from "../(components)/Gameover";
 import { usePageVisibility } from "react-page-visibility";
+import { v4 as uuidv4 } from "uuid";
 export default function Home() {
   const [srcandnamewhite, setsrcandnamewhite] = React.useState({
     name: "Gość",
@@ -131,14 +132,20 @@ export default function Home() {
     if (searchParams.get("color") === "white" && Yourside === "white") {
       updateDoc(docRef, {
         white: false,
-        whitesrcandname: { src: "https://icon-library.com/images/user-image-icon/user-image-icon-9.jpg", name: "Gość" },
+        whitesrcandname: {
+          src: "https://icon-library.com/images/user-image-icon/user-image-icon-9.jpg",
+          name: "Gość",
+        },
       });
     }
 
     if (searchParams.get("color") === "black" && Yourside === "black") {
       updateDoc(docRef, {
         black: false,
-       blacksrcandname:{src: "https://icon-library.com/images/user-image-icon/user-image-icon-9.jpg", name: "Gość" }
+        blacksrcandname: {
+          src: "https://icon-library.com/images/user-image-icon/user-image-icon-9.jpg",
+          name: "Gość",
+        },
       });
     }
   }
@@ -295,6 +302,30 @@ export default function Home() {
 
   React.useEffect(() => {
     if (gameover !== false) {
+      const enemyname =
+        Yourside === "white" ? srcandnameblack.name : srcandnamewhite.name;
+      const you =
+        Yourside === "white" ? srcandnamewhite.name : srcandnameblack.name;
+      if (cookies.get("email") !== undefined) {
+        const userRef = doc(db, "histories",uuidv4());
+
+
+const historydbnotnesterarray= historydb.map((each)=>{
+  return {board:each}
+})
+
+
+
+   
+          setDoc(userRef, {
+            history: {history:historydbnotnesterarray},
+      white:srcandnamewhite.name,
+      black:srcandnameblack.name,
+      lost:gameover,
+          });
+        }
+      
+
       updateDoc(docRef, {
         gameover: gameover,
       });
@@ -900,11 +931,12 @@ export default function Home() {
       <div className="grid grid-cols-4 ">
         <div class={classnamechessboard}>
           {chessboard.map((each, index) => {
-
-let border = "1px solid black"
-if(twolastmoves?.length>=2){  border =  twolastmoves.includes(index) ? "3px solid black" :"1px solid black"}
-
-
+            let border = "1px solid black";
+            if (twolastmoves?.length >= 2) {
+              border = twolastmoves.includes(index)
+                ? "3px solid black"
+                : "1px solid black";
+            }
 
             let i = index + 1;
 
@@ -1093,7 +1125,7 @@ if(twolastmoves?.length>=2){  border =  twolastmoves.includes(index) ? "3px soli
             </div>
           </div>
         )}
-  {gameover&&<Gameover msg={Ifgameisoveer}/>}
+        {gameover && <Gameover msg={Ifgameisoveer} />}
       </div>
     </>
   );

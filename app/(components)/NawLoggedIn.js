@@ -10,8 +10,9 @@ import {
   DropdownTrigger,
   Dropdown,
   DropdownMenu,
-  Avatar,
+
 } from "@nextui-org/react";
+import { Avatar } from "@nextui-org/avatar";
 import SignOut from "./SignOut";
 import { auth } from "../(firebase)/firebase";
 import Cookies, { Cookie } from "universal-cookie";
