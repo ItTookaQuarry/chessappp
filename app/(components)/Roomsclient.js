@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Room from "./Room";
 import { v4 as uuidv4 } from "uuid";
-import { collection, addDoc } from "firebase/firestore";
+
 import {
   Dropdown,
   DropdownTrigger,
@@ -11,7 +11,7 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import { FaChessBishop, FaSearch } from "react-icons/fa";
+
 import { useRouter } from "next/navigation";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../(firebase)/firebase";
