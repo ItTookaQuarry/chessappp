@@ -35,7 +35,7 @@ export default function Home() {
   });
   const [whiteleft, setwhiteleft] = React.useState(null);
   const [blackleft, setblackleft] = React.useState(null);
-///12
+
   const isLeft = usePageLeave();
   const isVisible = usePageVisibility();
 
