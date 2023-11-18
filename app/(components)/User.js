@@ -80,8 +80,8 @@ const [indextodisplay,setindextodisplay] = React.useState(null)
       <TableBody>
 {history.map((each,index)=>{
 
-const lost = each.lost === each.black ? each.black : each.white
-let  won = each.lost === each.black ? each.white : each.black
+const lost = each.lost === "black" ? each.black : each.white
+let  won = each.lost === "black" ? each.white : each.black
 let wontoupper = won[0].toUpperCase()+ [...won].splice(1,[...won].length-1).join("")
 let losttoupper= lost[0].toUpperCase()+ [...lost].splice(1,[...lost].length-1).join("")
 

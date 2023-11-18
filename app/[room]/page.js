@@ -159,11 +159,9 @@ export default function Home() {
 
     const docSnap = updateDoc(docRef, {
       chessboard: chessboard,
-      colortomove: colortomove,
       blackkingplaceonchessboard: blackkingplaceonchessboard,
       whitekingplaceonchessboard: whitekingplaceonchessboard,
       colortomove: colortomove,
-      gameover: gameover,
       deadwhitepieces: deadwhitepieces,
       deadblackpieces: deadblackpieces,
       beatinginpassing: passingbeating,
@@ -188,8 +186,9 @@ export default function Home() {
 
   const Datafetching = async () => {
     const docRef = doc(db, "rooms", `${pathname}`);
+    const historiesref= doc(db, "histories", `${pathname}`);
     const docSnap = await getDoc(docRef);
-
+const historiesnap= await getDoc(historiesref)
     if (!docSnap.exists()) {
       if (ingame === url) {
         cookies.remove("ingame");
@@ -215,12 +214,30 @@ export default function Home() {
       }
 
       if (data.gameover || data.gameover === null) {
+
+if(!historiesnap.exists()){
+           const attime = new Date();
+          setDoc(historiesref, {
+            history: { history: data.historydb},
+            white: srcandnamewhite.name,
+            black: srcandnameblack.name,
+            lost: data.gameover,
+            time: {
+              year: attime.getFullYear(),
+              month: attime.getMonth(),
+              day: attime.getDay(),
+              minute: attime.getMinutes(),
+            },
+          });
+        
+        }
+
         setgameover(data.gameover);
         setgamestarted(false);
         setcolortomove(false);
         setTimeout(() => {
           deleteDoc(docRef);
-        }, 2000);
+        }, 1000);
         cookies.remove("ingame");
         return;
       }
@@ -279,12 +296,14 @@ export default function Home() {
         setsrcandnamewhite(data.whitesrcandname);
       }
 
+
+
+
       if (Array.isArray(data.chessboard) && data.colortomove !== colortomove) {
         setchessboard(data.chessboard);
         setcolortomove(data.colortomove);
         setblackkingplace(data.blackkingplaceonchessboard);
         setwhitekingplace(data.whitekingplaceonchessboard);
-        setgameover(data.gameover);
         if (data.deadblackpieces.length > deadblackpieces) {
           setdeadblackpieces(data.deadblackpieces);
         }
@@ -299,39 +318,6 @@ export default function Home() {
   };
 
   const [gameover, setgameover] = React.useState(false);
-
-  React.useEffect(() => {
-    if (gameover !== false) {
-      const enemyname =
-        Yourside === "white" ? srcandnameblack.name : srcandnamewhite.name;
-      const you =
-        Yourside === "white" ? srcandnamewhite.name : srcandnameblack.name;
-      if (cookies.get("email") !== undefined) {
-        const userRef = doc(db, "histories",uuidv4());
-
-
-const historydbnotnesterarray= historydb.map((each)=>{
-  return {board:each}
-})
-
-
-
-   
-          setDoc(userRef, {
-            history: {history:historydbnotnesterarray},
-      white:srcandnamewhite.name,
-      black:srcandnameblack.name,
-      lost:gameover,
-          });
-        }
-      
-
-      updateDoc(docRef, {
-        gameover: gameover,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameover]);
 
   function castle(index) {
     const colorofenemy = colortomove === "white" ? "black" : "white";
@@ -545,6 +531,10 @@ const historydbnotnesterarray= historydb.map((each)=>{
   ]);
   const [historydb, sethistorydb] = React.useState([chessboard]);
   const [twolastmoves, settwolastmoves] = React.useState();
+
+
+
+
   React.useEffect(() => {
     if (gamestarted) {
       sethistorydb((prev) => {
@@ -557,13 +547,6 @@ const historydbnotnesterarray= historydb.map((each)=>{
           ) {
             table.push(i);
           }
-
-          if (
-            prev[prev.length - 1][i].takenby.length == 2 &&
-            chessboard[i].takenby === false
-          ) {
-            table.push(i);
-          }
         }
 
         settwolastmoves(table);
@@ -573,6 +556,8 @@ const historydbnotnesterarray= historydb.map((each)=>{
     }
   }, [chessboard]);
 
+
+
   const [chessboardbefore, setchessboardbefore] = React.useState([
     ...chessboard,
   ]);
@@ -581,7 +566,7 @@ const historydbnotnesterarray= historydb.map((each)=>{
   const [deadblackpieces, setdeadblackpieces] = React.useState([]);
   React.useEffect(
     () => {
-      if (moveshistory.length === 0) {
+      if (moveshistory.length === 0 && Yourside === colortomove) {
         return;
       }
       const indexofkingtocheck =
@@ -644,8 +629,17 @@ const historydbnotnesterarray= historydb.map((each)=>{
           );
           /// If king doessnt have any moves we check his protections///
 
+
+
+          const historydbnotnesterarray = [...historydb,chessboard].map((each) => {
+            return { board: each };
+          });
+
           if (protections === false) {
-            setgameover(Yourside);
+            updateDoc(docRef, {
+              gameover: colortomove,
+              historydb:historydbnotnesterarray,
+            });
           }
         }
       }
@@ -1089,13 +1083,22 @@ const historydbnotnesterarray= historydb.map((each)=>{
                 color="danger"
                 variant="bordered"
                 onClick={() => {
-                  setupdate((prev) => {
-                    return prev + 1;
-                  });
-                  setgameover((prev) => {
-                    return Yourside;
-                  });
-                }}
+                  updateDoc(docRef,{gameover:Yourside,
+                  historydb:
+                  historydb.map((each) => {
+                    return { board: each };
+                  })
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                })
+               }}
               >
                 Poddaj się
               </Button>

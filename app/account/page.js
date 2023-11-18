@@ -27,7 +27,7 @@ export default async function page() {
   let tab = [];
   const querySnapshot = await getDocs(collection(db, "histories"));
   querySnapshot.forEach((doc) => {
-    if(doc.data().white===name||doc.data().black===name){tab.push(doc.data());}
+    if(doc.data()?.white===name||doc.data()?.black===name){tab.push(doc.data());}
  
   });
 
