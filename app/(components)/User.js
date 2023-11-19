@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import { updateDoc } from "firebase/firestore";
 import { db } from "../(firebase)/firebase";
 import { doc } from "firebase/firestore";
