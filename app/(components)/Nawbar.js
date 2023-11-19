@@ -30,7 +30,7 @@ key:data.user});
   const cookieStore = cookies()
 
   const authe = cookieStore.get('auth-token')
-  const email = cookieStore.get('email').value
+  const email = cookieStore.get('email')?.value
 
   return (<div>12</div>
   //   <div >{!authe&&<Nawnotlogged /> }
