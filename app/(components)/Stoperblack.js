@@ -32,6 +32,7 @@ function StoperBlack(props) {
     return () => {
       clearInterval(interval);
     };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.blackleft]);
 
   React.useEffect(() => {
@@ -53,6 +54,7 @@ function StoperBlack(props) {
     return () => {
       clearInterval(interval);
     };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.blackleft]);
 
   const cookies = new Cookies();

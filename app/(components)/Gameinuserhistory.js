@@ -29,6 +29,9 @@ export default function Gameinuserhistory(props) {
 
   React.useEffect(() => {
     setboardtoshow(History[slider].board);
+
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slider]);
 
   return (

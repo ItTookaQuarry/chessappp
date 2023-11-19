@@ -23,6 +23,7 @@ export default function User(props) {
 
   React.useEffect(() => {
     return updateDocc;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSelected]);
 
   return (

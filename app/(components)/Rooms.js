@@ -54,7 +54,7 @@ import chessjpg from "/public/chess.jpg"
     
 
 
-    <Image src={chessjpg} className="h-screen w-screen absolute object-cover"/>
+    <Image src={chessjpg} className="h-screen w-screen absolute object-cover" alt="chessimg"/>
   
 
 

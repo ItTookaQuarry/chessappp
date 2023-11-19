@@ -63,6 +63,7 @@ export default function Home() {
         whiteleft: false,
       });
     }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLeft]);
 
   React.useEffect(() => {
@@ -89,6 +90,7 @@ export default function Home() {
         whiteleft: false,
       });
     }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible]);
 
   const cookies = new Cookies();
@@ -554,6 +556,7 @@ if(!historiesnap.exists()){
         return [...prev, chessboard];
       });
     }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chessboard]);
 
 

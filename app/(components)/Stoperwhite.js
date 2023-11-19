@@ -51,6 +51,7 @@ function Stoperwhite(props) {
     return () => {
       clearInterval(interval);
     };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.whiteleft]);
 
   const cookies = new Cookies();
@@ -118,6 +119,7 @@ function Stoperwhite(props) {
     return () => {
       clearInterval(interval);
     };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   return (
