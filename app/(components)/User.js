@@ -1,6 +1,4 @@
 "use client";
-import React from "react";
-// import {Textarea} from "@nextui-org/react";
 
 import { updateDoc } from "firebase/firestore";
 import { db } from "../(firebase)/firebase";

@@ -7,7 +7,6 @@ export default function Anotheruserhistory(props) {
   const [indextodisplay, setindextodisplay] = React.useState(null);
 
 let history=props.history
-////123
 
   return (
 
