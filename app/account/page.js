@@ -8,58 +8,59 @@ import { redirect } from "next/navigation";
 import User from "../(components)/User";
 
 export default async function page() {
-  const cookieStore = cookies();
+return   <div>12</div>
+//   const cookieStore = cookies();
 
-  const email = cookieStore.get("email")?.value;
+//   const email = cookieStore.get("email")?.value;
 
-  if (email === undefined) {
-    redirect("/");
-  }
+//   if (email === undefined) {
+//     redirect("/");
+//   }
 
-  const name= cookieStore.get("displayname").value
+//   const name= cookieStore.get("displayname").value
 
 
-  const docRef = doc(db, "users", `${email}`);
+//   const docRef = doc(db, "users", `${email}`);
 
-  const docSnap = await getDoc(docRef);
+//   const docSnap = await getDoc(docRef);
 
-  const data = docSnap.data();
-  let tab = [];
-  const querySnapshot = await getDocs(collection(db, "histories"));
-  querySnapshot.forEach((doc) => {
-    if(doc.data().white===name||doc.data().black===name){tab.push(doc.data());}
+//   const data = docSnap.data();
+//   let tab = [];
+//   const querySnapshot = await getDocs(collection(db, "histories"));
+//   querySnapshot.forEach((doc) => {
+//     if(doc.data().white===name||doc.data().black===name){tab.push(doc.data());}
  
-  });
+//   });
 
-  return (
-    <>
-      <Nawbar />
-      <div>
-        <User data={data}
+//   return (
+//     <>
+//       <Nawbar />
+//       <div>
+//         <User data={data}
         
-        cookie={email}
+//         cookie={email}
         
-        history={
+//         history={
 
-tab.map((each)=>{
+// tab.map((each)=>{
 
-    return {...each,
+//     return {...each,
     
-    number:each.time.year+
-    each.time.month+each.time.minute+
-    each.time.day
-    }
+//     number:each.time.year+
+//     each.time.month+each.time.minute+
+//     each.time.day
+//     }
 
 
 
 
-})
+// })
 
-        }
+//         }
           
           
-          />
-      </div>
-    </>
-  );
+//           />
+//       </div>
+//     </>
+  
 }
