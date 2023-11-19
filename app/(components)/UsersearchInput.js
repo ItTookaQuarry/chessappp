@@ -6,7 +6,6 @@ import { FaSearch } from "react-icons/fa";
 import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
 import { Avatar } from '@nextui-org/react';
 import Link from 'next/link';
-import { constants } from 'crypto';
 export default function UsersearchInput(props) {
 
 const data = props.data
