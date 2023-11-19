@@ -18,5 +18,5 @@ await updateDoc(docRef,{
     
 
 
-// revalidatePath('/account') 
+revalidatePath('/account') 
 }
