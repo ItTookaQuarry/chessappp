@@ -33,11 +33,12 @@ key:data.user});
   const email = cookieStore.get('email').value
 
   return (
-    <div >{!authe&&<Nawnotlogged /> }
-  {authe&&<Nawlogged usersdata={datatable} 
+    <div>21</div>
+  //   <div >{!authe&&<Nawnotlogged /> }
+  // {authe&&<Nawlogged usersdata={datatable} 
   
-  cookie={email}
+  // cookie={email}
   
-  />}</div>
+  // />}</div>
   )
 }
