@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import { Input } from "@nextui-org/react";
 import { FaSearch } from "react-icons/fa";
