@@ -40,7 +40,7 @@ const cookie=props.cookie
 
   const menuItems = [
     {name: "Menu Główne",link:"/"},
-    {name: "Pokoje do gry" ,link:"rooms"},
+    {name: "Pokoje do gry" ,link:"/rooms"},
    ];
  
 
@@ -61,13 +61,13 @@ const cookie=props.cookie
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link href="rooms" underline="none">
+          <Link href="/rooms" underline="none">
             Pokoje do gry
           </Link>
         </NavbarItem>
 
         <NavbarItem>
-          <Link href="rooms" underline="none">
+          <Link href="/" underline="none">
             Menu Główne
           </Link>
         </NavbarItem>
@@ -97,7 +97,7 @@ const cookie=props.cookie
         
 
 
-            <DropdownItem key="profile" className="h-14 gap-2" href="account">
+            <DropdownItem key="profile" className="h-14 gap-2" href="/account">
              <div >  Twoje konto</div> 
             </DropdownItem>
         
