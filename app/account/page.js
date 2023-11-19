@@ -16,7 +16,7 @@ export default async function page() {
       redirect("/");
     }
   
-    const name= cookieStore.get("displayname").value
+    const name= cookieStore.get("displayname")?.value
   
   
     const docRef = doc(db, "users", `${email}`);
