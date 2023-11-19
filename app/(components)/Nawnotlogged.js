@@ -38,11 +38,6 @@ export default function Nawnotlogged() {
 
         <NavbarItem>
 
-        <Auth/>
-     
-        </NavbarItem>
-        <NavbarItem>
-
         <Link href="/" underline="none">Menu Głowne</Link>
 
 </NavbarItem>
@@ -76,6 +71,7 @@ export default function Nawnotlogged() {
 
 
 
+      <Auth/>
     </Navbar>
   );
 }
