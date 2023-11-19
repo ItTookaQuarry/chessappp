@@ -9,7 +9,7 @@ import User from "../(components)/User";
 
 export default async function page() {
 return   <div>12</div>
-///231
+
 //   const cookieStore = cookies();
 
 //   const email = cookieStore.get("email")?.value;
