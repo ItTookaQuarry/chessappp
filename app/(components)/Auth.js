@@ -4,7 +4,6 @@ import { auth, provider  } from "../(firebase)/firebase";
 import { signInWithPopup, signInWithRedirect } from "firebase/auth";
 import Cookies, { Cookie } from "universal-cookie";
 import { useRouter } from 'next/navigation'
-import { signInWithRedirect } from "firebase/auth";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../(firebase)/firebase";
 
