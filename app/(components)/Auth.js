@@ -2,9 +2,9 @@
 import React from "react";
 import { auth, provider  } from "../(firebase)/firebase";
 import { signInWithPopup, signInWithRedirect } from "firebase/auth";
-import { getRedirectResult } from "firebase/auth";
 import Cookies, { Cookie } from "universal-cookie";
 import { useRouter } from 'next/navigation'
+import { signInWithRedirect } from "firebase/auth";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../(firebase)/firebase";
 
@@ -12,56 +12,44 @@ const cookies = new Cookies();
 
 
 
-export default function Auth(props) {
 
-  const router= useRouter()
-React.useEffect(async ()=>{
- const result= await getRedirectResult(auth) 
-
-if(result){
-  const user = result.user
-  const docRef = doc(db, "users",user.email);
-  const docSnap = await getDoc(docRef);
-  cookies.set("auth-token", result.user.refreshToken);
-  cookies.set("src",user.photoURL);
-  cookies.set("email",user.email)
-  cookies.set("displayname",user.displayName)
-
-    if(!docSnap.exists()){
-
-      await setDoc(docRef,{
-        history:true,
-        user:user.email,
-        photoURL:user.photoURL,
-        displayName:user.displayName,
-        Description:"",
-      })
-
-    }
-
-
-     router.refresh()
-}
-
-
-
-},[])
+export default function Auth() {
 
 
 
 
-
-
-
-
-
- 
+    const router= useRouter()
+    
     const signIn = async () => {
       
     
         try {
  
-  await signInWithRedirect(auth, provider);  
+          const result = await signInWithPopup(auth, provider);
+          const user = result.user
+
+          const docRef = doc(db, "users",user.email);
+          const docSnap = await getDoc(docRef);
+
+
+          cookies.set("auth-token", result.user.refreshToken);
+          cookies.set("src",user.photoURL);
+          cookies.set("email",user.email)
+          cookies.set("displayname",user.displayName)
+          router.refresh()
+            if(!docSnap.exists()){
+
+              await setDoc(docRef,{
+                history:true,
+                user:user.email,
+                photoURL:user.photoURL,
+                displayName:user.displayName,
+                Description:" ",
+              })
+
+            }
+  
+  
         
         } catch (err) {
           
