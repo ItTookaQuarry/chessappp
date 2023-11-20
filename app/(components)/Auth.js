@@ -34,13 +34,13 @@ if(result){
         user:user.email,
         photoURL:user.photoURL,
         displayName:user.displayName,
-        Description:" ",
+        Description:"",
       })
 
     }
 
 
-    router.refresh()
+     router.refresh()
 }
 
 
