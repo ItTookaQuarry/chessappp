@@ -11,7 +11,7 @@ NavbarMenu,
 } from "@nextui-org/react";
 import {Link} from "@nextui-org/react";
 import Auth from "./Auth";
-export default function Nawnotlogged() {
+export default function Nawnotlogged(props) {
 
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -71,7 +71,7 @@ export default function Nawnotlogged() {
 
 
 
-      <Auth/>
+      <Auth cookie={props.cookie}/>
     </Navbar>
   );
 }
