@@ -10,7 +10,7 @@ const handler = NextAuth({providers: [
       clientSecret: process.env.GOOGLE_CLIENT_SECRET
     })
   ],
-  secret:process.env.JWT_SECRET
+  secret:process.env.NEXTAUTH_SECRET_KEY
   })
 
 
