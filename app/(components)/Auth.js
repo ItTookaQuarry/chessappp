@@ -31,22 +31,22 @@ if(data){
 
 
 
-      const docRef = doc(db, "users",user.email);
+      const docRef = doc(db, "users",user?.email);
       const docSnap = await getDoc(docRef);
 
 
-      cookies.set("auth-token", user.expires);
-      cookies.set("src",user.image);
-      cookies.set("email",user.email)
-      cookies.set("displayname",user.name)
+      cookies.set("auth-token", user?.expires);
+      cookies.set("src",user?.image);
+      cookies.set("email",user?.email)
+      cookies.set("displayname",user?.name)
       router.refresh()
         if(!docSnap.exists()){
 
           await setDoc(docRef,{
             history:true,
-            user:user.email,
-            photoURL:user.photoURL,
-            displayName:user.displayName,
+            user:user?.email,
+            photoURL:user?.photoURL,
+            displayName:user?.displayName,
             Description:" ",
           })
 
@@ -61,7 +61,7 @@ if(data){
   };
 
 
-  sign(data.user)
+  sign(data?.user)
 }
 
 
