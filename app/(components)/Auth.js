@@ -27,7 +27,7 @@ const {status,data} = useSession()
 if(data){
   const sign = async (user) => {
       
-    
+    ///
     try {
 
 
