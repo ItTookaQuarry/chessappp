@@ -8,7 +8,6 @@ import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../(firebase)/firebase";
 import {useSession} from "next-auth/react"
 import { signIn } from "next-auth/react";
-import next from "next";
 const cookies = new Cookies();
 
 
@@ -78,7 +77,7 @@ if(data){
     return (
       <button
         type="button"
-        onClick={()=>{signIn()}}
+        onClick={async ()=>{ await signIn()}}
         className=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
       >
        Zaloguj się przez Google
