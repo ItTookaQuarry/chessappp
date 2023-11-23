@@ -14,4 +14,8 @@ const handler = NextAuth({providers: [
   })
 
 
-  export {handler as GET, handler as POST}
+
+  export default handler
+
+
+  // export {handler as GET, handler as POST}
