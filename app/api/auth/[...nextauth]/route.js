@@ -2,7 +2,7 @@
 
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
-
+import  EmailProvider  from "next-auth/providers/email";
 
 const handler = NextAuth({providers: [
 
