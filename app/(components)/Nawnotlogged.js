@@ -71,7 +71,7 @@ export default function Nawnotlogged(props) {
 
 
 
-      <Auth cookie={props.cookie}/>
+      <Auth cookie={props.cookied}/>
     </Navbar>
   );
 }

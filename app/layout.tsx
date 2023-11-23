@@ -4,10 +4,11 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Providers } from "./providers";
 import { ToastContainer, toast } from "react-toastify";
-import { NavigationEvents } from './(components)/navigation-events'
+import { NavigationEvents } from './(components)/navigation-events';
 import { Suspense } from "react";
 
 import { headers } from 'next/headers';
+import Session from './(components)/SessionProviderss'
 import clsx from "clsx";
 
 export const metadata: Metadata = {
@@ -51,8 +52,8 @@ export default function RootLayout({
 				)}
 			>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-			
-							{children}
+				<Session>{children}</Session>
+							
 							<Suspense fallback={null}>
           <NavigationEvents />
         </Suspense>

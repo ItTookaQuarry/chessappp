@@ -1,45 +1,27 @@
-"use client"
-import React from 'react'
+"use client";
+import React from "react";
 import Cookies, { Cookie } from "universal-cookie";
-import { useRouter } from 'next/navigation'
-import { signOut } from "firebase/auth";
-import { auth } from '../(firebase)/firebase';
-
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 const cookies = new Cookies();
 
-
-
-
-
-
 export default function SignOut() {
-  
-    const router= useRouter()
-    const Signout = async () => {
-const signout= signOut(auth).then(() => {
 
-  // window.location.assign('https://accounts.google.com/Logout');
 
-}).catch((error) => {
-  // An error happened.
-});
-
-signout
-
-cookies.remove("auth-token");
-cookies.remove("src");
-cookies.remove("email")
-cookies.remove("displayname")
-router.refresh()
-        };
-   
   return (
     <button
-    type="button"
-    onClick={Signout}
-    class=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-  >
-Wyloguj się
-  </button>
-  )
+      type="button"
+      onClick={() => {
+        cookies.remove("auth-token");
+        cookies.remove("src");
+        cookies.remove("email");
+        cookies.remove("displayname");
+        signOut()
+      }}
+      class=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+    >
+      Wyloguj się
+    </button>
+  );
 }

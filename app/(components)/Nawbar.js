@@ -5,9 +5,12 @@ import Nawnotlogged from './Nawnotlogged.js'
 import { cookies } from 'next/headers'
 import { db, doc } from "../(firebase)/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { getRedirectResult } from "firebase/auth";
-import { auth } from '../(firebase)/firebase';
 export default async function Nawbar(props) {
+
+
+
+
+
 
   const datatable = [];
   const colRef = collection(db, "users");
