@@ -11,7 +11,12 @@ NavbarMenu,
 } from "@nextui-org/react";
 import {Link} from "@nextui-org/react";
 import Auth from "./Auth";
-export default function Nawnotlogged(props) {
+import { Avatar } from "@nextui-org/avatar";
+import SignOut from "./SignOut";
+import UsersearchInput from "./UsersearchInput";
+import Cookies, { Cookie } from "universal-cookie";
+import { Spinner } from "@nextui-org/react";
+export default function Nawbarclient(props) {
 
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -69,7 +74,7 @@ export default function Nawnotlogged(props) {
 
 
 
-      <Auth cookie={props.cookied}/>
+      <Auth user={props.user}/>
     </Navbar>
   );
 }

@@ -8,8 +8,19 @@ import { NavigationEvents } from './(components)/navigation-events';
 import { Suspense } from "react";
 
 import { headers } from 'next/headers';
-import Session from './(components)/SessionProviderss'
+import {
+	ClerkProvider,
+  } from "@clerk/nextjs";
+   
 import clsx from "clsx";
+
+ 
+
+
+
+
+
+
 
 export const metadata: Metadata = {
 	title: {
@@ -43,6 +54,7 @@ export default function RootLayout({
 
 
 	return (
+		<ClerkProvider>
 		<html lang="en" suppressHydrationWarning>
 			<head />
 			<body
@@ -52,7 +64,8 @@ export default function RootLayout({
 				)}
 			>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-				<Session>{children}</Session>
+
+					{children}
 							
 							<Suspense fallback={null}>
           <NavigationEvents />
@@ -64,5 +77,6 @@ export default function RootLayout({
 				</Providers>
 			</body>
 		</html>
+		</ClerkProvider>
 	);
 }

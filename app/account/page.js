@@ -4,19 +4,23 @@ import { collection } from "firebase/firestore";
 import { db } from "../(firebase)/firebase";
 import Nawbar from "../(components)/Nawbar";
 import { cookies } from "next/headers";
+import { currentUser } from '@clerk/nextjs'
 import { redirect } from "next/navigation";
 import User from "../(components)/User";
 
 export default async function page() {
-    const cookieStore = cookies();
 
-    const email = cookieStore.get("email")?.value;
-  
-    if (email === undefined) {
+
+  const user = await currentUser();
+  const email= user.emailAddresses[0].emailAddress
+  const src= user.imageUrl
+  const  name =`${user.firstName} ${user.lastName}`
+
+
+
+    if (!user) {
       redirect("/");
     }
-  
-    const name= cookieStore.get("displayname")?.value
   
   
     const docRef = doc(db, "users", `${email}`);

@@ -35,7 +35,7 @@ const cookie = props.cookie
       defaultItems={data}
     >
       {(item) =>{    
-const link = cookie === item.key ? "/account" : `/users/${item.key}`
+const link = cookie === item.key ? "/account" : `/user?user=${item.key}`
         return (
           <AutocompleteItem key={item.key} 
 

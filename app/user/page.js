@@ -1,27 +1,34 @@
 import React from "react";
-import Nawbar from "../../(components)/Nawbar";
+import Nawbar from "../(components)/Nawbar";
 import { deleteDoc, doc, getDoc, setDoc, getDocs } from "firebase/firestore";
 import { collection } from "firebase/firestore";
-import { db } from "../../(firebase)/firebase";
-
-import { cookies } from "next/headers";
+import { db } from "../(firebase)/firebase";
+import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import Anotheruserhistory from "../../(components)/Anotheruserhistory";
-import Usercard from "../../(components)/Usercard";
-export default async function page({ params }) {
-  const user = params.user.replace("%40", "@");
+import Anotheruserhistory from "../(components)/Anotheruserhistory";
+import Usercard from "../(components)/Usercard";
+export default async function page({ params,searchParams }) {
 
-  const cookieStore = cookies();
+const user=searchParams.user
+  const loggeduser = await currentUser();
 
-  const email = cookieStore.get("email")?.value;
 
-  if (email === undefined) {
+
+
+  if (!loggeduser||user===undefined) {
     redirect("/");
   }
+
+  // const user = params.user.replace("%40", "@");
+
+
+
+
 
   const docRef = doc(db, "users", `${user}`);
 
   const docSnap = await getDoc(docRef);
+
 let tab=[]
   const data = docSnap.data();
 let name = data.displayName
