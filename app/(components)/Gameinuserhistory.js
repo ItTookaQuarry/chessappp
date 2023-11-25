@@ -127,7 +127,7 @@ export default function Gameinuserhistory(props) {
             }
           })}
         </div>
-        <Slider
+        {History.length>1 && <Slider
           value={slider}
           onChange={(val) => {
             setslider(val);
@@ -138,7 +138,8 @@ export default function Gameinuserhistory(props) {
           step={1}
           maxValue={History.length - 1}
           className=" col-span-full m-auto w-[500px]"
-        />
+        />}
+       
       </div>
     </>
   );
