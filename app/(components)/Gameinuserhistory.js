@@ -127,7 +127,10 @@ export default function Gameinuserhistory(props) {
             }
           })}
         </div>
-        {History.length>1 && <Slider
+        {History.length>1 && 
+        
+        <div className="grid w-screen">
+        <Slider
           value={slider}
           onChange={(val) => {
             setslider(val);
@@ -137,8 +140,11 @@ export default function Gameinuserhistory(props) {
           size="sm"
           step={1}
           maxValue={History.length - 1}
-          className=" col-span-full m-auto w-[500px]"
-        />}
+          className=" col-span-full m-auto lg:w-[500px] w-5/6"
+        />
+        
+        </div>
+        }
        
       </div>
     </>
