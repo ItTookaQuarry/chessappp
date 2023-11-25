@@ -23,8 +23,7 @@ const cookie = props.cookie
 
 
 
- 
-//qwes
+
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
   
