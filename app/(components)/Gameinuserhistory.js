@@ -38,7 +38,7 @@ export default function Gameinuserhistory(props) {
     <>
   
       <div className=" absolute h-screen w-screen bg-black z-20 ">
-      <div className="h-[200]px "></div>
+      <div className="h-[20px] "></div>
         <div
           class={
             "grid border-solid border-2 border-indigo-600 w-[400px] h-auto lg:h-[500px] lg:w-[600px] md:w-[600px] h-[450px] w-5/6 md:h-[450px] md:w-full rounded lg:col-start-1 lg:col-span-2   grid-cols-8 grid-rows-8 md:col-start-1 md:col-span-2 auto-rows-fr  m-auto  "

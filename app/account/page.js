@@ -39,7 +39,8 @@ export default async function page() {
 
   return (
     <>
-      <Nawbar />
+    <div>
+      <Nawbar /></div>
       <div>
         <User data={data}
         
