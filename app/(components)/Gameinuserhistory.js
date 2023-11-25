@@ -32,7 +32,7 @@ export default function Gameinuserhistory(props) {
 
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slider]);
+  }, [slider]);//dsaasd
 
   return (
     <>
