@@ -23,11 +23,13 @@ export default async function page() {
     }
   
   
-    const docRef = doc(db, "users", `${email}`);
+    const docRef = doc(db, "users",`${email}`);
   
     const docSnap = await getDoc(docRef);
   
     const data = docSnap.data();
+
+
     let tab = [];
     const querySnapshot = await getDocs(collection(db, "histories"));
     querySnapshot.forEach((doc) => {

@@ -28,7 +28,7 @@ export default function User(props) {
 
   return (
     <div className="grid gap-10">
-      <Usercard data={props.data} />
+      <Usercard data={props.data} email={props.email} />
 
       {indextodisplay === null && (
         <>
@@ -43,6 +43,7 @@ export default function User(props) {
 
       {indextodisplay !== null && (
         <Gameinuserhistory
+  
           hide={setindextodisplay}
           history={history[indextodisplay]}
         />
