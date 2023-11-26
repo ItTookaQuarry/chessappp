@@ -8,19 +8,21 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { updateDoc } from 'firebase/firestore';
 import { doc } from 'firebase/firestore';
 import { db } from '../(firebase)/firebase';
+import { FaRegWindowClose } from "react-icons/fa";
 export default function Popoverchatcomponent(props) {
 const color = props.color === "white" ? "black" : "white"
 
-const [opened,setopened]=React.useState()
+const [opened,setopened]=React.useState(false)
 
 
 
 
   return (<>
-    <Popover placement='right'
+    <Popover placement='top'
     className="lg:w-[400px] w-[300px]"
     disableAnimation={true}
     onOpenChange={()=>{setopened((prev)=>{!prev})}}
+    isOpen={opened}
     >
       
       <PopoverTrigger >
@@ -52,7 +54,10 @@ const [opened,setopened]=React.useState()
     </div>
       </PopoverTrigger>
       <PopoverContent>
-
+      <Button color="danger" variant="bordered" startContent={<FaRegWindowClose />}>
+     Zamknij
+      </Button>
+      <br></br>
     <div className='grid h-[100px] lg:w-[400px] w-[300px] overflow-y-scroll scroll-auto rotate-180'>
    
 
@@ -101,7 +106,6 @@ const [opened,setopened]=React.useState()
 
      </form>   
       </PopoverContent>
-      <div>`${opened}`12123</div>
     </Popover></>
   )
 }
