@@ -275,8 +275,11 @@ if(!historiesnap.exists()&&data.historydb!==undefined){
       }
 
       if (
-        (searchParams.get("color") === "white" && !data.white) ||
+        searchParams.get("color") === "white" && !data.white && data.black!==
+        cookie ||
         (data.white === cookie && searchParams.get("color") === "white")
+        &&
+        data.white!==cookie
       ) {
         setYourside("white");
         await updateDoc(docRef, {
@@ -286,8 +289,11 @@ if(!historiesnap.exists()&&data.historydb!==undefined){
       }
 
       if (
-        (searchParams.get("color") === "black" && !data.black) ||
+        (searchParams.get("color") === "black" && !data.black) &&
+        data.white!==cookie ||
         (data.black === cookie && searchParams.get("color") === "black")
+        &&
+        data.white!==cookie||data.black===cookie
       ) {
         setYourside("black");
         await updateDoc(docRef, {

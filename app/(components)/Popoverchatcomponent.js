@@ -12,7 +12,6 @@ import { FaRegWindowClose } from "react-icons/fa";
 export default function Popoverchatcomponent(props) {
 const color = props.color === "white" ? "black" : "white"
 
-const [opened,setopened]=React.useState(false)
 
 
 
@@ -21,8 +20,6 @@ const [opened,setopened]=React.useState(false)
     <Popover placement='top'
     className="lg:w-[400px] w-[300px]"
     disableAnimation={true}
-    onOpenChange={()=>{setopened((prev)=>{!prev})}}
-    isOpen={opened}
     >
       
       <PopoverTrigger >
@@ -54,9 +51,7 @@ const [opened,setopened]=React.useState(false)
     </div>
       </PopoverTrigger>
       <PopoverContent>
-      <Button color="danger" variant="bordered" startContent={<FaRegWindowClose />}>
-     Zamknij
-      </Button>
+  
       <br></br>
     <div className='grid h-[100px] lg:w-[400px] w-[300px] overflow-y-scroll scroll-auto rotate-180'>
    
@@ -97,7 +92,8 @@ const [opened,setopened]=React.useState(false)
 
 
 
-<Button color="success" variant="bordered" startContent={< FaLongArrowAltRight/>} type='Submit' name='button' value={props.url}>
+<Button color="success" variant="bordered" startContent={< FaLongArrowAltRight/>} type='Submit' name='button' value={props.url}
+>
 
       </Button>
 
