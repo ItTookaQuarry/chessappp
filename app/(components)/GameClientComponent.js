@@ -40,7 +40,7 @@ export default function Home(props) {
   const [notifications, setnotifications] = React.useState(null);
   const isLeft = usePageLeave();
   const isVisible = usePageVisibility();
-
+  
   React.useEffect(() => {
     if (gamestarted && isLeft && Yourside === "black") {
       updateDoc(docRef, {
@@ -65,7 +65,7 @@ export default function Home(props) {
         whiteleft: false,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLeft]);
 
   React.useEffect(() => {
@@ -92,14 +92,14 @@ export default function Home(props) {
         whiteleft: false,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible]);
 
   const cookies = new Cookies();
 
-  const cookie = props.src;
-  const src = props.src;
-  const name = props.name;
+  const cookie = props.src
+  const src =props.src
+  const name = props.name
 
   const [isRunning, setIsRunning] = React.useState(null);
   const [update, setupdate] = React.useState(0);
@@ -184,9 +184,9 @@ export default function Home(props) {
 
   const Datafetching = async () => {
     const docRef = doc(db, "rooms", `${pathname}`);
-    const historiesref = doc(db, "histories", `${pathname}`);
+    const historiesref= doc(db, "histories", `${pathname}`);
     const docSnap = await getDoc(docRef);
-    const historiesnap = await getDoc(historiesref);
+const historiesnap= await getDoc(historiesref)
     if (!docSnap.exists()) {
       if (ingame === url) {
         cookies.remove("ingame");
@@ -211,28 +211,30 @@ export default function Home(props) {
         setwhiteleft(false);
       }
 
-      if (data?.Chat?.length !== chat.length && data.Chat !== undefined) {
-        if (
-          data?.whitesrcandname?.src === src &&
-          notifications !== data?.notificationswhite
-        ) {
-          setnotifications(data.notificationswhite);
-        }
-        if (
-          data?.blacksrcandname?.src === src &&
-          notifications !== data?.notificationsblack
-        ) {
-          setnotifications(data?.notificationsblack);
-        }
 
-        setchat(data.Chat);
+      if(data?.Chat?.length!==chat.length&&data.Chat!==undefined){
+
+        if(data?.whitesrcandname?.src===src&&notifications!==data?.notificationswhite){
+          setnotifications(data.notificationswhite)
+        }
+        if(data?.blacksrcandname?.src===src&&notifications!==data?.notificationsblack){
+     setnotifications(data?.notificationsblack)
+      }
+     
+        setchat(data.Chat)
       }
 
+
+
+
+
+
       if (data.gameover || data.gameover === null) {
-        if (!historiesnap.exists()) {
-          const attime = new Date();
+
+if(!historiesnap.exists()){
+           const attime = new Date();
           setDoc(historiesref, {
-            history: { history: data.historydb },
+            history: { history: data.historydb},
             white: srcandnamewhite.name,
             black: srcandnameblack.name,
             lost: data.gameover,
@@ -243,6 +245,7 @@ export default function Home(props) {
               minute: attime.getMinutes(),
             },
           });
+        
         }
 
         setgameover(data.gameover);
@@ -309,6 +312,8 @@ export default function Home(props) {
         setsrcandnamewhite(data.whitesrcandname);
       }
 
+
+        
       if (Array.isArray(data.chessboard) && data.colortomove !== colortomove) {
         setchessboard(data.chessboard);
         setcolortomove(data.colortomove);
@@ -542,6 +547,9 @@ export default function Home(props) {
   const [historydb, sethistorydb] = React.useState([chessboard]);
   const [twolastmoves, settwolastmoves] = React.useState();
 
+
+
+
   React.useEffect(() => {
     if (gamestarted) {
       sethistorydb((prev) => {
@@ -561,8 +569,10 @@ export default function Home(props) {
         return [...prev, chessboard];
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chessboard]);
+
+
 
   const [chessboardbefore, setchessboardbefore] = React.useState([
     ...chessboard,
@@ -635,16 +645,16 @@ export default function Home(props) {
           );
           /// If king doessnt have any moves we check his protections///
 
-          const historydbnotnesterarray = [...historydb, chessboard].map(
-            (each) => {
-              return { board: each };
-            }
-          );
+
+
+          const historydbnotnesterarray = [...historydb,chessboard].map((each) => {
+            return { board: each };
+          });
 
           if (protections === false) {
             updateDoc(docRef, {
               gameover: colortomove,
-              historydb: historydbnotnesterarray,
+              historydb:historydbnotnesterarray,
             });
           }
         }
@@ -1044,6 +1054,7 @@ export default function Home(props) {
 
         {!gameover && (
           <div className="grid lg:col-start-3 md:col-start-3 col-span-full lg:row-span-full  m-auto">
+         
             {!gamestarted && (
               <div className="grid col-span-full m-auto text-center">
                 <h1>Oczekiwanie na drugiego gracza</h1>
@@ -1056,31 +1067,16 @@ export default function Home(props) {
 
             {gamestarted && colortomove !== Yourside && (
               <div className="grid">
-                <Popoverchatcomponent
-                  url={pathname}
-                  chat={chat}
-                  color={Yourside}
-                  notifications={notifications}
-                  setnotifications={setnotifications}
-                />
                 Oczekiwanie na ruch przeciwnika
                 <Spinner />
               </div>
             )}
 
             {gamestarted && colortomove == Yourside && (
-              <div className="grid">
-                <Popoverchatcomponent
-                  url={pathname}
-                  chat={chat}
-                  color={Yourside}
-                  notifications={notifications}
-                  setnotifications={setnotifications}
-                />
-                <h1>Twój Ruch</h1>{" "}
-              </div>
+              <h1 className="col-span-full m-auto text-center">Twój Ruch</h1>
             )}
             <div className="flex gap-10  lg:row-span-full  m-auto   ">
+
               <Stoperwhite
                 setIsRunning={setIsRunning}
                 isRunning={isRunning}
@@ -1097,24 +1093,43 @@ export default function Home(props) {
                 srcandname={srcandnameblack}
                 blackleft={blackleft}
               />
+
+
+             
             </div>
             <br></br>
-
+          
             {gamestarted && (
+<div className="flex gap-10 col-span-full m-auto">
+<Popoverchatcomponent url={pathname} chat={chat}
+     
+
+color={Yourside}
+
+  notifications={notifications} setnotifications={setnotifications}/>
               <Button
                 color="danger"
                 variant="bordered"
                 onClick={() => {
-                  updateDoc(docRef, {
-                    gameover: Yourside,
-                    historydb: historydb.map((each) => {
-                      return { board: each };
-                    }),
-                  });
-                }}
+                  updateDoc(docRef,{gameover:Yourside,
+                  historydb:
+                  historydb.map((each) => {
+                    return { board: each };
+                  })
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                })
+               }}
               >
                 Poddaj się
-              </Button>
+              </Button></div>
             )}
 
             <br></br>
