@@ -16,15 +16,15 @@ import { collection } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Cookies, { Cookie } from "universal-cookie";
-import { Spinner } from "@nextui-org/react";
+import { Popover, Spinner } from "@nextui-org/react";
 import Smallicon from "../(components)/Smallicon";
 import { Button } from "@nextui-org/react";
 import "react-toastify/dist/ReactToastify.css";
 import { usePageLeave } from "@reactuses/core";
 import Gameover from "../(components)/Gameover";
 import { usePageVisibility } from "react-page-visibility";
-import { currentUser } from '@clerk/nextjs'
-import { v4 as uuidv4 } from "uuid";
+import Popoverchatcomponent from "./Popoverchatcomponent.js";
+
 export default function Home(props) {
   const [srcandnamewhite, setsrcandnamewhite] = React.useState({
     name: "Gość",
@@ -36,7 +36,8 @@ export default function Home(props) {
   });
   const [whiteleft, setwhiteleft] = React.useState(null);
   const [blackleft, setblackleft] = React.useState(null);
-
+  const [chat, setchat] = React.useState([]);
+  const [notifications, setnotifications] = React.useState(null);
   const isLeft = usePageLeave();
   const isVisible = usePageVisibility();
 
@@ -64,7 +65,7 @@ export default function Home(props) {
         whiteleft: false,
       });
     }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLeft]);
 
   React.useEffect(() => {
@@ -91,14 +92,14 @@ export default function Home(props) {
         whiteleft: false,
       });
     }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible]);
 
   const cookies = new Cookies();
 
-  const cookie = props.src
-  const src =props.src
-  const name = props.name
+  const cookie = props.src;
+  const src = props.src;
+  const name = props.name;
 
   const [isRunning, setIsRunning] = React.useState(null);
   const [update, setupdate] = React.useState(0);
@@ -183,9 +184,9 @@ export default function Home(props) {
 
   const Datafetching = async () => {
     const docRef = doc(db, "rooms", `${pathname}`);
-    const historiesref= doc(db, "histories", `${pathname}`);
+    const historiesref = doc(db, "histories", `${pathname}`);
     const docSnap = await getDoc(docRef);
-const historiesnap= await getDoc(historiesref)
+    const historiesnap = await getDoc(historiesref);
     if (!docSnap.exists()) {
       if (ingame === url) {
         cookies.remove("ingame");
@@ -210,12 +211,28 @@ const historiesnap= await getDoc(historiesref)
         setwhiteleft(false);
       }
 
-      if (data.gameover || data.gameover === null) {
+      if (data?.Chat?.length !== chat.length && data.Chat !== undefined) {
+        if (
+          data?.whitesrcandname?.src === src &&
+          notifications !== data?.notificationswhite
+        ) {
+          setnotifications(data.notificationswhite);
+        }
+        if (
+          data?.blacksrcandname?.src === src &&
+          notifications !== data?.notificationsblack
+        ) {
+          setnotifications(data?.notificationsblack);
+        }
 
-if(!historiesnap.exists()){
-           const attime = new Date();
+        setchat(data.Chat);
+      }
+
+      if (data.gameover || data.gameover === null) {
+        if (!historiesnap.exists()) {
+          const attime = new Date();
           setDoc(historiesref, {
-            history: { history: data.historydb},
+            history: { history: data.historydb },
             white: srcandnamewhite.name,
             black: srcandnameblack.name,
             lost: data.gameover,
@@ -226,7 +243,6 @@ if(!historiesnap.exists()){
               minute: attime.getMinutes(),
             },
           });
-        
         }
 
         setgameover(data.gameover);
@@ -292,9 +308,6 @@ if(!historiesnap.exists()){
       if (data.whitesrcandname) {
         setsrcandnamewhite(data.whitesrcandname);
       }
-
-
-
 
       if (Array.isArray(data.chessboard) && data.colortomove !== colortomove) {
         setchessboard(data.chessboard);
@@ -529,9 +542,6 @@ if(!historiesnap.exists()){
   const [historydb, sethistorydb] = React.useState([chessboard]);
   const [twolastmoves, settwolastmoves] = React.useState();
 
-
-
-
   React.useEffect(() => {
     if (gamestarted) {
       sethistorydb((prev) => {
@@ -551,10 +561,8 @@ if(!historiesnap.exists()){
         return [...prev, chessboard];
       });
     }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chessboard]);
-
-
 
   const [chessboardbefore, setchessboardbefore] = React.useState([
     ...chessboard,
@@ -627,16 +635,16 @@ if(!historiesnap.exists()){
           );
           /// If king doessnt have any moves we check his protections///
 
-
-
-          const historydbnotnesterarray = [...historydb,chessboard].map((each) => {
-            return { board: each };
-          });
+          const historydbnotnesterarray = [...historydb, chessboard].map(
+            (each) => {
+              return { board: each };
+            }
+          );
 
           if (protections === false) {
             updateDoc(docRef, {
               gameover: colortomove,
-              historydb:historydbnotnesterarray,
+              historydb: historydbnotnesterarray,
             });
           }
         }
@@ -1048,13 +1056,29 @@ if(!historiesnap.exists()){
 
             {gamestarted && colortomove !== Yourside && (
               <div className="grid">
+                <Popoverchatcomponent
+                  url={pathname}
+                  chat={chat}
+                  color={Yourside}
+                  notifications={notifications}
+                  setnotifications={setnotifications}
+                />
                 Oczekiwanie na ruch przeciwnika
                 <Spinner />
               </div>
             )}
 
             {gamestarted && colortomove == Yourside && (
-              <h1 className="col-span-full m-auto text-center">Twój Ruch</h1>
+              <div className="grid">
+                <Popoverchatcomponent
+                  url={pathname}
+                  chat={chat}
+                  color={Yourside}
+                  notifications={notifications}
+                  setnotifications={setnotifications}
+                />
+                <h1>Twój Ruch</h1>{" "}
+              </div>
             )}
             <div className="flex gap-10  lg:row-span-full  m-auto   ">
               <Stoperwhite
@@ -1081,22 +1105,13 @@ if(!historiesnap.exists()){
                 color="danger"
                 variant="bordered"
                 onClick={() => {
-                  updateDoc(docRef,{gameover:Yourside,
-                  historydb:
-                  historydb.map((each) => {
-                    return { board: each };
-                  })
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                })
-               }}
+                  updateDoc(docRef, {
+                    gameover: Yourside,
+                    historydb: historydb.map((each) => {
+                      return { board: each };
+                    }),
+                  });
+                }}
               >
                 Poddaj się
               </Button>

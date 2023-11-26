@@ -13,6 +13,7 @@ console.log(`${email}||${src}||${displayName}`)
 
 
    <GameClientComponent email={email} src={src} name={displayName}/>
+
 </>
   )
 }
