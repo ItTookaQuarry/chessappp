@@ -6,8 +6,12 @@ import { usePageLeave } from "@reactuses/core";
 import { usePageVisibility } from "react-page-visibility";
 import { Progress } from '@nextui-org/react';
 import {User, Link} from "@nextui-org/react";
+import { updateDoc } from 'firebase/firestore';
+import { doc } from 'firebase/firestore';
+import { db } from '../(firebase)/firebase';
 function StoperBlack(props) {
 
+  const docRef = doc(db,"rooms",props.url);
 
   const [counting, setCounting] = React.useState(20);
   const [propgressbarvalue,setprogressbarvalue]= React.useState(counting)
@@ -19,7 +23,10 @@ function StoperBlack(props) {
           const toreturn = prev - 1 > 0 ? prev - 1 : 0;
 
           if (toreturn === 0) {
-            props.setgameover("black");
+            updateDoc(docRef,{
+            gameover:"black"
+            }
+            )
           }
           return toreturn;
         });

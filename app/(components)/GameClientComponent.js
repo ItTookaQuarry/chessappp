@@ -231,7 +231,7 @@ const historiesnap= await getDoc(historiesref)
 
       if (data.gameover || data.gameover === null) {
 
-if(!historiesnap.exists()){
+if(!historiesnap.exists()&&data.historydb!==undefined){
            const attime = new Date();
           setDoc(historiesref, {
             history: { history: data.historydb},
@@ -1084,14 +1084,15 @@ if(!historiesnap.exists()){
                 setgameover={setgameover}
                 srcandname={srcandnamewhite}
                 whiteleft={whiteleft}
+                url={pathname}
               />
 
               <StoperBlack
                 setIsRunning={setIsRunning}
                 isRunning={isRunning}
-                setgameover={setgameover}
                 srcandname={srcandnameblack}
                 blackleft={blackleft}
+                url={pathname}
               />
 
 

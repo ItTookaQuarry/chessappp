@@ -14,10 +14,6 @@ const color = props.color === "white" ? "black" : "white"
 const [opened,setopened]=React.useState()
 
 
-// React.useEffect(()=>{
-
-// },[])
-
 
 
   return (<>

@@ -4,9 +4,12 @@ import Cookies, { Cookie } from "universal-cookie";
 
 import { Progress } from "@nextui-org/react";
 import {User, Link} from "@nextui-org/react";
-
+import { updateDoc } from 'firebase/firestore';
+import { doc } from 'firebase/firestore';
+import { db } from '../(firebase)/firebase';
 
 function Stoperwhite(props) {
+  const docRef = doc(db,"rooms",props.url);
   const [counting, setCounting] = React.useState(20);
   const [propgressbarvalue,setprogressbarvalue]= React.useState(100)
   React.useEffect(() => {
@@ -17,7 +20,9 @@ function Stoperwhite(props) {
           const toreturn = prev - 1 > 0 ? prev - 1 : 0;
 
           if (toreturn === 0) {
-            props.setgameover("white");
+            updateDoc(docRef,{
+              gameover:"black"
+              })
           }
           return toreturn;
         });
