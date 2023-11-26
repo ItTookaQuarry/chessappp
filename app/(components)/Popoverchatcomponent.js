@@ -14,9 +14,9 @@ const color = props.color === "white" ? "black" : "white"
 const [opened,setopened]=React.useState()
 
 
-React.useEffect(()=>{
+// React.useEffect(()=>{
 
-},[])
+// },[])
 
 
 
@@ -61,9 +61,9 @@ React.useEffect(()=>{
    
 
     <div className='rotate-180 grid gap-1'>
-{props.chat.map((each)=>{
+{props.chat.map((each,index)=>{
 
-  return (    <div className='flex gap-2'>
+  return (    <div className='flex gap-2' key={index}>
   <Avatar className='h-[50px] w-[50px] ' src={each.image}/>    <Textarea
   isReadOnly
   variant="bordered"
