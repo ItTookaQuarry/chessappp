@@ -48,7 +48,8 @@ let name = data.displayName
 
   return (
     <div className="grid gap-10">
-      <Nawbar />
+    <div>     <Nawbar /></div>
+ 
       <Usercard data={data} withoutform={true} />
 
       {data.history && (
