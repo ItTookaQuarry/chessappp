@@ -15,15 +15,14 @@ const user=searchParams.user
 
 
 
-  if (!loggeduser ||user===undefined) {
+  if (!loggeduser ||user===undefined||
+    loggeduser?.emailAddresses[0]?.emailAddress===user) {
     redirect("/");
   }
 
 const currentuseremail= loggeduser?.emailAddresses[0]?.emailAddress
 
 const currentuserref= doc(db, "users", `${currentuseremail}`);
-
-const currentusersnap= await getDoc(currentuserref)
 
 
 

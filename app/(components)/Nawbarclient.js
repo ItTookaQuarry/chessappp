@@ -22,6 +22,10 @@ import { Avatar } from "@nextui-org/react";
 import UsersearchInput from "./UsersearchInput";
 
 export default function Nawnotlogged(props) {
+
+console.log(props.currentUserdata)
+
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 const data=props.data
   const src = props?.user?.imageUrl;

@@ -12,9 +12,29 @@ export default async function Nawbar(props) {
   const datatable = [];
   const colRef = collection(db, "users");
 
+
+  let currentUserdata=[]
   const docsSnap = await getDocs(colRef);
   docsSnap.forEach((doc) => {
     const data = doc.data();
+if(data.user===
+  user?.emailAddresses[0]?.emailAddress){
+    currentUserdata.push(data)
+
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+
 
     datatable.push({
       label: data.displayName,
@@ -24,7 +44,7 @@ export default async function Nawbar(props) {
     });
   });
 
-  const cookieStore = cookies();
+
 
   if (user) {
     const sign = async (user) => {
@@ -48,5 +68,9 @@ export default async function Nawbar(props) {
   }
 
 
-  return <Nawbarclient user={user}  data={datatable}/>;
+  return <Nawbarclient user={user}  data={datatable}
+
+  
+  currentUserdata={currentUserdata}
+  />;
 }

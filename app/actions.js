@@ -148,7 +148,7 @@ export async function deleteinvite(FormData) {
         },
       });
     
-
+if(invitedData?.notifications?.invitesusers.includes(invites)){
       updateDoc(invitedRef, {
         notifications: {
           invites: invitedData?.notifications?.invites - 1,
@@ -158,7 +158,7 @@ export async function deleteinvite(FormData) {
         },
       });
   
-
+    }
 
     revalidatePath("/user")
 
