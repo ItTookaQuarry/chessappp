@@ -45,7 +45,7 @@ export default function Dropdownclient(props) {
         <DropdownTrigger>
           <div className="grid">
             <div className="col-span-full row-span-full m-auto text-center">
-            <Badge  content="5" color="primary"> <IoMdNotificationsOutline   size={"1.5em"} /></Badge>
+            <Badge  content="5" color="primary"> <IoMdNotificationsOutline   size={"2em"} /></Badge>
             </div>
 
           </div>

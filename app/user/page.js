@@ -15,11 +15,22 @@ const user=searchParams.user
 
 
 
-  if (!loggeduser||user===undefined) {
+  if (!loggeduser ||user===undefined) {
     redirect("/");
   }
 
-  // const user = params.user.replace("%40", "@");
+const currentuseremail= loggeduser?.emailAddresses[0]?.emailAddress
+
+const currentuserref= doc(db, "users", `${currentuseremail}`);
+
+const currentusersnap= await getDoc(currentuserref)
+
+
+
+
+
+
+
 
 
 
@@ -42,7 +53,16 @@ let name = data.displayName
   });
 
 
+  let status = false
+  if( data?.notifications?.invitesusers &&  data?.notifications?.invitesusers.includes(currentuseremail) ){
+  
+  status = "invited"
+  
+  }
+  
+  
 
+  
 
 
 
@@ -50,7 +70,7 @@ let name = data.displayName
     <div className="grid gap-10">
     <div>     <Nawbar /></div>
  
-      <Usercard data={data} withoutform={true} />
+      <Usercard data={data} withoutform={true} user={user} status={status}/>
 
       {data.history && (
         <Anotheruserhistory

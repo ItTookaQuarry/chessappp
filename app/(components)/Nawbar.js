@@ -3,8 +3,8 @@ import { cookies } from "next/headers";
 import { db } from "../(firebase)/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { currentUser } from "@clerk/nextjs";
-import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+
 import Nawbarclient from "./Nawbarclient.js";
 export default async function Nawbar(props) {
   const user = await currentUser();
