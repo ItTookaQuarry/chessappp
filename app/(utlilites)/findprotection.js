@@ -246,7 +246,7 @@ export function findprotection(moves, colortomove, chessboard, kingfield) {
 
 
         if (ifpawncanprotect === true) {
-          console.log("Pawn protects");
+   
           bulll = true;
         }
       }

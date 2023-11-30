@@ -46,11 +46,9 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 
-	const headersList = headers();
 
-	 const header_url = headersList
 
-	console.log(header_url)
+
 
 
 	return (

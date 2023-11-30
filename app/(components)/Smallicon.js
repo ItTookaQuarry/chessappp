@@ -8,7 +8,7 @@ import React from 'react'
 export default function Smallicon(props) {
 
 
-console.log(props.piece)
+
     if(props.piece==="Knight"){
 
         if(props.color==="black"){

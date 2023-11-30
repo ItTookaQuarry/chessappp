@@ -7,7 +7,7 @@ export default async  function page() {
 const email= user.emailAddresses[0].emailAddress
 const src= user.imageUrl
 const  displayName =`${user.firstName} ${user.lastName}`
-console.log(`${email}||${src}||${displayName}`)
+
 
   return (<>
 
