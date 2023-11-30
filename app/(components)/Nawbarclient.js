@@ -14,11 +14,13 @@ import {
   DropdownItem,
 Dropdown
 } from "@nextui-org/react";
+import Dropdownclient from "./Dropdownclient";
 import SignOut from "./SignOut";
 import { Link } from "@nextui-org/react";
 import Auth from "./Auth";
 import { Avatar } from "@nextui-org/react";
 import UsersearchInput from "./UsersearchInput";
+
 export default function Nawnotlogged(props) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 const data=props.data
@@ -64,28 +66,11 @@ const user=props.user
         {props.user === null && <Auth />}
 
         {props.user !== null && (<>
-<Dropdown>
-
-          <DropdownTrigger>
-            <Avatar
-              isBordered
-              as="button"
-              className="transition-transform"
-              color="secondary"
-              size="sm"
-              src={src}
-            />
-          </DropdownTrigger>
-   
-        <DropdownMenu aria-label="Profile Actions" variant="flat">
-          <DropdownItem key="profile" className="h-14 gap-2" href="/account">
-            <div> Twoje konto</div>
-          </DropdownItem>
-
-          <DropdownItem key="Wyloguj" className="h-14 gap-2">
-            <SignOut />
-          </DropdownItem>
-        </DropdownMenu></Dropdown>   
+          <NavbarItem className="flex gap-5">
+<Dropdownclient src={src} />
+<Dropdownclient src={false}  />
+<Dropdownclient src={false} nots={true} />
+</NavbarItem>
               <NavbarItem>
 
               <UsersearchInput  data={data}  cookie={user?.emailAddresses[0]?.emailAddress}/>

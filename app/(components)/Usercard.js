@@ -22,7 +22,7 @@ export default function Usercard(props) {
         />
         <div className="flex flex-col">
           <h1 className="text-lg">{props?.data?.displayName}</h1>
-          <p className="text-md text-default-500">{props?.data?.user}</p>
+          {/* <p className="text-md text-default-500">{props?.data?.user}</p> */}
         </div>
 
         {props.withoutform && (
