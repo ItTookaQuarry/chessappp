@@ -8,11 +8,7 @@ import {
   NavbarMenuToggle,
   NavbarContent,
   NavbarMenuItem,
-  Spinner,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-Dropdown
+
 } from "@nextui-org/react";
 import Dropdownclient from "./Dropdownclient";
 import SignOut from "./SignOut";
@@ -22,8 +18,6 @@ import { Avatar } from "@nextui-org/react";
 import UsersearchInput from "./UsersearchInput";
 
 export default function Nawnotlogged(props) {
-
-console.log(props.currentUserdata)
 
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);

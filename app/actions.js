@@ -70,7 +70,7 @@ export async function addtofriends(FormData) {
   const inviteddatainvites = invitesData?.connections?.invited;
 
   let inviteddatatab;
-  console.log(inviteddatainvites);
+
 
   if (inviteddatainvites === undefined||inviteddatainvites.length<1 ) {
     inviteddatatab = [invited];
