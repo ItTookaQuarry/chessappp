@@ -250,7 +250,7 @@ const friendstoreturn2 = invitesfriends === undefined ? [invited] :
 
             return (
               <DropdownItem className={classs}>
-                <div className="grid gap-2">
+                <div className="grid gap-2" key={each.value}>
                   <div className="flex gap-1 row-start-1 row-span-1">
                     <img
                       src={each.userphoto}
