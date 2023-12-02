@@ -55,13 +55,32 @@ export default async function Nawbar(props) {
   let inviteusersemailsfiltred;
 
   if (inviteusersemails !== undefined) {
-    inviteusersemailsfiltred = datatable.filter((each) => {
+    inviteusersemailsfiltred = [...datatable].filter((each) => {
       return inviteusersemails.includes(each.id);
     });
   }
 
+  const friends = currentUserdata[0]?.friends
+
+let friendstable
+  if (friends !== undefined) {
+    friendstable = [...datatable].filter((each) => {
+    
+
+console.log(friends.includes(each.id))
+
+
+      return friends.includes(each.id);
+    });
+  }
+
+
+
+
+
   return (
     <Nawbarclient
+    friends={friendstable}
       user={user}
       data={datatable}
       invites={inviteusersemailsfiltred}

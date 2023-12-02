@@ -15,7 +15,6 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { IoMdPersonAdd } from "react-icons/io";
 import { HiOutlineUserRemove } from "react-icons/hi";
 
-
 import { Button } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 export default function Dropdownclient(props) {
@@ -25,9 +24,9 @@ export default function Dropdownclient(props) {
 
   const [invitesstate, setinvitesstate] = React.useState(invites);
 
-  async function addinvitestable(index, value,bull) {
+  async function addinvitestable(index, value, bull) {
     setinvitesstate((prev) => {
-      return prev.filter((each,i) => {
+      return prev.filter((each, i) => {
         return i !== index;
       });
     });
@@ -72,25 +71,9 @@ export default function Dropdownclient(props) {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  async function addtofriends(index, value,bull) {
+  async function addtofriends(index, value, bull) {
     setinvitesstate((prev) => {
-      return prev.filter((each,i) => {
+      return prev.filter((each, i) => {
         return i !== index;
       });
     });
@@ -110,18 +93,15 @@ export default function Dropdownclient(props) {
 
     const inviteddatafriends = invitedData?.friends;
 
-const friendstoreturn = inviteddatafriends === undefined ? [invites] :
-[...inviteddatafriends,invites]
+    const friendstoreturn =
+      inviteddatafriends === undefined
+        ? [invites]
+        : [...inviteddatafriends, invites];
 
+    const invitesfriends = invitesData?.friends;
 
-const invitesfriends= invitesData?.friends
-
-
-const friendstoreturn2 = invitesfriends === undefined ? [invited] :
-[...invitesfriends ,invited]
-
-
-
+    const friendstoreturn2 =
+      invitesfriends === undefined ? [invited] : [...invitesfriends, invited];
 
     updateDoc(invitesRef, {
       connections: {
@@ -129,15 +109,8 @@ const friendstoreturn2 = invitesfriends === undefined ? [invited] :
           return each !== invited;
         }),
       },
-      friends:friendstoreturn2
+      friends: friendstoreturn2,
     });
-
-
-
-
-
-
-
 
     if (invitedData?.notifications?.invitesusers.includes(invites)) {
       let inv =
@@ -154,26 +127,10 @@ const friendstoreturn2 = invitesfriends === undefined ? [invited] :
             }
           ),
         },
-        friends:friendstoreturn
+        friends: friendstoreturn,
       });
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   const pathname = usePathname();
 
@@ -248,48 +205,7 @@ const friendstoreturn2 = invitesfriends === undefined ? [invited] :
               ? "h-14 gap-2 w-auto flex invisible"
               : "h-14 gap-2 w-auto flex";
 
-            return (
-              <DropdownItem className={classs}    key={index} >
-                <div className="grid gap-2" >
-                  <div className="flex gap-1 row-start-1 row-span-1">
-                    <img
-                      src={each.userphoto}
-                      className="h-[20px] w-[20px] rounded-full"
-                    />
-                    <p>{each.label} Zaprasza Cię</p>
-                  </div>
-
-                  <div className="flex gap-1 row-start-2 row-span-2">
-                  
-                      <Button
-                      onClick={() => {
-                        addtofriends(index, each.value,true);
-                      }}
-                        type="submit"
-                        name={"sendinv"}
-                        value={each.value}
-                        color="success"
-                        className="h-[20px] w-[10px]"
-                        endContent={<IoMdPersonAdd />}
-                      ></Button>
-                 
-
-                    <Button
-                      onClick={() => {
-                        addinvitestable(index, each.value,false);
-                      }}
-                      name={"sendinv"}
-                      value={each.value}
-                      type="submit"
-                      color="danger"
-                      className="h-[20px] w-[10px]"
-                      endContent={<HiOutlineUserRemove />}
-                    ></Button>
-                    <input className="hidden" name="path" value={pathname} />
-                  </div>
-                </div>
-              </DropdownItem>
-            );
+            return <DropdownItem className={classs} key={index}></DropdownItem>;
           })}
         </DropdownMenu>
       </Dropdown>
@@ -310,17 +226,21 @@ const friendstoreturn2 = invitesfriends === undefined ? [invited] :
           </div>
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions ">
-          <DropdownItem
-            key="profile"
-            className="h-14 gap-2 w-auto"
-            href="/account"
-          >
-            <div> Twoje konto</div>
-          </DropdownItem>
-
-          <DropdownItem key="Wyloguj" className="h-14 gap-2 w-auto">
-            <SignOut />
-          </DropdownItem>
+          {props.friends.map((each,) => {
+            return (
+              <DropdownItem key={index}>
+                <div className="grid gap-2">
+                  <div className="flex gap-1 row-start-1 row-span-1">
+                    <img
+                      src={each.userphoto}
+                      className="h-[20px] w-[20px] rounded-full"
+                    />
+                    <p>{each.label}</p>
+                  </div>
+                </div>
+              </DropdownItem>
+            );
+          })}
         </DropdownMenu>
       </Dropdown>
     );
