@@ -249,8 +249,8 @@ const friendstoreturn2 = invitesfriends === undefined ? [invited] :
               : "h-14 gap-2 w-auto flex";
 
             return (
-              <DropdownItem className={classs}>
-                <div className="grid gap-2" key={each.value}>
+              <DropdownItem className={classs}    key={index} >
+                <div className="grid gap-2" >
                   <div className="flex gap-1 row-start-1 row-span-1">
                     <img
                       src={each.userphoto}
