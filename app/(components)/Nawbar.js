@@ -12,39 +12,23 @@ export default async function Nawbar(props) {
   const datatable = [];
   const colRef = collection(db, "users");
 
-
-  let currentUserdata=[]
+  let currentUserdata = [];
   const docsSnap = await getDocs(colRef);
   docsSnap.forEach((doc) => {
     const data = doc.data();
-if(data.user===
-  user?.emailAddresses[0]?.emailAddress){
-    currentUserdata.push(data)
-
-
-
-
-
-  }
-
-
-
-
-
-
-
-
-
+    const id = doc.id;
+    if (data.user === user?.emailAddresses[0]?.emailAddress) {
+      currentUserdata.push(data);
+    }
 
     datatable.push({
       label: data.displayName,
       value: data.user,
       userphoto: data.photoURL,
       key: data.user,
+      id: id,
     });
   });
-
-
 
   if (user) {
     const sign = async (user) => {
@@ -67,10 +51,21 @@ if(data.user===
     sign(user);
   }
 
+  const inviteusersemails = currentUserdata[0]?.notifications?.invitesusers
+  let inviteusersemailsfiltred;
 
-  return <Nawbarclient user={user}  data={datatable}
+  if (inviteusersemails !== undefined) {
+    inviteusersemailsfiltred = datatable.filter((each) => {
+      return inviteusersemails.includes(each.id);
+    });
+  }
 
-  
-  currentUserdata={currentUserdata}
-  />;
+  return (
+    <Nawbarclient
+      user={user}
+      data={datatable}
+      invites={inviteusersemailsfiltred}
+      nots={currentUserdata[0]?.notifications?.invites}
+    />
+  );
 }

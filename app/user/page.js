@@ -22,7 +22,7 @@ const user=searchParams.user
 
 const currentuseremail= loggeduser?.emailAddresses[0]?.emailAddress
 
-const currentuserref= doc(db, "users", `${currentuseremail}`);
+
 
 
 
@@ -59,7 +59,9 @@ let name = data.displayName
   
   }
   
-  
+  if(data?.friends && data?.friends.includes(currentuseremail) ){
+    status="friends"
+  }
 
   
 

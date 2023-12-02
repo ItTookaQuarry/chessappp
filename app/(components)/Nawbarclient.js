@@ -20,10 +20,21 @@ import UsersearchInput from "./UsersearchInput";
 export default function Nawnotlogged(props) {
 
 
+
+
+
+
+
+
+
+
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 const data=props.data
   const src = props?.user?.imageUrl;
 const user=props.user
+
+const email=user.emailAddresses[0]?.emailAddress
   const menuItems = [
     { name: "Menu Główne", link: "/" },
     { name: "Pokoje do gry", link: "rooms" },
@@ -66,8 +77,13 @@ const user=props.user
         {props.user !== null && (<>
           <NavbarItem className="flex gap-5">
 <Dropdownclient src={src} />
-<Dropdownclient src={false}  />
-<Dropdownclient src={false} nots={true} />
+<Dropdownclient src={false} nots={props.nots} invites={props.invites}
+name={"nots"}
+email={props.user.emailAddresses[0].emailAddress}
+
+
+/>
+<Dropdownclient src={false} name={"msg"} />
 </NavbarItem>
               <NavbarItem>
 

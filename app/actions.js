@@ -149,9 +149,16 @@ export async function deleteinvite(FormData) {
       });
     
 if(invitedData?.notifications?.invitesusers.includes(invites)){
+
+
+let inv = invitedData?.notifications?.invites - 1 <0 ? 0 : 
+invitedData?.notifications?.invites - 1
+
+
+
       updateDoc(invitedRef, {
         notifications: {
-          invites: invitedData?.notifications?.invites - 1,
+          invites: inv,
           invitesusers: invitedData?.notifications?.invitesusers.filter((each)=>{
             return each!== invites
           })
@@ -167,4 +174,5 @@ if(invitedData?.notifications?.invitesusers.includes(invites)){
 
 
   }
+
   
