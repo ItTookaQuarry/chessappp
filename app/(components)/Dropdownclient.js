@@ -226,7 +226,7 @@ export default function Dropdownclient(props) {
           </div>
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions ">
-          {props.friends.map((each,) => {
+          {props.friends.map((each,index) => {
             return (
               <DropdownItem key={index}>
                 <div className="grid gap-2">
