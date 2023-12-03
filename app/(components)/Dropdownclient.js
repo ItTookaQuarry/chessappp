@@ -132,6 +132,27 @@ export default function Dropdownclient(props) {
         friends: friendstoreturn,
       });
     }
+
+    const chatid = [...invited, ...invites].sort((a, b) => {
+
+      const numA = isNaN(a) ? a.charCodeAt(0) : parseFloat(a);
+      const numB = isNaN(b) ? b.charCodeAt(0) : parseFloat(b);
+    
+      return numA - numB;
+    }).join("");
+    
+
+
+
+    const chatsref = doc(db, "chats", chatid);
+    const chatSnap = await getDoc(chatsref);
+
+    if (!chatSnap.exists()) {
+      setDoc(chatsref, {
+        access: [invited, invites],
+        chat: ["First msg"],
+      });
+    }
   }
 
   const pathname = usePathname();
@@ -204,7 +225,7 @@ export default function Dropdownclient(props) {
 
           {invitesstate.map((each, index) => {
             return (
-              <DropdownItem  key={index}>
+              <DropdownItem key={index}>
                 <div className="grid gap-2">
                   <div className="flex gap-1 row-start-1 row-span-1">
                     <img
@@ -250,8 +271,17 @@ export default function Dropdownclient(props) {
   }
 
   if (props.name === "msg") {
+
+
+
+
+
+    
+    
+
+
     return (
-      <Dropdown>
+      <Dropdown closeOnSelect={false}>
         <DropdownTrigger>
           <div className="grid">
             <div className="col-span-full row-span-full m-auto text-center">
@@ -263,12 +293,28 @@ export default function Dropdownclient(props) {
           </div>
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions ">
-          {friends.length === 0 && <DropdownItem >Brak czatów </DropdownItem>}
+          {friends.length === 0 && <DropdownItem>Brak czatów </DropdownItem>}
 
           {friends.length > 0 &&
             friends.map((each, index) => {
+              
+              const invites = each.value;
+
+             const invited = props.email
+
+             const chatid = [...invited, ...invites].sort((a, b) => {
+
+              const numA = isNaN(a) ? a.charCodeAt(0) : parseFloat(a);
+              const numB = isNaN(b) ? b.charCodeAt(0) : parseFloat(b);
+            
+              return numA - numB;
+            }).join("");
+            
+
+
+
               return (
-                <DropdownItem key={index}>
+                <DropdownItem key={index} href={`/chat?chat=${chatid }`}>
                   <div className="grid gap-2">
                     <div className="flex gap-1 row-start-1 row-span-1">
                       <img

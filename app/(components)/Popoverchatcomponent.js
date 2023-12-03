@@ -8,7 +8,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { updateDoc } from 'firebase/firestore';
 import { doc } from 'firebase/firestore';
 import { db } from '../(firebase)/firebase';
-import { FaRegWindowClose } from "react-icons/fa";
+
 export default function Popoverchatcomponent(props) {
 const color = props.color === "white" ? "black" : "white"
 

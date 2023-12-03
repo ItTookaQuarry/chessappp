@@ -72,7 +72,10 @@ export default function Nawnotlogged(props) {
                 name={"nots"}
                 email={props.user.emailAddresses[0].emailAddress}
               />
-              <Dropdownclient src={false} name={"msg"} friends={props.friends} />
+              <Dropdownclient src={false} name={"msg"} friends={props.friends} 
+              
+              
+              email={props.user.emailAddresses[0].emailAddress}/>
             </NavbarItem>
             <NavbarItem>
               <UsersearchInput
@@ -83,6 +86,9 @@ export default function Nawnotlogged(props) {
           </>
         )}
       </Navbar>
+
+     
+     
     </>
   );
 }

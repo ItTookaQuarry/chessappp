@@ -18,6 +18,68 @@ export async function myAction(FormData) {
   revalidatePath("/account");
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+export async function chatfriendsaction(FormData) {
+  const user = await currentUser();
+  const src = user.imageUrl;
+  const text = FormData.get("text");
+  const chat = FormData.get("button");
+  const color = FormData.get("color");
+  const docRef = doc(db, "chats", chat);
+  const data = await getDoc(docRef);
+  const dataa = data.data();
+
+const msgs= dataa.chat
+
+
+    await updateDoc(docRef, {
+      chat: [...msgs,{text:text,image:src}],
+    })
+ 
+  revalidatePath("/chat")
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export async function ChatAction(FormData) {
   const user = await currentUser();
   const src = user.imageUrl;
