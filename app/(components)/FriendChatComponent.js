@@ -72,7 +72,7 @@ export default function FriendChatComponent(props) {
       <div className="grid">
   
       <br></br>
-    <div className='grid h-[100px] lg:w-[500px] w-[500px] overflow-y-scroll scroll-auto rotate-180 backdrop-brightness-0
+    <div className='grid rounded-md h-[200px] lg:w-[500px] w-[300px] lg:h-[300px] overflow-y-scroll scroll-auto rotate-180 backdrop-brightness-0
   col-span-full m-auto'>
    
 
