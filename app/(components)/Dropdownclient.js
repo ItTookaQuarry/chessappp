@@ -22,10 +22,7 @@ export default function Dropdownclient(props) {
 
   let notes = props.nots === 0 ? undefined : props.nots;
 
-
   let friends = props.friends === undefined ? [] : props.friends;
-
-
 
   const [invitesstate, setinvitesstate] = React.useState(invites);
 
@@ -206,11 +203,46 @@ export default function Dropdownclient(props) {
           )}
 
           {invitesstate.map((each, index) => {
-            const classs = each.clicked
-              ? "h-14 gap-2 w-auto flex invisible"
-              : "h-14 gap-2 w-auto flex";
+            return (
+              <DropdownItem  key={index}>
+                <div className="grid gap-2">
+                  <div className="flex gap-1 row-start-1 row-span-1">
+                    <img
+                      src={each.userphoto}
+                      className="h-[20px] w-[20px] rounded-full"
+                    />
+                    <p>{each.label} Zaprasza Cię</p>
+                  </div>
 
-            return <DropdownItem className={classs} key={index}></DropdownItem>;
+                  <div className="flex gap-1 row-start-2 row-span-2">
+                    <Button
+                      onClick={() => {
+                        addtofriends(index, each.value, true);
+                      }}
+                      type="submit"
+                      name={"sendinv"}
+                      value={each.value}
+                      color="success"
+                      className="h-[20px] w-[10px]"
+                      endContent={<IoMdPersonAdd />}
+                    ></Button>
+
+                    <Button
+                      onClick={() => {
+                        addinvitestable(index, each.value, false);
+                      }}
+                      name={"sendinv"}
+                      value={each.value}
+                      type="submit"
+                      color="danger"
+                      className="h-[20px] w-[10px]"
+                      endContent={<HiOutlineUserRemove />}
+                    ></Button>
+                    <input className="hidden" name="path" value={pathname} />
+                  </div>
+                </div>
+              </DropdownItem>
+            );
           })}
         </DropdownMenu>
       </Dropdown>
@@ -231,21 +263,24 @@ export default function Dropdownclient(props) {
           </div>
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions ">
-          {friends.map((each,index) => {
-            return (
-              <DropdownItem key={index}>
-                <div className="grid gap-2">
-                  <div className="flex gap-1 row-start-1 row-span-1">
-                    <img
-                      src={each.userphoto}
-                      className="h-[20px] w-[20px] rounded-full"
-                    />
-                    <p>{each.label}</p>
+          {friends.length === 0 && <div>Brak czatów</div>}
+
+          {friends.length > 0 &&
+            friends.map((each, index) => {
+              return (
+                <DropdownItem key={index}>
+                  <div className="grid gap-2">
+                    <div className="flex gap-1 row-start-1 row-span-1">
+                      <img
+                        src={each.userphoto}
+                        className="h-[20px] w-[20px] rounded-full"
+                      />
+                      <p>{each.label}</p>
+                    </div>
                   </div>
-                </div>
-              </DropdownItem>
-            );
-          })}
+                </DropdownItem>
+              );
+            })}
         </DropdownMenu>
       </Dropdown>
     );
