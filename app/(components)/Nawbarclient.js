@@ -22,7 +22,7 @@ export default function Nawnotlogged(props) {
   const src = props?.user?.imageUrl;
   const user = props.user;
 
-  const email = user.emailAddresses[0]?.emailAddress;
+  const email = user?.emailAddresses[0]?.emailAddress;
   const menuItems = [
     { name: "Menu Główne", link: "/" },
     { name: "Pokoje do gry", link: "rooms" },

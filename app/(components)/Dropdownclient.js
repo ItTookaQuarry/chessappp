@@ -22,6 +22,11 @@ export default function Dropdownclient(props) {
 
   let notes = props.nots === 0 ? undefined : props.nots;
 
+
+  let friends = props.friends === undefined ? [] : props.friends;
+
+
+
   const [invitesstate, setinvitesstate] = React.useState(invites);
 
   async function addinvitestable(index, value, bull) {
@@ -226,7 +231,7 @@ export default function Dropdownclient(props) {
           </div>
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions ">
-          {props.friends.map((each,index) => {
+          {friends.map((each,index) => {
             return (
               <DropdownItem key={index}>
                 <div className="grid gap-2">
