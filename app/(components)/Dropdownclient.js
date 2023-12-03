@@ -263,7 +263,7 @@ export default function Dropdownclient(props) {
           </div>
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions ">
-          {friends.length === 0 && <div>Brak czatów</div>}
+          {friends.length === 0 && <DropdownItem >Brak czatów </DropdownItem>}
 
           {friends.length > 0 &&
             friends.map((each, index) => {
