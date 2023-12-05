@@ -1,20 +1,22 @@
 import React from "react";
 import { cookies } from "next/headers";
 import { db } from "../(firebase)/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, updateDoc } from "firebase/firestore";
 import { currentUser } from "@clerk/nextjs";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 import Nawbarclient from "./Nawbarclient.js";
 export default async function Nawbar(props) {
   const user = await currentUser();
+  const chatid =  props.paramscchat
+
 
   const datatable = [];
   const colRef = collection(db, "users");
 
   let currentUserdata = [];
   const docsSnap = await getDocs(colRef);
-  docsSnap.forEach((doc) => {
+  docsSnap.forEach((doc,index) => {
     const data = doc.data();
     const id = doc.id;
     if (data.user === user?.emailAddresses[0]?.emailAddress) {
@@ -51,60 +53,47 @@ export default async function Nawbar(props) {
     sign(user);
   }
 
-  const inviteusersemails = currentUserdata[0]?.notifications?.invitesusers
-  let inviteusersemailsfiltred;
+  const inviteusersemailsfiltred = currentUserdata[0]?.notifications?.invitesusers
 
-  if (inviteusersemails !== undefined) {
-    inviteusersemailsfiltred = [...datatable].filter((each) => {
-      return inviteusersemails.includes(each.id);
-    });
-  }
+
+
 
   const friends = currentUserdata[0]?.friends
 
 
+let msgnots=0
 
 
 
-
-let friendstable
 
   if (friends !== undefined) {
 
-    let friendsmapped=friends.map((each)=>{
+    let friendsmapped=friends.map((each,index)=>{
+     
+      if(each.chatromm===props.paramscchat&&friends[index].nots>0){
+        friends[index].nots=0
+        
+        updateDoc(doc(db,"users",user.emailAddresses[0].emailAddress),{
+          friends:friends
+        })
+      }
+
+
+      if(each.nots!==undefined &&
+        each.chatromm!==props.paramscchat){
+        msgnots = msgnots + each.nots
+      }
       return each.friend
     })
 
-
-
-
-
-    friendstable = [...datatable].filter((each) => {
-return  friendsmapped.includes(each.id)
-
-
-    }).map((each)=>{
-
-const index  =  friendsmapped?.indexOf(each.id)
-console.log(friendsmapped,each.id,index,friends[index])
-const toreturn = friends[index]?.nots === undefined ?            {...each,chat:friends[index]?.chatromm } :
-{...each,chat:friends[index]?.chatromm,nots:friends[index]?.nots }
-
-return toreturn 
-    });
-
-
-
-
   }
-
-console.log(  friendstable )
 
 
 
   return (
     <Nawbarclient
-    friends={friendstable}
+    msgnots = {msgnots}
+     friends={friends}
       user={user}
       data={datatable}
       invites={inviteusersemailsfiltred}

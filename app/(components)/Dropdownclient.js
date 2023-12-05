@@ -14,18 +14,21 @@ import { db } from "../(firebase)/firebase";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { IoMdPersonAdd } from "react-icons/io";
 import { HiOutlineUserRemove } from "react-icons/hi";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 import { Button } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 export default function Dropdownclient(props) {
-  let invites = props.invites === undefined ? [] : props.invites;
 
-  let notes = props.nots === 0 ? undefined : props.nots;
+let notsstate = props.notsstate
+let setnotesstae = props.setnotesstae
+let invitesstate= props.invitesstate
 
-  let friends = props.friends === undefined ? [] : props.friends;
+let setinvitesstate=props.setinvitesstate 
+let friends = props.friends
 
-  const [invitesstate, setinvitesstate] = React.useState(invites);
+
+
 
   async function addinvitestable(index, value, bull) {
     setinvitesstate((prev) => {
@@ -50,12 +53,18 @@ export default function Dropdownclient(props) {
     updateDoc(invitesRef, {
       connections: {
         invited: inviteddatainvites.filter((each) => {
-          return each !== invited;
+          return each.email !== invited;
         }),
       },
     });
 
-    if (invitedData?.notifications?.invitesusers.includes(invites)) {
+    if (
+      invitedData?.notifications?.invitesusers
+        .map((each) => {
+          return each.email;
+        })
+        .includes(invites)
+    ) {
       let inv =
         invitedData?.notifications?.invites - 1 < 0
           ? 0
@@ -66,7 +75,7 @@ export default function Dropdownclient(props) {
           invites: inv,
           invitesusers: invitedData?.notifications?.invitesusers.filter(
             (each) => {
-              return each !== invites;
+              return each.email !== invites;
             }
           ),
         },
@@ -95,32 +104,88 @@ export default function Dropdownclient(props) {
     const inviteddatainvites = invitesData?.connections?.invited;
 
     const inviteddatafriends = invitedData?.friends;
+    if (
+      inviteddatafriends
+        ?.map((each) => {
+          return each.friend.email;
+        })
+        ?.includes(invites)
+    ) {
 
-         const id= uuidv4()
+      let inv =
+      invitedData?.notifications?.invites - 1 < 0
+        ? 0
+        : invitedData?.notifications?.invites - 1;
 
 
 
+
+      updateDoc(invitesRef, {
+        connections: {
+          invited: inviteddatainvites.filter((each) => {
+            return each.email !== invited;
+          }),
+        },
+      });
+
+      updateDoc(invitedRef, {
+        notifications: {
+          invites: inv,
+          invitesusers: invitedData?.notifications?.invitesusers.filter(
+            (each) => {
+              return each.email !== invites;
+            }
+          ),
+        },
+      });
+
+
+      return 
+
+    }
+
+    const id = uuidv4();
+
+    let invitedobj = {
+      email: invitedData.user,
+      src: invitedData.photoURL,
+      name: invitedData.displayName,
+    };
+
+    let invitesobj = {
+      email: invitesData.user,
+      src: invitesData.photoURL,
+      name: invitesData.displayName,
+    };
 
     const friendstoreturn =
       inviteddatafriends === undefined
-        ? [{friend:invites,chatromm:id}]
-        : [...inviteddatafriends, {friend:invites,chatromm:id}];
+        ? [{ friend: invitesobj, chatromm: id }]
+        : [...inviteddatafriends, { friend: invitesobj, chatromm: id }];
 
     const invitesfriends = invitesData?.friends;
 
     const friendstoreturn2 =
-      invitesfriends === undefined ? [{friend:invited,chatromm:id}] : [...invitesfriends, {friend:invited,chatromm:id}];
+      invitesfriends === undefined
+        ? [{ friend: invitedobj, chatromm: id }]
+        : [...invitesfriends, { friend: invitedobj, chatromm: id }];
 
     updateDoc(invitesRef, {
       connections: {
         invited: inviteddatainvites.filter((each) => {
-          return each !== invited;
+          return each.email !== invited;
         }),
       },
       friends: friendstoreturn2,
     });
 
-    if (invitedData?.notifications?.invitesusers.includes(invites)) {
+    if (
+      invitedData?.notifications?.invitesusers
+        .map((each) => {
+          return each.email;
+        })
+        .includes(invites)
+    ) {
       let inv =
         invitedData?.notifications?.invites - 1 < 0
           ? 0
@@ -131,7 +196,7 @@ export default function Dropdownclient(props) {
           invites: inv,
           invitesusers: invitedData?.notifications?.invitesusers.filter(
             (each) => {
-              return each !== invites;
+              return each.email !== invites;
             }
           ),
         },
@@ -139,10 +204,7 @@ export default function Dropdownclient(props) {
       });
     }
 
-    let chatid= id
-    
-
-
+    let chatid = id;
 
     const chatsref = doc(db, "chats", chatid);
     const chatSnap = await getDoc(chatsref);
@@ -157,8 +219,7 @@ export default function Dropdownclient(props) {
 
   const pathname = usePathname();
 
-  const [notsstate, setnotesstae] = React.useState(notes);
-
+  
   if (props.src) {
     return (
       <Dropdown>
@@ -199,8 +260,8 @@ export default function Dropdownclient(props) {
 
                 updateDoc(docref, {
                   notifications: {
-                    invitesusers: props.invites.map((each) => {
-                      return each.id;
+                    invitesusers: invitesstate?.map((each) => {
+                      return each;
                     }),
                     invites: 0,
                   },
@@ -219,30 +280,29 @@ export default function Dropdownclient(props) {
           </div>
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions ">
-          {!invitesstate.length && (
+          {!invitesstate?.length && (
             <DropdownItem>Brak powiadomień</DropdownItem>
           )}
 
-          {invitesstate.map((each, index) => {
+          {invitesstate?.map((each, index) => {
             return (
               <DropdownItem key={index}>
                 <div className="grid gap-2">
                   <div className="flex gap-1 row-start-1 row-span-1">
                     <img
-                      src={each.userphoto}
+                      src={each.src}
                       className="h-[20px] w-[20px] rounded-full"
                     />
-                    <p>{each.label} Zaprasza Cię</p>
+                    <p>{each.name} Zaprasza Cię</p>
                   </div>
 
                   <div className="flex gap-1 row-start-2 row-span-2">
                     <Button
                       onClick={() => {
-                        addtofriends(index, each.value, true);
+                        addtofriends(index, each.email, true);
                       }}
                       type="submit"
                       name={"sendinv"}
-                      value={each.value}
                       color="success"
                       className="h-[20px] w-[10px]"
                       endContent={<IoMdPersonAdd />}
@@ -250,7 +310,7 @@ export default function Dropdownclient(props) {
 
                     <Button
                       onClick={() => {
-                        addinvitestable(index, each.value, false);
+                        addinvitestable(index, each.email, false);
                       }}
                       name={"sendinv"}
                       value={each.value}
@@ -271,24 +331,19 @@ export default function Dropdownclient(props) {
   }
 
   if (props.name === "msg") {
-
-
-
-
-
-    
-    
-
-
     return (
       <Dropdown closeOnSelect={false}>
         <DropdownTrigger>
           <div className="grid">
             <div className="col-span-full row-span-full m-auto text-center">
-              <Badge content={props.nots} color="primary">
-                {" "}
-                <BsChatSquare size={"1.5em"} />
-              </Badge>
+              {props.msgs === undefined ||
+                (props.msgs < 1 && <BsChatSquare size={"1.5em"} />)}
+
+              {props.msgs >= 1 && (
+                <Badge content={props.msgs} color="primary">
+                  <BsChatSquare size={"1.5em"} />
+                </Badge>
+              )}
             </div>
           </div>
         </DropdownTrigger>
@@ -297,40 +352,35 @@ export default function Dropdownclient(props) {
 
           {friends.length > 0 &&
             friends.map((each, index) => {
-              
-            
-            
-
-
-
               return (
-                <DropdownItem key={index} href={`/chat?chat=${each.chat }`}>
-                  <div className="grid gap-4">
-                    <div className="flex gap-1 row-start-1 row-span-1">
+                <DropdownItem key={index} href={`/chat?chat=${each.chatromm}`}>
+                  {!each.nots && (
+                    <div className="flex gap-1 ">
                       <img
-                        src={each.userphoto}
-                        className="h-[20px] w-[20px] rounded-full"
+                        src={each.friend.src}
+                        className="h-[40px] w-[40px] rounded-full"
                       />
-                      <p>{each.label}</p>
-
-
-{1===0 &&
-                      <Badge >
-           
-           <BsChatSquare size={"1.5em"} />
-         </Badge>
-            }
-         
-           
-        {1===1 &&  <BsChatSquare size={"1.5em"} />
-       
-          }
-
-
-
+                      <p>{each.friend.name}</p>
                     </div>
+                  )}
 
-                  </div>
+                  {each.nots > 0 && (
+                    <div className="flex gap-1 ">
+                      <img
+                        src={each.friend.src}
+                        className="h-[40px] w-[40px] rounded-full"
+                      />
+                      <br></br>
+                      <Badge
+                        content={each.nots}
+                        color="primary"
+                        className="mt-2"
+                      >
+                        <div></div>{" "}
+                      </Badge>
+                      <p className="mt-5">{each.friend.name}</p>
+                    </div>
+                  )}
                 </DropdownItem>
               );
             })}

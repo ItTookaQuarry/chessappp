@@ -53,14 +53,16 @@ let name = data.displayName
 
 
   let status = false
-  if( data?.notifications?.invitesusers &&  data?.notifications?.invitesusers.includes(currentuseremail) ){
+  if( data?.notifications?.invitesusers &&  data?.notifications?.invitesusers.map((each)=>{
+    return each.email
+  }).includes(currentuseremail) ){
   
   status = "invited"
   
   }
   
   if(data?.friends && data?.friends.map((each)=>{
-    return each.friend
+    return each.friend.email
   }).includes(currentuseremail) ){
     status="friends"
   }

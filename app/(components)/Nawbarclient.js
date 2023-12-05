@@ -10,19 +10,62 @@ import {
   NavbarMenuItem,
 } from "@nextui-org/react";
 import Dropdownclient from "./Dropdownclient";
-import SignOut from "./SignOut";
 import { Link } from "@nextui-org/react";
 import Auth from "./Auth";
-import { Avatar } from "@nextui-org/react";
 import UsersearchInput from "./UsersearchInput";
-
+import { collection, getDocs,onSnapshot } from "firebase/firestore";
+import { currentUser } from "@clerk/nextjs";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../(firebase)/firebase";
 export default function Nawnotlogged(props) {
+
+
+
+
+
+
+
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const data = props.data;
   const src = props?.user?.imageUrl;
   const user = props.user;
 
   const email = user?.emailAddresses[0]?.emailAddress;
+
+
+
+
+
+
+
+  const [invitesstate, setinvitesstate] = React.useState(props.invites === undefined ? [] : props.invites)
+
+  const [notsstate, setnotesstae] = React.useState(props.nots === 0 ? undefined : props.nots)
+
+const [friendstate,setfriends]= React.useState(props.friends === undefined ? [] : props.friends)
+
+const [msgs,setmsgs] = React.useState(props.msgnots)
+
+
+React.useEffect(() => {
+  onSnapshot(doc(db, "users", `${props.user?.emailAddresses[0]?.emailAddress}`), (doc) => {
+    const data = doc.data();
+    if(data.notifications?.invites!==0){setnotesstae(data.notifications?.invites)}
+
+setinvitesstate(data.notifications?.invitesusers)
+setfriends(data.friends)
+
+
+
+
+
+
+  });
+}, []);
+
+
+
   const menuItems = [
     { name: "Menu Główne", link: "/" },
     { name: "Pokoje do gry", link: "rooms" },
@@ -66,14 +109,17 @@ export default function Nawnotlogged(props) {
             <NavbarItem className="flex gap-5">
               <Dropdownclient src={src} />
               <Dropdownclient
-                src={false}
-                nots={props.nots}
-                invites={props.invites}
+            
+            notsstate={notsstate}
+            setnotesstae={setnotesstae}
+            invitesstate={invitesstate}
+            setinvitesstate={setinvitesstate}
                 name={"nots"}
-                email={props.user.emailAddresses[0].emailAddress}
+                email={email}
+                friends={friendstate}
               />
-              <Dropdownclient src={false} name={"msg"} friends={props.friends} 
-              
+              <Dropdownclient  name={"msg"} friends={friendstate} 
+              msgs={msgs}
               
               email={props.user.emailAddresses[0].emailAddress}/>
             </NavbarItem>
