@@ -62,19 +62,43 @@ export default async function Nawbar(props) {
 
   const friends = currentUserdata[0]?.friends
 
+
+
+
+
+
 let friendstable
+
   if (friends !== undefined) {
+
+    let friendsmapped=friends.map((each)=>{
+      return each.friend
+    })
+
+
+
+
+
     friendstable = [...datatable].filter((each) => {
-    
-
-console.log(friends.includes(each.id))
+return  friendsmapped.includes(each.id)
 
 
-      return friends.includes(each.id);
+    }).map((each)=>{
+
+const index  =  friendsmapped?.indexOf(each.id)
+console.log(friendsmapped,each.id,index,friends[index])
+const toreturn = friends[index]?.nots === undefined ?            {...each,chat:friends[index]?.chatromm } :
+{...each,chat:friends[index]?.chatromm,nots:friends[index]?.nots }
+
+return toreturn 
     });
+
+
+
+
   }
 
-
+console.log(  friendstable )
 
 
 

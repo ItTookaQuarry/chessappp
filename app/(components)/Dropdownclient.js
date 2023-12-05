@@ -14,6 +14,7 @@ import { db } from "../(firebase)/firebase";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { IoMdPersonAdd } from "react-icons/io";
 import { HiOutlineUserRemove } from "react-icons/hi";
+import { v4 as uuidv4 } from 'uuid';
 
 import { Button } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
@@ -95,15 +96,20 @@ export default function Dropdownclient(props) {
 
     const inviteddatafriends = invitedData?.friends;
 
+         const id= uuidv4()
+
+
+
+
     const friendstoreturn =
       inviteddatafriends === undefined
-        ? [invites]
-        : [...inviteddatafriends, invites];
+        ? [{friend:invites,chatromm:id}]
+        : [...inviteddatafriends, {friend:invites,chatromm:id}];
 
     const invitesfriends = invitesData?.friends;
 
     const friendstoreturn2 =
-      invitesfriends === undefined ? [invited] : [...invitesfriends, invited];
+      invitesfriends === undefined ? [{friend:invited,chatromm:id}] : [...invitesfriends, {friend:invited,chatromm:id}];
 
     updateDoc(invitesRef, {
       connections: {
@@ -133,13 +139,7 @@ export default function Dropdownclient(props) {
       });
     }
 
-    const chatid = [...invited, ...invites].sort((a, b) => {
-
-      const numA = isNaN(a) ? a.charCodeAt(0) : parseFloat(a);
-      const numB = isNaN(b) ? b.charCodeAt(0) : parseFloat(b);
-    
-      return numA - numB;
-    }).join("");
+    let chatid= id
     
 
 
@@ -298,31 +298,38 @@ export default function Dropdownclient(props) {
           {friends.length > 0 &&
             friends.map((each, index) => {
               
-              const invites = each.value;
-
-             const invited = props.email
-
-             const chatid = [...invited, ...invites].sort((a, b) => {
-
-              const numA = isNaN(a) ? a.charCodeAt(0) : parseFloat(a);
-              const numB = isNaN(b) ? b.charCodeAt(0) : parseFloat(b);
             
-              return numA - numB;
-            }).join("");
             
 
 
 
               return (
-                <DropdownItem key={index} href={`/chat?chat=${chatid }`}>
-                  <div className="grid gap-2">
+                <DropdownItem key={index} href={`/chat?chat=${each.chat }`}>
+                  <div className="grid gap-4">
                     <div className="flex gap-1 row-start-1 row-span-1">
                       <img
                         src={each.userphoto}
                         className="h-[20px] w-[20px] rounded-full"
                       />
                       <p>{each.label}</p>
+
+
+{1===0 &&
+                      <Badge >
+           
+           <BsChatSquare size={"1.5em"} />
+         </Badge>
+            }
+         
+           
+        {1===1 &&  <BsChatSquare size={"1.5em"} />
+       
+          }
+
+
+
                     </div>
+
                   </div>
                 </DropdownItem>
               );

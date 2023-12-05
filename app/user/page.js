@@ -59,7 +59,9 @@ let name = data.displayName
   
   }
   
-  if(data?.friends && data?.friends.includes(currentuseremail) ){
+  if(data?.friends && data?.friends.map((each)=>{
+    return each.friend
+  }).includes(currentuseremail) ){
     status="friends"
   }
 
