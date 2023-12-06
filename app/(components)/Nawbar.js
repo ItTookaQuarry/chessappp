@@ -1,14 +1,22 @@
 import React from "react";
-import { cookies } from "next/headers";
 import { db } from "../(firebase)/firebase";
 import { collection, getDocs, updateDoc } from "firebase/firestore";
 import { currentUser } from "@clerk/nextjs";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-
+import { cookies } from 'next/headers'
 import Nawbarclient from "./Nawbarclient.js";
 export default async function Nawbar(props) {
+  const cookieStore = cookies()
+  
+
+
+
   const user = await currentUser();
   const chatid =  props.paramscchat
+ const chatidcookie = cookieStore.get("id")
+ 
+
+
 
 
   const datatable = [];
@@ -24,10 +32,10 @@ export default async function Nawbar(props) {
     }
 
     datatable.push({
-      label: data.displayName,
-      value: data.user,
-      userphoto: data.photoURL,
-      key: data.user,
+      label: data?.displayName,
+      value: data?.user,
+      userphoto: data?.photoURL,
+      key: data?.user,
       id: id,
     });
   });
@@ -41,8 +49,8 @@ export default async function Nawbar(props) {
         if (!docSnap.exists()) {
           await setDoc(docRef, {
             history: true,
-            user: user.emailAddresses[0].emailAddress,
-            photoURL: user.imageUrl,
+            user: user.emailAddresses[0]?.emailAddress,
+            photoURL: user?.imageUrl,
             displayName: `${user.firstName} ${user.lastName}`,
             Description: " ",
           });
@@ -70,7 +78,12 @@ let msgnots=0
 
     let friendsmapped=friends.map((each,index)=>{
      
-      if(each.chatromm===props.paramscchat&&friends[index].nots>0){
+      if((each?.chatromm===props?.paramscchat&&friends[index].nots>0 ) || 
+      chatidcookie ) {
+
+     
+
+
         friends[index].nots=0
         
         updateDoc(doc(db,"users",user.emailAddresses[0].emailAddress),{
@@ -80,7 +93,7 @@ let msgnots=0
 
 
       if(each.nots!==undefined &&
-        each.chatromm!==props.paramscchat){
+        each?.chatromm!==props?.paramscchat){
         msgnots = msgnots + each.nots
       }
       return each.friend
@@ -93,6 +106,7 @@ let msgnots=0
   return (
     <Nawbarclient
     msgnots = {msgnots}
+    paramscchat={chatid }
      friends={friends}
       user={user}
       data={datatable}
