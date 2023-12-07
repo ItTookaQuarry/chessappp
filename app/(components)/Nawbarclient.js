@@ -9,9 +9,12 @@ import {
   NavbarContent,
   NavbarMenuItem,
 } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
+import chessjpg from "/public/chess.jpg"
 import Dropdownclient from "./Dropdownclient";
 import { Link } from "@nextui-org/react";
 import Auth from "./Auth";
+import { FaArrowRight } from "react-icons/fa";
 import UsersearchInput from "./UsersearchInput";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { currentUser } from "@clerk/nextjs";
@@ -19,18 +22,19 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../(firebase)/firebase";
 import { updateDoc } from "firebase/firestore";
 import Cookies from 'universal-cookie';
+import Image from "next/image";
 export default function Nawnotlogged(props) {
   const cookies = new Cookies();
 
-  // if(props.paramscchat){
+  if(props.paramscchat){
 
-  //   cookies.set("id",props.paramscchat)
-  // }
+    cookies.set("id",props.paramscchat)
+  }
 
 
-  // if(props?.paramscchat===undefined && cookies.get("id")){
-  //   cookies.remove("id")
-  // }
+  if(props?.paramscchat===undefined && cookies.get("id")){
+    cookies.remove("id")
+  }
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const data = props.data;
@@ -55,43 +59,49 @@ export default function Nawnotlogged(props) {
 
 
 
-  // React.useEffect(async () => {
+  React.useEffect(async () => {
 
 
-  //   console.log(123)
-  //   onSnapshot(
-  //     doc(db, "users", `${props.user?.emailAddresses[0]?.emailAddress}`),
-  //     (doc) => {
-  //       const data = doc.data();
-  //       if (data.notifications?.invites !== 0) {
-  //         setnotesstae(data.notifications?.invites);
-  //       }
+ 
+   const update= ()=>{onSnapshot(
+    doc(db, "users", `${props.user?.emailAddresses[0]?.emailAddress}`),
+    (doc) => {
+      const data = doc.data();
+      if (data.notifications?.invites !== 0) {
+        setnotesstae(data.notifications?.invites);
+      }
 
-  //       setinvitesstate(data.notifications?.invitesusers);
-  //       setfriends(data.friends);
+      setinvitesstate(data.notifications?.invitesusers);
+      setfriends(data.friends);
 
-  //       let msgnots = 0;
-  //       let friendss = [...data.friends];
+      let msgnots = 0;
+      let friendss = [...data.friends];
 
-  //       if (friendss !== undefined) {
-  //         [...data?.friends].map((each, index) => {
+      if (friendss !== undefined) {
+        [...data?.friends].map((each, index) => {
 
 
-  //           if (
-  //             each.nots !== undefined &&
-  //             each?.chatromm !== props?.paramscchat
-  //           ) {
-  //             msgnots = msgnots + each?.nots;
-  //           }
-  //         });
+          if (
+            each.nots !== undefined &&
+            each?.chatromm !== props?.paramscchat
+          ) {
+            msgnots = msgnots + each?.nots;
+          }
+        });
 
-  //         if (msgnots !== msgs) {
-  //           setmsgs(msgnots);
-  //         }
-  //       }
-  //     }
-  //   );
-  // }, []);
+        if (msgnots !== msgs) {
+          setmsgs(msgnots);
+        }
+      }
+      
+   
+    }
+   
+  );} 
+
+
+    return update()
+  }, []);
 
   const menuItems = [
     { name: "Menu Główne", link: "/" },
@@ -117,6 +127,7 @@ export default function Nawnotlogged(props) {
               Pokoje do gry
             </Link>
           </NavbarItem>
+          
         </NavbarContent>
 
         <NavbarMenu>
@@ -160,6 +171,19 @@ export default function Nawnotlogged(props) {
           </>
         )}
       </Navbar>
+
+      {props.main &&<> <Image  src={chessjpg} className='h-screen w-screen absolute object-cover' alt='chess'/>
+      <div className='relative col-span-full lg:p-40 grid backdrop-brightness-50'>
+  <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white px-10">Graj w szachy ze znajomymi</h1>
+
+  <Button color="primary" variant="shadow"  href={"/rooms"} className="h-[100px] w-[200px] text-xl col-span-full m-auto"  endContent={<FaArrowRight /> 
+}>
+    Graj
+      </Button>    
+
+
+
+</div></>}
     </>
   );
 }

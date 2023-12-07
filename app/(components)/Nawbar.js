@@ -15,7 +15,7 @@ export default async function Nawbar(props) {
   const chatid =  props.paramscchat
  const chatidcookie = cookieStore.get("id")
  
-
+console.log(chatidcookie,123)
 
 
 
@@ -105,6 +105,7 @@ let msgnots=0
 
   return (
     <Nawbarclient
+    main={props.main}
     msgnots = {msgnots}
     paramscchat={chatid }
      friends={friends}
