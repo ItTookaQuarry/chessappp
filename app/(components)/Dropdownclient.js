@@ -348,9 +348,9 @@ let friends = props.friends
           </div>
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions ">
-          {friends.length === 0 && <DropdownItem>Brak czatów </DropdownItem>}
+          {friends?.length === 0 && <DropdownItem>Brak czatów </DropdownItem>}
 
-          {friends.length > 0 &&
+          {friends?.length > 0 &&
             friends.map((each, index) => {
               return (
                 <DropdownItem key={index} href={`/chat?chat=${each.chatromm}`}>

@@ -75,9 +75,16 @@ export default function Nawnotlogged(props) {
       setfriends(data.friends);
 
       let msgnots = 0;
-      let friendss = [...data.friends];
+      let friendss=data.friends
+
+
+
+
 
       if (friendss !== undefined) {
+
+       
+
         [...data?.friends].map((each, index) => {
 
 
