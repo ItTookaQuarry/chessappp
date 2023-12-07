@@ -176,10 +176,11 @@ export default function Nawnotlogged(props) {
       <div className='relative col-span-full lg:p-40 grid backdrop-brightness-50'>
   <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white px-10">Graj w szachy ze znajomymi</h1>
 
-  <Button color="primary" variant="shadow"  href={"/rooms"} className="h-[100px] w-[200px] text-xl col-span-full m-auto"  endContent={<FaArrowRight /> 
+<Link href={"/rooms"}>
+  <Button color="primary" variant="shadow"   className="h-[100px] w-[200px] text-xl col-span-full m-auto"  endContent={<FaArrowRight /> 
 }>
     Graj
-      </Button>    
+      </Button>   </Link> 
 
 
 
