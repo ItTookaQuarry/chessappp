@@ -20,11 +20,11 @@ import chessjpg from "/public/chess.jpg"
   
 
   React.useEffect(()=>{
-  const snap=   onSnapshot(collection(db,"rooms"),(snapshot)=>{
+  onSnapshot(collection(db,"rooms"),(snapshot)=>{
       setfetch(snapshot)
     })
 
-    return snap()
+  
   },[])
 
 
