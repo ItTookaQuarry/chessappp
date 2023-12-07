@@ -59,7 +59,7 @@ export default function Nawnotlogged(props) {
 
 
 
-  React.useEffect(async () => {
+  React.useEffect(() => {
 
 
  
