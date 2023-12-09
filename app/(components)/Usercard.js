@@ -32,7 +32,11 @@ export default function Usercard(props) {
         <div className="flex flex-col">
           <h1 className="text-lg">{props?.data?.displayName}</h1>
         </div>
-<Status withoutform={props.withoutform} status={props.status} user={props.user} email={props.email}/>
+
+        {props.withoutform && 
+        
+        <Status withoutform={props.withoutform} status={props.status} user={props.user} email={props.email}/>}
+
 
 
 

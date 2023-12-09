@@ -1110,7 +1110,7 @@ if(!historiesnap.exists()&&data.historydb!==undefined){
 <div className="flex gap-10 col-span-full m-auto">
 <Popoverchatcomponent url={pathname} chat={chat}
      
-
+src={props.src}
 color={Yourside}
 
   notifications={notifications} setnotifications={setnotifications}/>

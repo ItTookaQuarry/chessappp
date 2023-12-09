@@ -14,6 +14,7 @@ export default function Status(props) {
   const [status, setstatus] = React.useState(props.status);
 
   React.useEffect(() => {
+
     const update = () => {
       onSnapshot(doc(db, "users", props.user), (doc) => {
         const data = doc.data();
