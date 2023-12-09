@@ -10,12 +10,16 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getDoc } from "firebase/firestore";
 import { updateDoc } from "firebase/firestore";
+import { MdDelete } from "react-icons/md";
 export default function FriendChatComponent(props) {
 
 
  async function updatechat (){
     const src = props.src ;
     const text = value
+    if(value.length===0){
+      return 
+    }
     const chat = props.id
     const email = props.currentuser
     const seconduser = props.seconduser
@@ -110,6 +114,11 @@ setValue("")
                       defaultValue={each.text}
                       className="w-auto"
                     />
+                   <Button
+                  className="h-[20]px w-[20]px"
+                  //  startContent={<MdDelete />}
+                   onClick={()=>{console.log(213)}}
+                   />
                   </div>
                 );
               })}

@@ -25,7 +25,7 @@ export default async function page({ params, searchParams }) {
     redirect("/");
   }
 
-  let chatdata = chat.data();
+  let chatdata = chat?.data();
 
 let Chat=chatdata.chat
 
