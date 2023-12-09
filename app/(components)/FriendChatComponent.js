@@ -114,11 +114,6 @@ setValue("")
                       defaultValue={each.text}
                       className="w-auto"
                     />
-                   <Button
-                  className="h-[20]px w-[20]px"
-                  //  startContent={<MdDelete />}
-                   onClick={()=>{console.log(213)}}
-                   />
                   </div>
                 );
               })}
