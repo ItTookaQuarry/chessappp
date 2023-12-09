@@ -34,8 +34,6 @@ let Chat=chatdata.chat
   }
 
 const seconduserindex =  chatdata.access.indexOf(currentuseremail)=== 0 ? 1 : 0 
-
-
 const seconduser = chatdata.access[seconduserindex]
 
 
@@ -46,7 +44,9 @@ const seconduser = chatdata.access[seconduserindex]
     <>
       <Nawbar paramscchat={paramscchat}/>
       <Image  src={chessjpg} className='h-screen w-screen absolute object-cover' alt='chess'/>
-        <FriendChatComponent chat={Chat} id={paramscchat} seconduser={seconduser}/>
+        <FriendChatComponent chat={Chat} id={paramscchat} seconduser={seconduser} 
+        
+        currentuser={currentuseremail }   src={loggeduser?.imageUrl}/>
 
     </>
   );

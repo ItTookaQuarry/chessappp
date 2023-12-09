@@ -17,6 +17,7 @@ import { Spinner } from "@nextui-org/react";
 import { FaTrash } from "react-icons/fa";
 import { deleteinvite } from "../actions";
 import { FaUserFriends } from "react-icons/fa";
+import Status from "./Status";
 export default function Usercard(props) {
   return (
     <Card className=" max-w-[400px] lg:max-w-[650px] col-span-full m-auto ">
@@ -31,54 +32,11 @@ export default function Usercard(props) {
         <div className="flex flex-col">
           <h1 className="text-lg">{props?.data?.displayName}</h1>
         </div>
+<Status withoutform={props.withoutform} status={props.status} user={props.user} email={props.email}/>
 
-        {props.withoutform && !props.status && (
-          <form action={addtofriends}>
-            <Button
-              type="submit"
-              color="primary"
-              variant="ghost"
-              startContent={<IoPersonAdd />}
-              name={"invited"}
-              value={props.user}
-            >
-              <p className="hidden lg:block ">Dodaj do znajomych</p>
-            </Button>
-          </form>
-        )}
 
-        {props.status === "invited" && (
-          <form action={deleteinvite}>
-            <Button
-              type="submit"
-              color="primary"
-              variant="ghost"
-              endContent={<FaTrash />}
-              startContent={<Spinner />}
-              name={"invited"}
-              value={props.user}
-            >
-              <p className="hidden lg:block ">Usuń zaproszenie</p>
-            </Button>
-          </form>
-        )}
 
-{props.status === "friends" && (
-    
-            <Button
-            isDisabled={true}
-              type="submit"
-              color="primary"
-              variant="ghost"
-              name={"invited"}
-              value={props.user}
-              startContent={<FaUserFriends />}
-            >
-       
-              <p className="hidden lg:block ">Znajomi</p>
-            </Button>
-       
-        )}
+
       </CardHeader>
       <Divider />
       <CardBody>

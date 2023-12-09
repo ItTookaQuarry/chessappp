@@ -8,8 +8,79 @@ import { Textarea } from "@nextui-org/react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/router";
+import { getDoc } from "firebase/firestore";
+import { updateDoc } from "firebase/firestore";
 export default function FriendChatComponent(props) {
+
+
+ async function updatechat (){
+    const src = props.src ;
+    const text = value
+    const chat = props.id
+    const email = props.currentuser
+    const seconduser = props.seconduser
+  
+    const docRef = doc(db, "chats", chat);
+    const data = await getDoc(docRef);
+    const dataa = data.data();
+  
+    const msgs = dataa?.chat;
+  
+    await updateDoc(docRef, {
+      chat: [...msgs, { text: text, image: src }],
+    });
+  
+    const Seconduseref = doc(db, "users", seconduser);
+  
+  
+    const document = await getDoc(Seconduseref);
+    const Seconduserdata = document.data();
+  
+  
+    const tabletoreturn = Seconduserdata.friends.map((each) => {
+      if (each.friend.email !== email) {
+        return each;
+      }
+      if (each.friend.email === email) {
+        const toreturn =
+          each.nots === undefined
+            ? { ...each, nots: 1 }
+            : { ...each, nots: each.nots + 1 };
+            return toreturn 
+      }
+    });
+  
+  
+  
+  await updateDoc((Seconduseref),{...Seconduserdata,
+  friends: tabletoreturn})
+  
+  
+  
+setValue("")
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
   const [chatab, setchat] = React.useState([]);
+
+  const [value, setValue] = React.useState('');
+
+  const onChange = (event) => {
+    setValue(event.target.value);
+  };
 
   React.useEffect(() => {
     onSnapshot(doc(db, "chats", `${props.id}`), (doc) => {
@@ -48,22 +119,27 @@ export default function FriendChatComponent(props) {
           <br></br>
           <form
             className=" flex gap-10  m-auto justify-center h-full w-full px-10 "
-            action={chatfriendsaction}
           >
             <input value={props.seconduser} name="seconduser" className="hidden 0" />
             <Textarea
+            onChange={onChange}
+            value={value}
               name="text"
               placeholder="Napisz wiadomość"
               className="max-w-xs text-sm h-auto"
             />
 
             <Button
+            onClick={()=>{
+              
+              updatechat()
+              }}
               color="success"
               variant="bordered"
               startContent={<FaLongArrowAltRight />}
               name="button"
               value={props.id}
-              type="submit"
+
               className="backdrop-brightness-0"
             ></Button>
           </form>

@@ -62,11 +62,6 @@ await updateDoc((Seconduseref),{...Seconduserdata,
 friends: tabletoreturn})
 
 
-
-
-
-
-  revalidatePath("/chat");
 }
 
 export async function ChatAction(FormData) {
@@ -105,6 +100,11 @@ export async function ChatAction(FormData) {
     });
   }
 }
+
+
+
+
+
 
 export async function addtofriends(FormData) {
   const invited = FormData.get("invited");
@@ -189,7 +189,7 @@ export async function addtofriends(FormData) {
     });
   }
 
-  revalidatePath("/user");
+
 }
 
 export async function deleteinvite(FormData) {
@@ -204,17 +204,24 @@ export async function deleteinvite(FormData) {
   let invitesData = await getDoc(invitesRef);
   invitesData = invitesData.data();
 
-  const inviteddatainvites = invitesData?.connections?.invited;
+  const inviteddatainvites = invitesData?.connections?.invited
 
+
+
+
+
+  
   updateDoc(invitesRef, {
     connections: {
       invited: inviteddatainvites.filter((each) => {
-        return each !== invited;
+        return each.email !== invited;
       }),
     },
   });
 
-  if (invitedData?.notifications?.invitesusers.includes(invites)) {
+  if (invitedData?.notifications?.invitesusers.map((each)=>{
+    return each.email
+  }).includes(invites)) {
     let inv =
       invitedData?.notifications?.invites - 1 < 0
         ? 0
@@ -225,12 +232,11 @@ export async function deleteinvite(FormData) {
         invites: inv,
         invitesusers: invitedData?.notifications?.invitesusers.filter(
           (each) => {
-            return each !== invites;
+            return each.email !== invites;
           }
         ),
       },
     });
   }
 
-  revalidatePath("/user");
 }

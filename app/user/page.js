@@ -7,75 +7,65 @@ import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import Anotheruserhistory from "../(components)/Anotheruserhistory";
 import Usercard from "../(components)/Usercard";
-export default async function page({ params,searchParams }) {
-
-const user=searchParams.user
+export default async function page({ params, searchParams }) {
+  const user = searchParams.user;
   const loggeduser = await currentUser();
 
-
-
-
-  if (!loggeduser ||user===undefined||
-    loggeduser?.emailAddresses[0]?.emailAddress===user) {
+  if (
+    !loggeduser ||
+    user === undefined ||
+    loggeduser?.emailAddresses[0]?.emailAddress === user
+  ) {
     redirect("/");
   }
 
-const currentuseremail= loggeduser?.emailAddresses[0]?.emailAddress
-
-
-
-
-
-
-
-
-
-
-
-
-
+  const currentuseremail = loggeduser?.emailAddresses[0]?.emailAddress;
 
   const docRef = doc(db, "users", `${user}`);
 
   const docSnap = await getDoc(docRef);
 
-let tab=[]
+  let tab = [];
   const data = docSnap.data();
-let name = data.displayName
+  let name = data.displayName;
   const querySnapshot = await getDocs(collection(db, "histories"));
   querySnapshot.forEach((doc) => {
-    
     if (doc.data().white === name || doc.data().black === name) {
-     
       tab.push(doc.data());
     }
   });
 
-
-  let status = false
-  if( data?.notifications?.invitesusers &&  data?.notifications?.invitesusers.map((each)=>{
-    return each.email
-  }).includes(currentuseremail) ){
-  
-  status = "invited"
-  
-  }
-  
-  if(data?.friends && data?.friends.map((each)=>{
-    return each.friend.email
-  }).includes(currentuseremail) ){
-    status="friends"
+  let status = false;
+  if (
+    data?.notifications?.invitesusers &&
+    data?.notifications?.invitesusers
+      .map((each) => {
+        return each.email;
+      })
+      .includes(currentuseremail)
+  ) {
+    status = "invited";
   }
 
-  
-
-
+  if (
+    data?.friends &&
+    data?.friends
+      .map((each) => {
+        return each.friend.email;
+      })
+      .includes(currentuseremail)
+  ) {
+    status = "friends";
+  }
 
   return (
     <div className="grid gap-10">
-    <div>     <Nawbar /></div>
- 
-      <Usercard data={data} withoutform={true} user={user} status={status}/>
+      <div>
+        {" "}
+        <Nawbar />
+      </div>
+
+      <Usercard data={data} withoutform={true} user={user} status={status} email={loggeduser?.emailAddresses[0]?.emailAddress} />
 
       {data.history && (
         <Anotheruserhistory

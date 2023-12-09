@@ -16,14 +16,21 @@ import { Link } from "@nextui-org/react";
 import Auth from "./Auth";
 import { FaArrowRight } from "react-icons/fa";
 import UsersearchInput from "./UsersearchInput";
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
-import { currentUser } from "@clerk/nextjs";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
+
 import { db } from "../(firebase)/firebase";
-import { updateDoc } from "firebase/firestore";
 import Cookies from 'universal-cookie';
 import Image from "next/image";
+
+
+
+
+
 export default function Nawnotlogged(props) {
+  
+
+
+
   const cookies = new Cookies();
 
   if(props.paramscchat){
@@ -61,7 +68,7 @@ export default function Nawnotlogged(props) {
 
   React.useEffect(() => {
 
-
+ 
  
    const update= ()=>{onSnapshot(
     doc(db, "users", `${props.user?.emailAddresses[0]?.emailAddress}`),
